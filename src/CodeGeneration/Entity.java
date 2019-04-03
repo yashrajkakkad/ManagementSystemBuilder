@@ -1,6 +1,9 @@
 /* 
 Generates entityName.java file with data fields, getters and setters
  */
+
+package CodeGeneration;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

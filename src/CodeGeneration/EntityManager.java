@@ -1,6 +1,7 @@
 /*
 Manages all entities of the project
  */
+package CodeGeneration;
 
 import java.io.IOException;
 import java.sql.SQLException;

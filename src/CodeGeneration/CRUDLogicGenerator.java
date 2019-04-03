@@ -1,3 +1,5 @@
+package CodeGeneration;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -52,7 +54,6 @@ public class CRUDLogicGenerator {
         w.writeln_r("public void delete" + entity.getEntityName()
                 + "(String dataField, String value) throws SQLException {");
         w.writeln("StringBuilder conditionString = new StringBuilder();");
-//        conditionString.append(entityMember.getValue()).append("=");
         w.writeln("conditionString.append(dataField).append(\"=\");");
         w.writeln_r("if(dataField.equals(\"int\") || dataField.equals(\"double\")) {");
         w.writeln("conditionString.append(value);");
@@ -60,16 +61,9 @@ public class CRUDLogicGenerator {
         w.writeln_r("else {");
         w.writeln("conditionString.append(\"'\" + value + \"'\");");
         w.writeln_l("}");
-//        if (entityMember.getKey().equals("int") || entityMember.getKey().equals("double")) {
-//            conditionString.append("dataField = value");
-//        } else {
-//            conditionString.append("dataField = 'value'");
-//        }
-//        DatabaseUtil.stmt.exec
         w.writeln("String deleteQuery = \"DELETE FROM tbl_"
                 + entity.getEntityName().toLowerCase()
                 + " WHERE \" + conditionString.toString();");
-//        w.writeln_l("}");
         w.writeln("int i = DatabaseUtil.stmt.executeUpdate(deleteQuery);");
         w.writeln_r("if(i!=1) {");
         w.writeln("System.out.println(\"Error occured in deleting " + entity.getEntityName() + "\");");
@@ -82,7 +76,6 @@ public class CRUDLogicGenerator {
         w.writeln_r("public ArrayList<" + entity.getEntityName() + "> view" + entity.getEntityName()
                 + "(String dataField, String value) throws SQLException {");
         w.writeln("StringBuilder conditionString = new StringBuilder();");
-//        conditionString.append(entityMember.getValue()).append("=");
         w.writeln("conditionString.append(dataField).append(\"=\");");
         w.writeln_r("if(dataField.equals(\"int\") || dataField.equals(\"double\")) {");
         w.writeln("conditionString.append(value);");
@@ -90,19 +83,10 @@ public class CRUDLogicGenerator {
         w.writeln_r("else {");
         w.writeln("conditionString.append(\"'\" + value + \"'\");");
         w.writeln_l("}");
-//        if (entityMember.getKey().equals("int") || entityMember.getKey().equals("double")) {
-//            conditionString.append("dataField = value");
-//        } else {
-//            conditionString.append("dataField = 'value'");
-//        }
         w.writeln("String viewQuery = \"SELECT * FROM tbl_"
                 + entity.getEntityName().toLowerCase()
                 + " WHERE \" + conditionString.toString();");
-//        w.writeln_l("}");
         w.writeln("DatabaseUtil.rs = DatabaseUtil.stmt.executeQuery(viewQuery);");
-//        while(rs.next()) {
-//            
-//        }
         w.writeln("ArrayList<" + entity.getEntityName() + "> "
                 + Character.toLowerCase(entity.getEntityName().charAt(0))
                 + entity.getEntityName().substring(1) + " = new ArrayList<>();");
@@ -113,7 +97,6 @@ public class CRUDLogicGenerator {
                 .append(entity.getEntityName().substring(1)).append(".add(")
                 .append("new ").append(entity.getEntityName()).append("( ");
         entity.getEntityMembers().forEach((entityMember) -> {
-//            w.writeln(entityMember.getKey() + );
             toRetrieve.append("DatabaseUtil.rs.").append("get")
                     .append(Character.toUpperCase(entityMember.getKey().charAt(0)))
                     .append(entityMember.getKey().substring(1)).append("(")
@@ -130,9 +113,6 @@ public class CRUDLogicGenerator {
         w.writeln("");
     }
 
-//    public void updateStudent(Student student, int ID) {
-//        String updateQuery = "UPDATE studentName = ABC WHERE ID = 5";        
-//    }
     public static void generateUpdateEntity(Entity entity) {
         w.writeln_r("public void update" + entity.getEntityName() + "("
                 + entity.getEntityName() + " " + entity.getEntityName().toLowerCase()
