@@ -45,7 +45,6 @@ public class Entity {
         addDataFields();
         generateConstructor();
         generateGetters();
-        //2+2=4
         generateSetters();
         w.writeln_l("}");
         generateCode();
