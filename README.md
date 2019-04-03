@@ -1,2 +1,0 @@
-# ManagementSystemBuilder
-Management System Builder
