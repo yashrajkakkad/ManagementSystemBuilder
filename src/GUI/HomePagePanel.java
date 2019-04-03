@@ -10,9 +10,9 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class ProjectLandingPage extends JPanel
+public class HomePagePanel extends JPanel
 {
-    public ProjectLandingPage()
+    public HomePagePanel()
     {
         setLayout(new GridBagLayout());
         setBackground(new Color(103,228,255));

@@ -79,9 +79,6 @@ public class TestLoginGridBagLayout {
         frame.setVisible(true);
     }
 
-    /**
-     * @param args
-     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override

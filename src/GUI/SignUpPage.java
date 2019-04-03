@@ -1,4 +1,6 @@
-package GUI;/*
+package GUI;
+
+/*
  * @author Prayag Savsani AU1841035
  * @version dd/03/2019
  * Description: write purpose/ description of the program here
@@ -135,7 +137,10 @@ public class SignUpPage extends JPanel
             }
 
             @Override
-            public void focusLost(FocusEvent e){}
+            public void focusLost(FocusEvent e){
+                signUpbtn.setEnabled(false);
+            }
+            
         });
 
         c.gridy+=3;
