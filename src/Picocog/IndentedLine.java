@@ -1,3 +1,4 @@
+package Picocog;
 /*
  * Copyright 2017, Chris Ainsley
  *
@@ -13,8 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * @author Chris Ainsley
- *
- */
-package org.ainslec.picocog;
+
+public class IndentedLine implements PicoWriterItem {
+   String _line;
+   int    _indent;
+   public IndentedLine(String line, int indent) {
+      _line   = line;
+      _indent = indent;
+   }
+   public String getLine() { return _line; }
+   public int getIndent()  { return _indent; }
+   @Override public String toString() { return _indent + ":" + _line; }
+}

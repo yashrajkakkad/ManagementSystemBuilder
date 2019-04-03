@@ -8,9 +8,7 @@ package GUI;/*
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
+import Utility.*;
 
 public class SignUpPage extends JPanel
 {
@@ -96,18 +94,12 @@ public class SignUpPage extends JPanel
                         if (!password.getText().equals(""))
                         {
                             //VALIDATION CODE GOES HERE
-                            Connection con = null;
                             try
                             {
-                                Class.forName("com.mysql.jdbc.Driver");
-                                con = DriverManager.getConnection("jdbc:mysql://134.209.159.227:3306/db_mansys","mansys","sysman$");
-                                Statement stat =(Statement) con.createStatement();
                                 String insertString = "INSERT INTO `tbl_loginInfo`(`username`, `emailAddress`,`password`) VALUES ('"+username.getText()+"','"+emailAddress.getText()+"','"+password.getText()+"')";
                                 System.out.println(insertString);
-                                int i = stat.executeUpdate (insertString);
+                                int i = DatabaseUtil.stmt.executeUpdate(insertString);
                                 System.out.println("Return value from executeUpdate" + i);
-                                stat.close();
-                                con.close();
                             }catch (Exception ex)
                             {
                                 System.out.println("Exception caught --> " + ex);
@@ -164,6 +156,3 @@ public class SignUpPage extends JPanel
         });
     }
 }
-
-/* PROGRAM OUTPUT
- */

@@ -1,12 +1,15 @@
+package Utility;
+
 import java.sql.*;
 
 public class DatabaseUtil {
 
-    static String dbURL = "jdbc:mysql://134.209.159.227:3306/db_mansys";
-    static String rootURL = "jdbc:mysql://134.209.159.227:3306";
-    static Connection con = null;
-    static Statement stmt;
-    static ResultSet rs;
+    public static String dbURL = "jdbc:mysql://134.209.159.227:3306/db_mansys";
+    public static String rootURL = "jdbc:mysql://134.209.159.227:3306";
+    public static Connection con = null;
+    public static Statement stmt;
+    public static ResultSet rs;
+    public static PreparedStatement ps;
 
     static {
         try {
@@ -20,12 +23,12 @@ public class DatabaseUtil {
 
     }
 
-    static Statement getStatement() throws SQLException {
+    public static Statement getStatement() throws SQLException {
         System.out.println("DataUtil stmt = " + stmt);
         return stmt;
     }
     
-    static void resetConnection() throws SQLException {
+    public static void resetConnection() throws SQLException {
         stmt.close();
         con.close();
         try {
@@ -38,7 +41,7 @@ public class DatabaseUtil {
         }        
     }
 
-    static void connectMain() throws SQLException {
+    public static void connectMain() throws SQLException {
         stmt.close();
         con.close();
         try {
@@ -52,7 +55,7 @@ public class DatabaseUtil {
         
     }
     
-    static void connectToProject(String dbName) throws SQLException {
+    public static void connectToProject(String dbName) throws SQLException {
         stmt.close();
         con.close();
         try {
@@ -66,6 +69,7 @@ public class DatabaseUtil {
             System.out.println("Exception in connectToProject = " + ex);
         }                
     }
+    
     protected void finalize() {
         try {
             stmt.close();

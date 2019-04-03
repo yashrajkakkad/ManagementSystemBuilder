@@ -1,3 +1,5 @@
+package Picocog;
+
 /*
  * Copyright 2017, Chris Ainsley
  *
