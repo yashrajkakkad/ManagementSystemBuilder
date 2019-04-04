@@ -10,9 +10,6 @@ import Picocog.*;
 public class GenerateDatabaseUtil {
 
     public static void generateCode(String projectName) throws IOException, SQLException {
-//        projectName = projectName.replaceAll(" ", "");
-//        projectName = projectName.toLowerCase();
-//        projectName = projectName.trim().toLowerCase().replaceAll(" ","");
         PicoWriter w = new PicoWriter();
         w.writeln("import java.sql.*;");
         w.writeln("");
@@ -54,7 +51,7 @@ public class GenerateDatabaseUtil {
 //        DatabaseUtil.con.close();        
 //        DatabaseUtil.con = DriverManager.getConnection("jdbc:mysql://134.209.159.227:3306", "mansys", "sysman$");
 //        DatabaseUtil.stmt = DatabaseUtil.con.createStatement();
-        File writeFile = new File("F:\\Java\\" + EntityManager.getProjectName().replaceAll(" ","") + "\\src\\" + "DatabaseUtil.java");
+        File writeFile = new File(EntityManager.getDirectoryName() + "\\" + "DatabaseUtil.java");
         try (FileWriter out = new FileWriter(writeFile)) {
             out.write(w.toString());
         }

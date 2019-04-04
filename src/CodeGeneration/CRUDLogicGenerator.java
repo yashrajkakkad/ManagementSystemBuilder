@@ -139,7 +139,7 @@ public class CRUDLogicGenerator {
     }
 
     public static void generateCode(Entity entity) throws IOException {
-        File writeFile = new File("F:\\Java\\" + EntityManager.getProjectName().replaceAll(" ","") + "\\src\\" +entity.getEntityName() + "CRUD.java");
+        File writeFile = new File(EntityManager.getDirectoryName() + "\\" + entity.getEntityName() + "CRUD.java");
         FileWriter out = new FileWriter(writeFile);
         out.write(w.toString());
         out.close();

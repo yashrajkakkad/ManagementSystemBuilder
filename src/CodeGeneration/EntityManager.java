@@ -8,13 +8,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javafx.util.Pair;
 import Utility.*;
+import java.io.File;
 
 public final class EntityManager {
 
     private static ArrayList<Entity> entities;
     private static String projectName;
     private static String DBName;
-
+    private static String directoryName; 
+    
     static {
         entities = new ArrayList<>();
     }
@@ -27,8 +29,13 @@ public final class EntityManager {
         return DBName;
     }
 
+    public static String getDirectoryName() {
+        return directoryName;
+    }
+    
     public static void setProjectName(String projectName) {
         EntityManager.projectName = projectName;
+        createDirectory();
     }
 
     public static void setDBName(String DBName) {
@@ -44,6 +51,14 @@ public final class EntityManager {
         String query = "CREATE DATABASE IF NOT EXISTS " + DBName;
         DatabaseUtil.stmt.executeUpdate(query);
         DatabaseUtil.resetConnection();
+    }
+    
+    public static void createDirectory() {
+        File tempFile = new File("generated");
+        tempFile.mkdir();
+        directoryName = "generated\\" + projectName.replaceAll(" ","");
+        File dir = new File(directoryName);
+        dir.mkdir();
     }
 
     public static void addEntity(String entityName, ArrayList<Pair<String, String>> entityMembers) throws IOException, SQLException {

@@ -101,8 +101,8 @@ public class Entity {
         w.writeln("");
     }
 
-    private void generateCode() throws IOException {
-        File writeFile = new File("F:\\Java\\" + EntityManager.getProjectName().replaceAll(" ","") + "\\src\\" + entityName + ".java");
+    private void generateCode() throws IOException {        
+        File writeFile = new File(EntityManager.getDirectoryName() + "\\"+ entityName + ".java");
         FileWriter out = new FileWriter(writeFile);
         out.write(w.toString());
         out.close();
