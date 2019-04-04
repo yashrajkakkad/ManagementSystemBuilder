@@ -1,8 +1,4 @@
-package GUI;/*
- * @author Prayag Savsani AU1841035
- * @version dd/03/2019
- * Description: write purpose/ description of the program here
- */
+package GUI;
 
 import javax.swing.*;
 import java.awt.*;
