@@ -97,7 +97,7 @@ public class SignUpPage extends JPanel
                                 System.out.println("Return value from executeUpdate" + i);
                             }catch (Exception ex)
                             {
-                                System.out.println("Exception caught --> " + ex);
+                                System.out.println("Exception caught during registration " + ex);
                             }
                             HomePageFrame.changeRootPanel(2);
                         }
@@ -131,7 +131,6 @@ public class SignUpPage extends JPanel
 
             @Override
             public void focusLost(FocusEvent e){
-                signUpbtn.setEnabled(false);
             }
             
         });

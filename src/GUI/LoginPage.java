@@ -66,10 +66,9 @@ public class LoginPage extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 if (!username.getText().equals("")) {
                     if (!password.getText().equals("")) {
-                        Connection con = null;
                         try {
                             String query = "select username, password from tbl_loginInfo where username=? and password =?";
-                            DatabaseUtil.ps = con.prepareStatement(query);
+                            DatabaseUtil.ps = DatabaseUtil.con.prepareStatement(query);
                             DatabaseUtil.ps.setString(1, username.getText());
                             DatabaseUtil.ps.setString(2, password.getText());
                             DatabaseUtil.rs = DatabaseUtil.ps.executeQuery();
@@ -81,7 +80,7 @@ public class LoginPage extends JPanel {
                                 username.requestFocus();
                             }
                         } catch (Exception ex) {
-                            System.out.println("Exception caught --> " + ex);
+                            System.out.println("Exception caught during login --> " + ex);
                         }
                     } else {
                         JOptionPane.showMessageDialog(null, "Password cannot be empty");
