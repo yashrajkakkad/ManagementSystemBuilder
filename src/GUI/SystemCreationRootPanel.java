@@ -27,7 +27,7 @@ public class SystemCreationRootPanel extends JPanel
         add(systemCreationCardPanel,BorderLayout.CENTER);
         systemCreationCardPanel.setLayout(systemCreationCardLayout);
         systemCreationCardPanel.add("Add Entities",new AddEntity());
-        systemCreationCardPanel.add("Add Datafields",new AddDatafields());
+        systemCreationCardPanel.add("Add Datafields",new AddDataFields());
         systemCreationCardLayout.show(systemCreationCardPanel,"Add Entities");
 
         JPanel bottomPanel = new JPanel();
@@ -48,7 +48,7 @@ public class SystemCreationRootPanel extends JPanel
     {
         switch (code)
         {
-            case 1: systemCreationCardPanel.add("Add Datafields",new AddDatafields());
+            case 1: systemCreationCardPanel.add("Add Datafields",new AddDataFields());
                     systemCreationCardLayout.show(systemCreationCardPanel,"Add Datafields");
                     break;
             case 2: systemCreationCardLayout.show(systemCreationCardPanel,"Add Entities");

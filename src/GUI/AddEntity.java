@@ -16,7 +16,7 @@ public class AddEntity extends JPanel
     private int entityCount = 1;
     private int rowCount = 0;
     private JLabel[] labels = new JLabel[11];
-    private JTextField[] textFields = new JTextField[11];
+    private static JTextField[] entities = new JTextField[11];
     private JButton[] addButtons = new JButton[11];
     private JButton[] defineButtons = new JButton[11];
     private JButton[] removeButtons = new JButton[11];
@@ -64,9 +64,9 @@ public class AddEntity extends JPanel
         addEntityPanel.add(labels[0],c);
 
         c.gridx++;
-        textFields[0] = new JTextField(15);
-        textFields[0].setFont(new Font("Century Gothic",Font.PLAIN,18));
-        addEntityPanel.add(textFields[0],c);
+        entities[0] = new JTextField(15);
+        entities[0].setFont(new Font("Century Gothic",Font.PLAIN,18));
+        addEntityPanel.add(entities[0],c);
 
         c.gridx++;
         addButtons[0] = new JButton("Add Entity");
@@ -87,14 +87,14 @@ public class AddEntity extends JPanel
             public void actionPerformed(ActionEvent e)
             {
                 boolean flag = true;
-                if (textFields[0].getText().equals(""))
+                if (entities[0].getText().equals(""))
                 {
                     JOptionPane.showMessageDialog(null,"Please fill out the required fields");
                     flag = false;
                 }
                 for (int i=1;i<=rowCount;++i)
                 {
-                    if (textFields[i].getText().equals(""))
+                    if (entities[i].getText().equals(""))
                     {
                         JOptionPane.showMessageDialog(null,"Please fill out the required fields");
                         flag = false;
@@ -122,7 +122,7 @@ public class AddEntity extends JPanel
                     if (response == JOptionPane.YES_OPTION)
                     {
                         addEntityPanel.remove(labels[rowCount]);
-                        addEntityPanel.remove(textFields[rowCount]);
+                        addEntityPanel.remove(entities[rowCount]);
                         addEntityPanel.remove(addButtons[rowCount]);
                         addEntityPanel.remove(defineButtons[rowCount]);
                         addEntityPanel.remove(removeButtons[rowCount]);
@@ -141,7 +141,7 @@ public class AddEntity extends JPanel
             public void actionPerformed(ActionEvent e)
             {
                 boolean flag = true;
-                if (textFields[0].getText().equals(""))
+                if (entities[0].getText().equals(""))
                 {
                     JOptionPane.showMessageDialog(null,"Please fill out the required fields");
                     flag = false;
@@ -150,7 +150,7 @@ public class AddEntity extends JPanel
                 {
                     for (int i=0;i<=rowCount;++i)
                     {
-                        if (textFields[i].getText().equals(""))
+                        if (entities[i].getText().equals(""))
                         {
                             JOptionPane.showMessageDialog(null,"Please fill out the required fields");
                             flag = false;
@@ -169,9 +169,9 @@ public class AddEntity extends JPanel
                     addEntityPanel.add(labels[rowCount],c);
 
                     c.gridx++;
-                    textFields[rowCount] = new JTextField(15);
-                    textFields[rowCount].setFont(new Font("Century Gothic",Font.PLAIN,18));
-                    addEntityPanel.add(textFields[rowCount],c);
+                    entities[rowCount] = new JTextField(15);
+                    entities[rowCount].setFont(new Font("Century Gothic",Font.PLAIN,18));
+                    addEntityPanel.add(entities[rowCount],c);
 
                     c.gridx++;
                     addButtons[rowCount] = new JButton("Add Entity");
