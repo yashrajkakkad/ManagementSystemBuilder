@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class AddEntity extends JPanel
 {
@@ -17,11 +18,11 @@ public class AddEntity extends JPanel
     private int rowCount = 0;
     private static String currentEntityName;
     private static String currentDefineButton;
-    private JLabel[] labels = new JLabel[11];
-    private static JTextField[] entities = new JTextField[11];
-    private JButton[] addButtons = new JButton[11];
-    private static JButton[] defineButtons = new JButton[11];
-    private JButton[] removeButtons = new JButton[11];
+    private ArrayList<JLabel> labels = new ArrayList<>();
+    private static ArrayList<JTextField> entities = new ArrayList<>();
+    private ArrayList<JButton> addButtons = new ArrayList<>();
+    private static ArrayList<JButton> defineButtons = new ArrayList<>();
+    private ArrayList<JButton> removeButtons = new ArrayList<>();
 
     public static String getCurrentEntityName() {
         return currentEntityName;
@@ -29,7 +30,7 @@ public class AddEntity extends JPanel
 
     public static void changeButtonName()
     {
-        defineButtons[Integer.parseInt(currentDefineButton)].setName("Button Pressed");
+        defineButtons.get(Integer.parseInt(currentDefineButton)).setName("Button Pressed");
     }
 
     public AddEntity()
@@ -55,7 +56,8 @@ public class AddEntity extends JPanel
         JPanel addEntityPanel = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         addEntityPanel.setBackground(Color.WHITE);
-        add(addEntityPanel,BorderLayout.CENTER);
+        JScrollPane scrollPane = new JScrollPane(addEntityPanel);
+        add(scrollPane,BorderLayout.CENTER);
         c.insets = new Insets(5,5,5,5);
         c.anchor = GridBagConstraints.PAGE_START;
         c.fill = GridBagConstraints.NORTH;
@@ -70,26 +72,26 @@ public class AddEntity extends JPanel
         c.fill = GridBagConstraints.BOTH;
         
         c.gridx = 0;
-        labels[0] = new JLabel("Entity no. "+entityCount+":");
-        labels[0].setFont(new Font("Century Gothic",Font.PLAIN,24));
-        addEntityPanel.add(labels[0],c);
+        labels.add(0,new JLabel("Entity no. "+entityCount+":"));
+        labels.get(0).setFont(new Font("Century Gothic",Font.PLAIN,24));
+        addEntityPanel.add(labels.get(0),c);
 
         c.gridx++;
-        entities[0] = new JTextField(15);
-        entities[0].setFont(new Font("Century Gothic",Font.PLAIN,18));
-        addEntityPanel.add(entities[0],c);
+        entities.add(0,new JTextField(15));
+        entities.get(0).setFont(new Font("Century Gothic",Font.PLAIN,18));
+        addEntityPanel.add(entities.get(0),c);
 
         c.gridx++;
-        addButtons[0] = new JButton("Add Entity");
-        addButtons[0].setFont(new Font("Century Gothic",Font.PLAIN,24));
-        addEntityPanel.add(addButtons[0],c);
+        addButtons.add(0,new JButton("Add Entity"));
+        addButtons.get(0).setFont(new Font("Century Gothic",Font.PLAIN,24));
+        addEntityPanel.add(addButtons.get(0),c);
         ++entityCount;
 
         c.gridx++;
-        defineButtons[0] = new JButton("Define Datafields");
-        defineButtons[0].setFont(new Font("Century Gothic",Font.PLAIN,24));
-        defineButtons[0].setName("0");
-        addEntityPanel.add(defineButtons[0],c);
+        defineButtons.add(0,new JButton("Define Datafields"));
+        defineButtons.get(0).setFont(new Font("Century Gothic",Font.PLAIN,24));
+        defineButtons.get(0).setName("0");
+        addEntityPanel.add(defineButtons.get(0),c);
 
         c.gridy++;
 
@@ -98,7 +100,7 @@ public class AddEntity extends JPanel
             boolean flag = true;
             for (int i=0;i<=rowCount;++i)
             {
-                if (entities[i].getText().equals(""))
+                if (entities.get(i).getText().equals(""))
                 {
                     JOptionPane.showMessageDialog(null,"Please fill out the required fields");
                     flag = false;
@@ -107,12 +109,12 @@ public class AddEntity extends JPanel
             }
             if (flag)
             {
-                currentEntityName = entities[Integer.parseInt(((JButton)e.getSource()).getName())].getText();
+                currentEntityName = entities.get(Integer.parseInt(((JButton)e.getSource()).getName())).getText();
                 currentDefineButton = ((JButton)e.getSource()).getName();
                 SystemCreationRootPanel.changeSystemCreationProcessPanel(1);
             }
         };
-        defineButtons[0].addActionListener(defineDatafields);
+        defineButtons.get(0).addActionListener(defineDatafields);
 
         ActionListener removeRowEvent = e ->
         {
@@ -123,11 +125,11 @@ public class AddEntity extends JPanel
                         JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                 if (response == JOptionPane.YES_OPTION)
                 {
-                    addEntityPanel.remove(labels[rowCount]);
-                    addEntityPanel.remove(entities[rowCount]);
-                    addEntityPanel.remove(addButtons[rowCount]);
-                    addEntityPanel.remove(defineButtons[rowCount]);
-                    addEntityPanel.remove(removeButtons[rowCount]);
+                    addEntityPanel.remove(labels.get(rowCount));
+                    addEntityPanel.remove(entities.get(rowCount));
+                    addEntityPanel.remove(addButtons.get(rowCount));
+                    addEntityPanel.remove(defineButtons.get(rowCount));
+                    addEntityPanel.remove(removeButtons.get(rowCount-1));
                     --rowCount;
                     --entityCount;
                     addEntityPanel.revalidate();
@@ -144,7 +146,7 @@ public class AddEntity extends JPanel
                 boolean flag = true;
                     for (int i=0;i<=rowCount;++i)
                     {
-                        if (entities[i].getText().equals(""))
+                        if (entities.get(i).getText().equals(""))
                         {
                             JOptionPane.showMessageDialog(null,"Please fill out the required fields");
                             flag = false;
@@ -157,33 +159,33 @@ public class AddEntity extends JPanel
                     c.fill = GridBagConstraints.BOTH;
 
                     c.gridx = 0;
-                    labels[rowCount] = new JLabel("Entity No. "+entityCount+":");
-                    labels[rowCount].setFont(new Font("Century Gothic",Font.PLAIN,24));
-                    addEntityPanel.add(labels[rowCount],c);
+                    labels.add(rowCount,new JLabel("Entity No. "+entityCount+":"));
+                    labels.get(rowCount).setFont(new Font("Century Gothic",Font.PLAIN,24));
+                    addEntityPanel.add(labels.get(rowCount),c);
 
                     c.gridx++;
-                    entities[rowCount] = new JTextField(15);
-                    entities[rowCount].setFont(new Font("Century Gothic",Font.PLAIN,18));
-                    addEntityPanel.add(entities[rowCount],c);
+                    entities.add(rowCount,new JTextField(15));
+                    entities.get(rowCount).setFont(new Font("Century Gothic",Font.PLAIN,18));
+                    addEntityPanel.add(entities.get(rowCount),c);
 
                     c.gridx++;
-                    addButtons[rowCount] = new JButton("Add Entity");
-                    addButtons[rowCount].setFont(new Font("Century Gothic",Font.PLAIN,24));
-                    addButtons[rowCount].addActionListener(this::actionPerformed);
-                    addEntityPanel.add(addButtons[rowCount],c);
+                    addButtons.add(rowCount,new JButton("Add Entity"));
+                    addButtons.get(rowCount).setFont(new Font("Century Gothic",Font.PLAIN,24));
+                    addButtons.get(rowCount).addActionListener(this::actionPerformed);
+                    addEntityPanel.add(addButtons.get(rowCount),c);
 
                     c.gridx++;
-                    defineButtons[rowCount] = new JButton("Define Datafields");
-                    defineButtons[rowCount].setFont(new Font("Century Gothic",Font.PLAIN,24));
-                    defineButtons[rowCount].setName(String.valueOf(rowCount));
-                    defineButtons[rowCount].addActionListener(defineDatafields);
-                    addEntityPanel.add(defineButtons[rowCount],c);
+                    defineButtons.add(rowCount,new JButton("Define Datafields"));
+                    defineButtons.get(rowCount).setFont(new Font("Century Gothic",Font.PLAIN,24));
+                    defineButtons.get(rowCount).setName(String.valueOf(rowCount));
+                    defineButtons.get(rowCount).addActionListener(defineDatafields);
+                    addEntityPanel.add(defineButtons.get(rowCount),c);
 
                     c.gridx++;
-                    removeButtons[rowCount] = new JButton("Remove Entity");
-                    removeButtons[rowCount].setFont(new Font("Century Gothic",Font.PLAIN,24));
-                    removeButtons[rowCount].addActionListener(removeRowEvent);
-                    addEntityPanel.add(removeButtons[rowCount],c);
+                    removeButtons.add(rowCount-1,new JButton("Remove Entity"));
+                    removeButtons.get(rowCount-1).setFont(new Font("Century Gothic",Font.PLAIN,24));
+                    removeButtons.get(rowCount-1).addActionListener(removeRowEvent);
+                    addEntityPanel.add(removeButtons.get(rowCount-1),c);
 
                     c.gridy++;
                     ++entityCount;
@@ -192,7 +194,7 @@ public class AddEntity extends JPanel
                 }
             }
         };
-        addButtons[0].addActionListener(addRowEvent);
+        addButtons.get(0).addActionListener(addRowEvent);
 
         JPanel bottomPanel = new JPanel();
         add(bottomPanel,BorderLayout.PAGE_END);
@@ -212,7 +214,7 @@ public class AddEntity extends JPanel
             boolean flag = true;
             for (int i=0; i<=rowCount; ++i)
             {
-                if (!defineButtons[i].getName().equals("Button Pressed"))
+                if (!defineButtons.get(i).getName().equals("Button Pressed"))
                 {
                     flag = false;
                     JOptionPane.showMessageDialog(null, "Please define datafields for all entities before submitting.");
@@ -251,10 +253,10 @@ public class AddEntity extends JPanel
         entityInfo.setFont(new Font("Century Gothic",Font.PLAIN,30));
         westPanel.add(entityInfo,wc);
 
-        wc.insets = new Insets(30,50,3,50);
+        wc.insets = new Insets(30,30,3,30);
         wc.gridy++;
         JLabel entityDetails = new JLabel("<html>Entity blah blah<br>Entity blah blah<br>Entity blah blah<br>Entity blah blah<br>Entity blah blah");
-        entityDetails.setFont(new Font("Century Gothic",Font.PLAIN,30));
+        entityDetails.setFont(new Font("Century Gothic",Font.PLAIN,24));
         westPanel.add(entityDetails,wc);
 
         JPanel eastPanel = new JPanel();
@@ -262,17 +264,17 @@ public class AddEntity extends JPanel
         eastPanel.setBackground(new Color(113, 211, 238));
         GridBagConstraints ec = new GridBagConstraints();
         add(eastPanel,BorderLayout.LINE_END);
-        ec.anchor = GridBagConstraints.CENTER;
+        ec.anchor = GridBagConstraints.LINE_START;
         ec.insets = new Insets(30,30,30,30);
         ec.gridy = 0;
         JLabel primaryKeyInfo = new JLabel("What is a primary key?");
         primaryKeyInfo.setFont(new Font("Century Gothic",Font.PLAIN,30));
         eastPanel.add(primaryKeyInfo,ec);
 
-        ec.insets = new Insets(30,50,3,50);
+        ec.insets = new Insets(30,30,3,30);
         ec.gridy++;
         JLabel primaryKeyDetails = new JLabel("<html>Primary Key blah blah<br>Primary Key blah blah<br>Primary Key blah blah<br>Primary Key blah blah<br>Primary Key blah blah");
-        primaryKeyDetails.setFont(new Font("Century Gothic",Font.PLAIN,30));
+        primaryKeyDetails.setFont(new Font("Century Gothic",Font.PLAIN,24));
         eastPanel.add(primaryKeyDetails,ec);
     }
 }

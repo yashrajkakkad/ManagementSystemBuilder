@@ -16,11 +16,11 @@ public class AddDataFields extends JPanel
 {
     private int datafieldCount = 1;
     private int rowCount = 0;
-    private JLabel[] labels = new JLabel[11];
-    private JTextField[] dataFields = new JTextField[11];
-    private JComboBox<String>[] dataTypes = new JComboBox[11];
-    private JButton[] addButtons = new JButton[11];
-    private JButton[] removeButtons = new JButton[11];
+    private ArrayList<JLabel> labels = new ArrayList<>();
+    private ArrayList<JTextField> dataFields = new ArrayList<>();
+    private ArrayList<JComboBox<String>> dataTypes = new ArrayList<>();
+    private ArrayList<JButton> addButtons = new ArrayList<>();
+    private ArrayList<JButton> removeButtons = new ArrayList<>();
 
     public AddDataFields()
     {
@@ -40,7 +40,8 @@ public class AddDataFields extends JPanel
 
         JPanel addDatafieldPanel = new JPanel(gridBagLayout);
         addDatafieldPanel.setBackground(Color.WHITE);
-        add(addDatafieldPanel,BorderLayout.CENTER);
+        JScrollPane scrollPane = new JScrollPane(addDatafieldPanel);
+        add(scrollPane,BorderLayout.CENTER);
         c.insets = new Insets(5,5,5,5);
         c.anchor = GridBagConstraints.PAGE_START;
         c.fill = GridBagConstraints.NORTH;
@@ -61,29 +62,29 @@ public class AddDataFields extends JPanel
 
         c.gridx = 0;
 
-        labels[0] = new JLabel("Datafield "+datafieldCount+":");
-        labels[0].setFont(new Font("Century Gothic",Font.PLAIN,24));
-        addDatafieldPanel.add(labels[0],c);
+        labels.add(0,new JLabel("Datafield "+datafieldCount+":"));
+        labels.get(0).setFont(new Font("Century Gothic",Font.PLAIN,24));
+        addDatafieldPanel.add(labels.get(0),c);
 
         c.gridx++;
-        dataFields[0] = new JTextField(15);
-        dataFields[0].setFont(new Font("Century Gothic",Font.PLAIN,18));
-        addDatafieldPanel.add(dataFields[0],c);
+        dataFields.add(0,new JTextField(15));
+        dataFields.get(0).setFont(new Font("Century Gothic",Font.PLAIN,18));
+        addDatafieldPanel.add(dataFields.get(0),c);
 
         c.gridx++;
-        dataTypes[0] = new JComboBox<>();
-        dataTypes[0].addItem("Choose a suitable datatype");
-        dataTypes[0].addItem("Integer");
-        dataTypes[0].addItem("Floating Point Decimal");
-        dataTypes[0].addItem("String of characters");
-        dataTypes[0].addItem("Single character");
-        dataTypes[0].setFont(new Font("Century Gothic",Font.PLAIN,18));
-        addDatafieldPanel.add(dataTypes[0],c);
+        dataTypes.add(0,new JComboBox<>());
+        dataTypes.get(0).addItem("Choose a suitable datatype");
+        dataTypes.get(0).addItem("Integer");
+        dataTypes.get(0).addItem("Floating Point Decimal");
+        dataTypes.get(0).addItem("String of characters");
+        dataTypes.get(0).addItem("Single character");
+        dataTypes.get(0).setFont(new Font("Century Gothic",Font.PLAIN,18));
+        addDatafieldPanel.add(dataTypes.get(0),c);
 
         c.gridx++;
-        addButtons[0] = new JButton("Add Datafield");
-        addButtons[0].setFont(new Font("Century Gothic",Font.PLAIN,24));
-        addDatafieldPanel.add(addButtons[0],c);
+        addButtons.add(0,new JButton("Add Datafield"));
+        addButtons.get(0).setFont(new Font("Century Gothic",Font.PLAIN,24));
+        addDatafieldPanel.add(addButtons.get(0),c);
         c.gridy++;
         ++datafieldCount;
 
@@ -96,11 +97,11 @@ public class AddDataFields extends JPanel
                         JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                 if (response == JOptionPane.YES_OPTION)
                 {
-                    addDatafieldPanel.remove(labels[rowCount]);
-                    addDatafieldPanel.remove(dataFields[rowCount]);
-                    addDatafieldPanel.remove(dataTypes[rowCount]);
-                    addDatafieldPanel.remove(addButtons[rowCount]);
-                    addDatafieldPanel.remove(removeButtons[rowCount]);
+                    addDatafieldPanel.remove(labels.get(rowCount));
+                    addDatafieldPanel.remove(dataFields.get(rowCount));
+                    addDatafieldPanel.remove(dataTypes.get(rowCount));
+                    addDatafieldPanel.remove(addButtons.get(rowCount));
+                    addDatafieldPanel.remove(removeButtons.get(rowCount-1));
                     --rowCount;
                     --datafieldCount;
                     addDatafieldPanel.revalidate();
@@ -117,7 +118,7 @@ public class AddDataFields extends JPanel
                 boolean flag = true;
                 for (int i=0;i<=rowCount;++i)
                 {
-                    if (dataFields[i].getText().equals("") || dataTypes[i].getSelectedItem().equals("Choose a suitable datatype"))
+                    if (dataFields.get(i).getText().equals("") || dataTypes.get(i).getSelectedItem().equals("Choose a suitable datatype"))
                     {
                         JOptionPane.showMessageDialog(null,"Please fill out the required fields");
                         flag = false;
@@ -130,36 +131,36 @@ public class AddDataFields extends JPanel
                     c.fill = GridBagConstraints.BOTH;
 
                     c.gridx = 0;
-                    labels[rowCount] = new JLabel("Datafield "+datafieldCount+":");
-                    labels[rowCount].setFont(new Font("Century Gothic",Font.PLAIN,24));
-                    addDatafieldPanel.add(labels[rowCount],c);
+                    labels.add(rowCount,new JLabel("Datafield "+datafieldCount+":"));
+                    labels.get(rowCount).setFont(new Font("Century Gothic",Font.PLAIN,24));
+                    addDatafieldPanel.add(labels.get(rowCount),c);
 
                     c.gridx++;
-                    dataFields[rowCount] = new JTextField(15);
-                    dataFields[rowCount].setFont(new Font("Century Gothic",Font.PLAIN,18));
-                    addDatafieldPanel.add(dataFields[rowCount],c);
+                    dataFields.add(rowCount,new JTextField(15));
+                    dataFields.get(rowCount).setFont(new Font("Century Gothic",Font.PLAIN,18));
+                    addDatafieldPanel.add(dataFields.get(rowCount),c);
 
                     c.gridx++;
-                    dataTypes[rowCount] = new JComboBox<>();
-                    dataTypes[rowCount].addItem("Choose a suitable datatype");
-                    dataTypes[rowCount].addItem("Integer");
-                    dataTypes[rowCount].addItem("Floating Point Decimal");
-                    dataTypes[rowCount].addItem("String of characters");
-                    dataTypes[rowCount].addItem("Single character");
-                    dataTypes[rowCount].setFont(new Font("Century Gothic",Font.PLAIN,18));
-                    addDatafieldPanel.add(dataTypes[rowCount],c);
+                    dataTypes.add(rowCount,new JComboBox<>());
+                    dataTypes.get(rowCount).addItem("Choose a suitable datatype");
+                    dataTypes.get(rowCount).addItem("Integer");
+                    dataTypes.get(rowCount).addItem("Floating Point Decimal");
+                    dataTypes.get(rowCount).addItem("String of characters");
+                    dataTypes.get(rowCount).addItem("Single character");
+                    dataTypes.get(rowCount).setFont(new Font("Century Gothic",Font.PLAIN,18));
+                    addDatafieldPanel.add(dataTypes.get(rowCount),c);
 
                     c.gridx++;
-                    addButtons[rowCount] = new JButton("Add Datafield");
-                    addButtons[rowCount].setFont(new Font("Century Gothic",Font.PLAIN,24));
-                    addButtons[rowCount].addActionListener(this::actionPerformed);
-                    addDatafieldPanel.add(addButtons[rowCount],c);
+                    addButtons.add(rowCount,new JButton("Add Datafield"));
+                    addButtons.get(rowCount).setFont(new Font("Century Gothic",Font.PLAIN,24));
+                    addButtons.get(rowCount).addActionListener(this::actionPerformed);
+                    addDatafieldPanel.add(addButtons.get(rowCount),c);
 
                     c.gridx++;
-                    removeButtons[rowCount] = new JButton("Remove Datafield");
-                    removeButtons[rowCount].setFont(new Font("Century Gothic",Font.PLAIN,24));
-                    removeButtons[rowCount].addActionListener(removeRowEvent);
-                    addDatafieldPanel.add(removeButtons[rowCount],c);
+                    removeButtons.add(rowCount-1,new JButton("Remove Datafield"));
+                    removeButtons.get(rowCount-1).setFont(new Font("Century Gothic",Font.PLAIN,24));
+                    removeButtons.get(rowCount-1).addActionListener(removeRowEvent);
+                    addDatafieldPanel.add(removeButtons.get(rowCount-1),c);
 
                     c.gridy++;
                     ++datafieldCount;
@@ -168,7 +169,7 @@ public class AddDataFields extends JPanel
                 }
             }
         };
-        addButtons[0].addActionListener(addRowEvent);
+        addButtons.get(0).addActionListener(addRowEvent);
 
 
         JPanel bottomPanel = new JPanel();
@@ -183,13 +184,14 @@ public class AddDataFields extends JPanel
         JButton submitButton = new JButton("Submit");
         submitButton.setFont(new Font("Century Gothic",Font.PLAIN,30));
         bottomPanel.add(submitButton,bc);
-        
+
+        // TODO - Add some visual response for entities already defined.
         submitButton.addActionListener(e ->
         {
             boolean flag = true;
             for (int i=0;i<=rowCount;++i)
             {
-                if (dataFields[i].getText().equals("") || dataTypes[i].getSelectedItem().equals("Choose a suitable datatype"))
+                if (dataFields.get(i).getText().equals("") || dataTypes.get(i).getSelectedItem().equals("Choose a suitable datatype"))
                 {
                     JOptionPane.showMessageDialog(null,"Please fill out all the required fields");
                     flag = false;
@@ -199,7 +201,7 @@ public class AddDataFields extends JPanel
             {
                 ArrayList<Pair<String, String>> datafieldList = new ArrayList<>();
                 for (int i = 0; i <= rowCount; i++) {
-                    datafieldList.add(new Pair(comboboxToDatatype((String)dataTypes[i].getSelectedItem()),dataFields[i].getText()));
+                    datafieldList.add(new Pair(comboboxToDatatype((String)dataTypes.get(i).getSelectedItem()),dataFields.get(i).getText()));
                 }
                 Entity entity1;
                 try {
