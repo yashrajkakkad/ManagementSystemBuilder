@@ -5,16 +5,22 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import CodeGeneration.*;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.util.Pair;
 
 public class AddDataFields extends JPanel
 {
     private int datafieldCount = 1;
-    private int rowCount = -1;
-    private JLabel[] labels = new JLabel[10];
-    private JTextField[] dataFields = new JTextField[10];
-    private JComboBox<String>[] dataTypes = new JComboBox[10];
-    private JButton[] addButtons = new JButton[10];
-    private JButton[] removeButtons = new JButton[10];
+    private int rowCount = 0;
+    private JLabel[] labels = new JLabel[11];
+    private JTextField[] dataFields = new JTextField[11];
+    private JComboBox<String>[] dataTypes = new JComboBox[11];
+    private JButton[] addButtons = new JButton[11];
+    private JButton[] removeButtons = new JButton[11];
 
     public AddDataFields()
     {
@@ -55,29 +61,29 @@ public class AddDataFields extends JPanel
 
         c.gridx = 0;
 
-        JLabel datafieldCountLabel = new JLabel("Datafield "+datafieldCount+":");
-        datafieldCountLabel.setFont(new Font("Century Gothic",Font.PLAIN,24));
-        addDatafieldPanel.add(datafieldCountLabel,c);
+        labels[0] = new JLabel("Datafield "+datafieldCount+":");
+        labels[0].setFont(new Font("Century Gothic",Font.PLAIN,24));
+        addDatafieldPanel.add(labels[0],c);
 
         c.gridx++;
-        JTextField datafieldName = new JTextField(15);
-        datafieldName.setFont(new Font("Century Gothic",Font.PLAIN,18));
-        addDatafieldPanel.add(datafieldName,c);
+        dataFields[0] = new JTextField(15);
+        dataFields[0].setFont(new Font("Century Gothic",Font.PLAIN,18));
+        addDatafieldPanel.add(dataFields[0],c);
 
         c.gridx++;
-        JComboBox<String> datatypeComboBox = new JComboBox<>();
-        datatypeComboBox.addItem("Choose a suitable datatype");
-        datatypeComboBox.addItem("Integer");
-        datatypeComboBox.addItem("Floating Point Decimal");
-        datatypeComboBox.addItem("String of characters");
-        datatypeComboBox.addItem("Single character");
-        datatypeComboBox.setFont(new Font("Century Gothic",Font.PLAIN,18));
-        addDatafieldPanel.add(datatypeComboBox,c);
+        dataTypes[0] = new JComboBox<>();
+        dataTypes[0].addItem("Choose a suitable datatype");
+        dataTypes[0].addItem("Integer");
+        dataTypes[0].addItem("Floating Point Decimal");
+        dataTypes[0].addItem("String of characters");
+        dataTypes[0].addItem("Single character");
+        dataTypes[0].setFont(new Font("Century Gothic",Font.PLAIN,18));
+        addDatafieldPanel.add(dataTypes[0],c);
 
         c.gridx++;
-        JButton addButton = new JButton("Add Datafield");
-        addButton.setFont(new Font("Century Gothic",Font.PLAIN,24));
-        addDatafieldPanel.add(addButton,c);
+        addButtons[0] = new JButton("Add Datafield");
+        addButtons[0].setFont(new Font("Century Gothic",Font.PLAIN,24));
+        addDatafieldPanel.add(addButtons[0],c);
         c.gridy++;
         ++datafieldCount;
 
@@ -113,7 +119,7 @@ public class AddDataFields extends JPanel
             public void actionPerformed(ActionEvent e)
             {
                 boolean flag = true;
-                if (datafieldName.getText().equals("") || datatypeComboBox.getSelectedItem().equals("Choose a suitable datatype"))
+                if (dataFields[0].getText().equals("") || dataTypes[0].getSelectedItem().equals("Choose a suitable datatype"))
                 {
                     JOptionPane.showMessageDialog(null,"Please fill out the required fields");
                     flag = false;
@@ -174,7 +180,7 @@ public class AddDataFields extends JPanel
                 }
             }
         };
-        addButton.addActionListener(addRowEvent);
+        addButtons[0].addActionListener(addRowEvent);
 
 
         JPanel bottomPanel = new JPanel();
@@ -189,6 +195,30 @@ public class AddDataFields extends JPanel
         JButton submitButton = new JButton("Submit");
         submitButton.setFont(new Font("Century Gothic",Font.PLAIN,30));
         bottomPanel.add(submitButton,bc);
+        
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ArrayList<Pair<String, String>> datafieldList = new ArrayList<>();
+                for (int i = 0; i <= rowCount; i++) {
+                    datafieldList.add(new Pair(comboboxToDatatype((String)dataTypes[i].getSelectedItem()),dataFields[i].getText()));
+                }
+                Entity entity1;
+                try {
+                    entity1 = new Entity(AddEntity.getCurrentEntityName(), datafieldList);
+                    CRUDLogicGenerator.writeClassName(entity1);
+                    CRUDLogicGenerator.generateAddEntity(entity1);
+                    CRUDLogicGenerator.generateDeleteEntity(entity1);
+                    CRUDLogicGenerator.generateUpdateEntity(entity1);
+                    CRUDLogicGenerator.generateViewEntity(entity1);
+                    CRUDLogicGenerator.endClass();
+                    CRUDLogicGenerator.generateCode(entity1);
+                } catch (IOException | SQLException ex) {
+                    Logger.getLogger(AddDataFields.class.getName()).log(Level.SEVERE, null, ex);
+                }               
+            }
+        });
+        
         bc.gridx++;
         JButton cancelButton = new JButton("Cancel");
         cancelButton.setFont(new Font("Century Gothic",Font.PLAIN,30));
@@ -242,6 +272,23 @@ public class AddDataFields extends JPanel
         JLabel datatypeDetails = new JLabel("<html>Datatype blah blah<br>Integer blah blah<br>Floating point number blah blah<br>String of characters blah blah<br>Character blah blah");
         datatypeDetails.setFont(new Font("Century Gothic",Font.PLAIN,24));
         eastPanel.add(datatypeDetails,ec);
+    }
+    
+    private String comboboxToDatatype(String item)
+    {
+        String datatype = null;
+        switch(item)
+        {
+            case "Integer" : datatype = "int";
+                             break;
+            case "Floating Point Decimal" : datatype = "double";
+                                            break;
+            case "String of characters" : datatype = "String";
+                                          break;
+            case "Single character" : datatype = "char";
+                                      break;                          
+        }
+        return datatype;
     }
 }
 

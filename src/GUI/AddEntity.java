@@ -15,12 +15,17 @@ public class AddEntity extends JPanel
 {
     private int entityCount = 1;
     private int rowCount = 0;
+    private static String currentEntityName;
     private JLabel[] labels = new JLabel[11];
     private static JTextField[] entities = new JTextField[11];
     private JButton[] addButtons = new JButton[11];
     private JButton[] defineButtons = new JButton[11];
     private JButton[] removeButtons = new JButton[11];
 
+    public static String getCurrentEntityName() {
+        return currentEntityName;
+    }
+    
     public AddEntity()
     {
         setLayout(new BorderLayout());
@@ -77,6 +82,7 @@ public class AddEntity extends JPanel
         c.gridx++;
         defineButtons[0] = new JButton("Define Datafields");
         defineButtons[0].setFont(new Font("Century Gothic",Font.PLAIN,24));
+        defineButtons[0].setName("0");
         addEntityPanel.add(defineButtons[0],c);
 
         c.gridy++;
@@ -87,12 +93,7 @@ public class AddEntity extends JPanel
             public void actionPerformed(ActionEvent e)
             {
                 boolean flag = true;
-                if (entities[0].getText().equals(""))
-                {
-                    JOptionPane.showMessageDialog(null,"Please fill out the required fields");
-                    flag = false;
-                }
-                for (int i=1;i<=rowCount;++i)
+                for (int i=0;i<=rowCount;++i)
                 {
                     if (entities[i].getText().equals(""))
                     {
@@ -103,6 +104,7 @@ public class AddEntity extends JPanel
                 }
                 if (flag)
                 {
+                    currentEntityName = entities[Integer.parseInt(((JButton)e.getSource()).getName())].getText();
                     SystemCreationRootPanel.changeSystemCreationProcessPanel(1);
                 }
             }
@@ -182,6 +184,7 @@ public class AddEntity extends JPanel
                     c.gridx++;
                     defineButtons[rowCount] = new JButton("Define Datafields");
                     defineButtons[rowCount].setFont(new Font("Century Gothic",Font.PLAIN,24));
+                    defineButtons[rowCount].setName(String.valueOf(rowCount));
                     defineButtons[rowCount].addActionListener(defineDatafields);
                     addEntityPanel.add(defineButtons[rowCount],c);
 

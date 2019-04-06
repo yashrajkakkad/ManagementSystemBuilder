@@ -1,11 +1,17 @@
 package GUI;
 
+import CodeGeneration.EntityManager;
+import CodeGeneration.GenerateDatabaseUtil;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SystemMenu extends JPanel
 {
@@ -67,7 +73,19 @@ public class SystemMenu extends JPanel
             {
                 if (!systemName.getText().equals(""))
                 {
-                    //VALIDATION CODE GOES HERE
+                    EntityManager.setProjectName(systemName.getText());        
+                    EntityManager.generateDBName();
+                    try {
+                        EntityManager.createDB();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(SystemMenu.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    System.out.println(EntityManager.getDBName());
+                    try {
+                        GenerateDatabaseUtil.generateCode(EntityManager.getDBName());
+                    } catch (IOException | SQLException ex) {
+                        Logger.getLogger(SystemMenu.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     HomePageFrame.changeRootPanel(3);
                 }
                 else
