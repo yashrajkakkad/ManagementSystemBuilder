@@ -87,28 +87,24 @@ public class AddDataFields extends JPanel
         c.gridy++;
         ++datafieldCount;
 
-        ActionListener removeRowEvent = new ActionListener()
+        ActionListener removeRowEvent = e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
+            if (rowCount > -1)
             {
-                if (rowCount > -1)
+                int response = JOptionPane.showConfirmDialog(null,
+                        "Are you sure to delete this datafield?", "Warning",
+                        JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                if (response == JOptionPane.YES_OPTION)
                 {
-                    int response = JOptionPane.showConfirmDialog(null,
-                            "Are you sure to delete this datafield?", "Warning",
-                            JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-                    if (response == JOptionPane.YES_OPTION)
-                    {
-                        addDatafieldPanel.remove(labels[rowCount]);
-                        addDatafieldPanel.remove(dataFields[rowCount]);
-                        addDatafieldPanel.remove(dataTypes[rowCount]);
-                        addDatafieldPanel.remove(addButtons[rowCount]);
-                        addDatafieldPanel.remove(removeButtons[rowCount]);
-                        --rowCount;
-                        --datafieldCount;
-                        addDatafieldPanel.revalidate();
-                        addDatafieldPanel.repaint();
-                    }
+                    addDatafieldPanel.remove(labels[rowCount]);
+                    addDatafieldPanel.remove(dataFields[rowCount]);
+                    addDatafieldPanel.remove(dataTypes[rowCount]);
+                    addDatafieldPanel.remove(addButtons[rowCount]);
+                    addDatafieldPanel.remove(removeButtons[rowCount]);
+                    --rowCount;
+                    --datafieldCount;
+                    addDatafieldPanel.revalidate();
+                    addDatafieldPanel.repaint();
                 }
             }
         };
@@ -119,20 +115,12 @@ public class AddDataFields extends JPanel
             public void actionPerformed(ActionEvent e)
             {
                 boolean flag = true;
-                if (dataFields[0].getText().equals("") || dataTypes[0].getSelectedItem().equals("Choose a suitable datatype"))
+                for (int i=0;i<=rowCount;++i)
                 {
-                    JOptionPane.showMessageDialog(null,"Please fill out the required fields");
-                    flag = false;
-                }
-                else if (rowCount > -1)
-                {
-                    for (int i=0;i<=rowCount;++i)
+                    if (dataFields[i].getText().equals("") || dataTypes[i].getSelectedItem().equals("Choose a suitable datatype"))
                     {
-                        if (dataFields[i].getText().equals("") || dataTypes[i].getSelectedItem().equals("Choose a suitable datatype"))
-                        {
-                            JOptionPane.showMessageDialog(null,"Please fill out the required fields");
-                            flag = false;
-                        }
+                        JOptionPane.showMessageDialog(null,"Please fill out the required fields");
+                        flag = false;
                     }
                 }
                 if (flag)
@@ -196,9 +184,19 @@ public class AddDataFields extends JPanel
         submitButton.setFont(new Font("Century Gothic",Font.PLAIN,30));
         bottomPanel.add(submitButton,bc);
         
-        submitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        submitButton.addActionListener(e ->
+        {
+            boolean flag = true;
+            for (int i=0;i<=rowCount;++i)
+            {
+                if (dataFields[i].getText().equals("") || dataTypes[i].getSelectedItem().equals("Choose a suitable datatype"))
+                {
+                    JOptionPane.showMessageDialog(null,"Please fill out all the required fields");
+                    flag = false;
+                }
+            }
+            if(flag)
+            {
                 ArrayList<Pair<String, String>> datafieldList = new ArrayList<>();
                 for (int i = 0; i <= rowCount; i++) {
                     datafieldList.add(new Pair(comboboxToDatatype((String)dataTypes[i].getSelectedItem()),dataFields[i].getText()));
@@ -215,25 +213,23 @@ public class AddDataFields extends JPanel
                     CRUDLogicGenerator.generateCode(entity1);
                 } catch (IOException | SQLException ex) {
                     Logger.getLogger(AddDataFields.class.getName()).log(Level.SEVERE, null, ex);
-                }               
+                }
+                AddEntity.changeButtonName();
+                SystemCreationRootPanel.changeSystemCreationProcessPanel(2);
             }
         });
         
         bc.gridx++;
         JButton cancelButton = new JButton("Cancel");
         cancelButton.setFont(new Font("Century Gothic",Font.PLAIN,30));
-        cancelButton.addActionListener(new ActionListener()
+        cancelButton.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
+            int response = JOptionPane.showConfirmDialog(null,
+                    "Are you sure to cancel? All the datafields will be reset.", "Warning",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (response == JOptionPane.YES_OPTION)
             {
-                int response = JOptionPane.showConfirmDialog(null,
-                        "Are you sure to cancel? All the datafields will be reset.", "Warning",
-                        JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-                if (response == JOptionPane.YES_OPTION)
-                {
-                    SystemCreationRootPanel.changeSystemCreationProcessPanel(2);
-                }
+                SystemCreationRootPanel.changeSystemCreationProcessPanel(2);
             }
         });
         bottomPanel.add(cancelButton,bc);

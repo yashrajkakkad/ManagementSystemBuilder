@@ -16,16 +16,22 @@ public class AddEntity extends JPanel
     private int entityCount = 1;
     private int rowCount = 0;
     private static String currentEntityName;
+    private static String currentDefineButton;
     private JLabel[] labels = new JLabel[11];
     private static JTextField[] entities = new JTextField[11];
     private JButton[] addButtons = new JButton[11];
-    private JButton[] defineButtons = new JButton[11];
+    private static JButton[] defineButtons = new JButton[11];
     private JButton[] removeButtons = new JButton[11];
 
     public static String getCurrentEntityName() {
         return currentEntityName;
     }
-    
+
+    public static void changeButtonName()
+    {
+        defineButtons[Integer.parseInt(currentDefineButton)].setName("Button Pressed");
+    }
+
     public AddEntity()
     {
         setLayout(new BorderLayout());
@@ -87,52 +93,45 @@ public class AddEntity extends JPanel
 
         c.gridy++;
 
-        ActionListener defineDatafields = new ActionListener()
+        ActionListener defineDatafields = e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
+            boolean flag = true;
+            for (int i=0;i<=rowCount;++i)
             {
-                boolean flag = true;
-                for (int i=0;i<=rowCount;++i)
+                if (entities[i].getText().equals(""))
                 {
-                    if (entities[i].getText().equals(""))
-                    {
-                        JOptionPane.showMessageDialog(null,"Please fill out the required fields");
-                        flag = false;
-                        break;
-                    }
+                    JOptionPane.showMessageDialog(null,"Please fill out the required fields");
+                    flag = false;
+                    break;
                 }
-                if (flag)
-                {
-                    currentEntityName = entities[Integer.parseInt(((JButton)e.getSource()).getName())].getText();
-                    SystemCreationRootPanel.changeSystemCreationProcessPanel(1);
-                }
+            }
+            if (flag)
+            {
+                currentEntityName = entities[Integer.parseInt(((JButton)e.getSource()).getName())].getText();
+                currentDefineButton = ((JButton)e.getSource()).getName();
+                SystemCreationRootPanel.changeSystemCreationProcessPanel(1);
             }
         };
         defineButtons[0].addActionListener(defineDatafields);
 
-        ActionListener removeRowEvent = new ActionListener()
+        ActionListener removeRowEvent = e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
+            if (rowCount > -1)
             {
-                if (rowCount > -1)
+                int response = JOptionPane.showConfirmDialog(null,
+                        "Are you sure to delete this datafield?", "Warning",
+                        JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                if (response == JOptionPane.YES_OPTION)
                 {
-                    int response = JOptionPane.showConfirmDialog(null,
-                            "Are you sure to delete this datafield?", "Warning",
-                            JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-                    if (response == JOptionPane.YES_OPTION)
-                    {
-                        addEntityPanel.remove(labels[rowCount]);
-                        addEntityPanel.remove(entities[rowCount]);
-                        addEntityPanel.remove(addButtons[rowCount]);
-                        addEntityPanel.remove(defineButtons[rowCount]);
-                        addEntityPanel.remove(removeButtons[rowCount]);
-                        --rowCount;
-                        --entityCount;
-                        addEntityPanel.revalidate();
-                        addEntityPanel.repaint();
-                    }
+                    addEntityPanel.remove(labels[rowCount]);
+                    addEntityPanel.remove(entities[rowCount]);
+                    addEntityPanel.remove(addButtons[rowCount]);
+                    addEntityPanel.remove(defineButtons[rowCount]);
+                    addEntityPanel.remove(removeButtons[rowCount]);
+                    --rowCount;
+                    --entityCount;
+                    addEntityPanel.revalidate();
+                    addEntityPanel.repaint();
                 }
             }
         };
@@ -143,13 +142,6 @@ public class AddEntity extends JPanel
             public void actionPerformed(ActionEvent e)
             {
                 boolean flag = true;
-                if (entities[0].getText().equals(""))
-                {
-                    JOptionPane.showMessageDialog(null,"Please fill out the required fields");
-                    flag = false;
-                }
-                else if (rowCount > -1)
-                {
                     for (int i=0;i<=rowCount;++i)
                     {
                         if (entities[i].getText().equals(""))
@@ -158,7 +150,6 @@ public class AddEntity extends JPanel
                             flag = false;
                         }
                     }
-                }
                 if (flag)
                 {
                     ++rowCount;
@@ -216,21 +207,35 @@ public class AddEntity extends JPanel
         submitButton.setFont(new Font("Century Gothic",Font.PLAIN,30));
         bottomPanel.add(submitButton,bc);
 
+        submitButton.addActionListener(e ->
+        {
+            boolean flag = true;
+            for (int i=0; i<=rowCount; ++i)
+            {
+                if (!defineButtons[i].getName().equals("Button Pressed"))
+                {
+                    flag = false;
+                    JOptionPane.showMessageDialog(null, "Please define datafields for all entities before submitting.");
+                    break;
+                }
+            }
+            if (flag)
+            {
+                JOptionPane.showMessageDialog(null, "DONE! Your system has been created!");
+            }
+        });
+
         bc.gridx++;
         JButton cancelButton = new JButton("Cancel");
         cancelButton.setFont(new Font("Century Gothic",Font.PLAIN,30));
-        cancelButton.addActionListener(new ActionListener()
+        cancelButton.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
+            int response = JOptionPane.showConfirmDialog(null,
+                    "Are you sure to cancel? All the entities will be reset.", "Warning",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (response == JOptionPane.YES_OPTION)
             {
-                int response = JOptionPane.showConfirmDialog(null,
-                        "Are you sure to cancel? All the entities will be reset.", "Warning",
-                        JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-                if (response == JOptionPane.YES_OPTION)
-                {
-                    HomePageFrame.changeRootPanel(2);
-                }
+                HomePageFrame.changeRootPanel(2);
             }
         });
         bottomPanel.add(cancelButton,bc);
