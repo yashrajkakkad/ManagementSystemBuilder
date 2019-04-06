@@ -21,5 +21,7 @@ public class GUITest {
         Entity entity1 = new Entity("Student", entityMembers1);        
         AddEntityPanel studentPanel = new AddEntityPanel(entity1);
         MainFrame mainFrame = new MainFrame();
+        AddEntityButton studentButton = new AddEntityButton(entity1);
+        UpdateEntityPanel updateStudentPanel = new UpdateEntityPanel(entity1);
     }
 }

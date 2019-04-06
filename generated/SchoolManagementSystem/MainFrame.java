@@ -8,7 +8,7 @@ public class MainFrame extends JFrame {
       setLayout(new BorderLayout());
       setTitle("School Management System");
       JLabel titleLabel = new JLabel();
-      titleLabel.setText(" School Management System");
+      titleLabel.setText("School Management System");
       titleLabel.setFont(new Font("Arial", Font.BOLD,24));
       add(titleLabel, BorderLayout.NORTH);
       setLocationRelativeTo(null);

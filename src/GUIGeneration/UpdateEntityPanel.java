@@ -65,15 +65,17 @@ public class UpdateEntityPanel {
 //        });
         Iterator<Pair<String, String>> itr
                 = entity.getEntityMembers().iterator();
-        w.writeln("add(" + itr.next().getValue() + "Label);");
-        w.writeln("subPanel.add(" + itr.next().getValue() + "TextField);");
+        String firstValue = itr.next().getValue();
+        w.writeln("add(" + firstValue + "Label);");
+        w.writeln("subPanel.add(" + firstValue + "TextField);");
         w.writeln("subPanel.add(btSearch);");
         w.writeln("add(subPanel);");
 //        w.writeln("add(\"new JPanel( + "\");");
 //        w.writeln("add(" + entityMember.getValue() + "TextField);");
         while (itr.hasNext()) {
-            w.writeln("add(" + itr.next().getValue() + "Label);");
-            w.writeln("add(" + itr.next().getValue() + "TextField);");
+            String nextValue = itr.next().getValue();
+            w.writeln("add(" + nextValue + "Label);");
+            w.writeln("add(" + nextValue + "TextField);");
         }
     }
 
@@ -82,24 +84,47 @@ public class UpdateEntityPanel {
         w.writeln_r("if(" + entity.getEntityMembers().get(0).getValue()
                 + "TextField.getText().equals(\"\")) {");
         w.writeln("JOptionPane.showMessageDialog(this,"
-                + "\"Please enter a valid value to search!\")");
+                + "\"Please enter a valid value to search!\");");
         w.writeln_lr("} else {");
-        w.writeln("StringBuilder selectQuery = new StringBuilder(\"SELECT * FROM tbl_\")");
-        w.writeln("selectQuery.append(\"" + entity.getEntityName().toLowerCase()
-                + "\")");
-        w.writeln("selectQuery.append(\"WHERE '"
-                + entity.getEntityMembers().get(0).getValue() + "' = \")");
+        StringBuilder selectQuery = new StringBuilder("SELECT * FROM tbl_");
+        selectQuery.append(entity.getEntityName().toLowerCase())
+                .append(" WHERE ")
+                .append(entity.getEntityMembers().get(0).getValue())
+                .append(" = ");
         if (entity.getEntityMembers().get(0).getKey().equals("int")
                 || entity.getEntityMembers().get(0).getKey().equals("double")) {
-            w.writeln("selectQuery.append("
-                    + entity.getEntityMembers().get(0).getValue()
-                    + "TextField.getText()');");
+            w.writeln("StringBuilder selectQuery = \"" + selectQuery + "\" + " 
+                    + entity.getEntityMembers().get(0).getValue() 
+                    + "TextField.getText();");
+//            selectQuery.append(entity.getEntityMembers().get(0).getValue());
+//            w.writeln("selectQuery.append("
+//                    + entity.getEntityMembers().get(0).getValue()
+//                    + "TextField.getText()');");
         } else {
-            w.writeln("selectQuery.append('"
-                    + entity.getEntityMembers().get(0).getValue()
-                    + "TextField.getText()';);");            
+            w.writeln("StringBuilder selectQuery = \"" + selectQuery + "'\" + " 
+                    + entity.getEntityMembers().get(0).getValue() 
+                    + "TextField.getText() + \"'\";");
         }
     //More code yet to come       
+    //Here we go bitches!
+        w.writeln("DatabaseUtil.rs "
+                + "= DatabaseUtil.stmt.executeQuery(selectQuery);");
+//        w.writeln("");
+        entity.getEntityMembers().forEach((entityMember) -> {
+            StringBuilder getFromResultSet = new StringBuilder();
+            getFromResultSet.append("rs.get")
+                    .append(Character.toUpperCase(entityMember.getKey().charAt(0))) 
+                    .append(entityMember.getKey().substring(1))
+                   .append("(\"").append(entityMember.getValue()).append("\")");
+            StringBuilder setTextField = new StringBuilder();
+            setTextField.append(entityMember.getValue()).append("TextField.setText");
+            w.writeln(setTextField.toString() + "(" 
+                    + getFromResultSet.toString() + " + \"\");");
+//            w.writeln("rs.get" 
+//                    + Character.toUpperCase(entityMember.getKey().charAt(0)) 
+//                    + entityMember.getKey().substring(1) + "(\"" 
+//                    + entityMember.getValue() + "\")");
+        });
         w.writeln_l("}");
         w.writeln_l("});");
     }
@@ -109,6 +134,7 @@ public class UpdateEntityPanel {
         w.writeln("setLayout(new GridLayout(" + entity.getEntityMembers().size()
                 + "," + entity.getEntityMembers().size() + ",10,10));");
         generateAddComponents();
+        generateBtSearchActionListener();
         w.writeln_l("}");
     }
 
