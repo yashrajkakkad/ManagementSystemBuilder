@@ -110,7 +110,8 @@ public class Entity {
 
     private void createTable() throws SQLException {
         StringBuilder createQuery;
-        createQuery = new StringBuilder("CREATE TABLE IF NOT EXISTS tbl_" + entityName.toLowerCase() + "(\n");
+        createQuery = new StringBuilder("CREATE TABLE IF NOT EXISTS tbl_" 
+                + entityName.toLowerCase() + "(\n");
         //First member of the ArrayList is the primary key.
         DatabaseUtil.connectToProject(EntityManager.getDBName());
         entityMembers.forEach((entityMember) -> {

@@ -15,5 +15,9 @@ public class Test2 extends JPanel {
         add(idTextField);
         add(nameLabel);
         add(nameTextField);
+        JButton bt1 = new JButton("TestButton");
+        bt1.addActionListener((e) -> {
+            
+        });
     }
 }

@@ -8,56 +8,68 @@ import java.io.IOException;
 
 public class AddEntityPanel {
 
-    private Entity entity;
-    private PicoWriter w;
+    private final Entity entity;
+    private final PicoWriter w;
 
     public AddEntityPanel(Entity entity) throws IOException {
         this.entity = entity;
         w = new PicoWriter();
         initialize();
+        generateLabels();
+        generateTextFields();
         generateConstructor();
         finish();
         generateCode();
     }
 
-    public void initialize() {
+    private void initialize() {
         w.writeln("import javax.swing.*;");
         w.writeln("import java.awt.*;");
         w.writeln("import java.awt.Event.*;");
         w.writeln("");
-        w.writeln_r("public class Add" + entity.getEntityName() 
-                + "Panel extends JPanel {");                
+        w.writeln_r("public class Add" + entity.getEntityName()
+                + "Panel extends JPanel {");
         w.writeln("");
     }
 
-    public void generateConstructor() {
-        w.writeln_r("public Add" + entity.getEntityName() + "Panel() {");
-        w.writeln("setLayout(new GridLayout(" + entity.getEntityMembers().size() 
-                + "," + entity.getEntityMembers().size() + ",10,10));");
+    private void generateLabels() {
         entity.getEntityMembers().forEach((entityMember) -> {
-            w.writeln("JLabel " + entityMember.getValue() 
-                    + "Label = new JLabel(\""+ entityMember.getValue() +"\");");
+            w.writeln("private JLabel " + entityMember.getValue()
+                    + "Label = new JLabel(\"" + entityMember.getValue() + "\");");
         });
+    }
+
+    private void generateTextFields() {
         entity.getEntityMembers().forEach((entityMember) -> {
-            w.writeln("JTextField " + entityMember.getValue() 
+            w.writeln("private JTextField " + entityMember.getValue()
                     + "TextField = new JTextField();");
         });
+    }
+
+    private void generateAddComponents() {
         entity.getEntityMembers().forEach((entityMember) -> {
             w.writeln("add(" + entityMember.getValue() + "Label);");
             w.writeln("add(" + entityMember.getValue() + "TextField);");
         });        
-        w.writeln_l("}");
     }
     
-    public void finish() {
+    private void generateConstructor() {
+        w.writeln_r("public Add" + entity.getEntityName() + "Panel() {");
+        w.writeln("setLayout(new GridLayout(" + entity.getEntityMembers().size()
+                + "," + entity.getEntityMembers().size() + ",10,10));");
+        generateAddComponents();
         w.writeln_l("}");
     }
 
-    public void generateCode() throws IOException {
-        File writeFile = new File(EntityManager.getDirectoryName() 
+    private void finish() {
+        w.writeln_l("}");
+    }
+
+    private void generateCode() throws IOException {
+        File writeFile = new File(EntityManager.getDirectoryName()
                 + "\\Add" + entity.getEntityName() + "Panel.java");
         FileWriter out = new FileWriter(writeFile);
         out.write(w.toString());
-        out.close();        
+        out.close();
     }
 }
