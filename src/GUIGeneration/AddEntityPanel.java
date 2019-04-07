@@ -63,7 +63,6 @@ public class AddEntityPanel extends CRUDPanel {
                 insertQuery.append(entityMember.getValue()).append(", ");                
             }
         });
-        
         insertQuery.deleteCharAt(insertQuery.length()-2);
         insertQuery.append(");");
         w.writeln("String insertQuery = \"" + insertQuery.toString() + "\";");

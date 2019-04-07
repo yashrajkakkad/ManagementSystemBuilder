@@ -1,39 +1,18 @@
 package GUIGeneration;
 
-import Picocog.*;
 import CodeGeneration.*;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Iterator;
 import javafx.util.Pair;
 
-public class UpdateEntityPanel {
-
-    private final Entity entity;
-    private final PicoWriter w;
+public class UpdateEntityPanel extends CRUDPanel {
 
     public UpdateEntityPanel(Entity entity) throws IOException {
-        this.entity = entity;
-        w = new PicoWriter();
-        initialize();
-        generateLabels();
-        generateTextFields();
-        generateSearchButton();
-        generateSubPanel();
+        super(entity);
+        super.initialize("Update" + entity.getEntityName() + "Panel");
+        generateComponents();
         generateConstructor();
-        finish();
-        generateCode();
-    }
-
-    private void initialize() {
-        w.writeln("import javax.swing.*;");
-        w.writeln("import java.awt.*;");
-        w.writeln("import java.awt.Event.*;");
-        w.writeln("");
-        w.writeln_r("public class Update" + entity.getEntityName()
-                + "Panel extends JPanel {");
-        w.writeln("");
+        super.finish("Update" + entity.getEntityName() + "Panel");
     }
 
     private void generateLabels() {
@@ -51,36 +30,47 @@ public class UpdateEntityPanel {
     }
 
     private void generateSearchButton() {
-        w.writeln("private JButton btSearch = new JButton(\"btSearch\");");
+        w.writeln("private JButton searchButton = new JButton(\"searchButton\");");
+    }
+
+    private void generateUpdateButton() {
+        w.writeln("JButton updateButton = new JButton(\"Update " + entity.getEntityName() + "\");");
     }
 
     private void generateSubPanel() {
         w.writeln("JPanel subPanel = new JPanel();");
     }
 
-    private void generateAddComponents() {
-//        entity.getEntityMembers().forEach((entityMember) -> {
-//            w.writeln("add(" + entityMember.getValue() + "Label);");
-//            w.writeln("add(" + entityMember.getValue() + "TextField);");
-//        });
+    @Override
+    protected void generateComponents() {
+        generateLabels();
+        generateTextFields();
+        generateSearchButton();
+        generateUpdateButton();
+        generateSubPanel();
+    }
+
+    @Override
+    protected void generateAddComponents() {
         Iterator<Pair<String, String>> itr
                 = entity.getEntityMembers().iterator();
         String firstValue = itr.next().getValue();
-        w.writeln("add(" + firstValue + "Label);");
+        w.writeln("topPanel.add(" + firstValue + "Label);");
         w.writeln("subPanel.add(" + firstValue + "TextField);");
-        w.writeln("subPanel.add(btSearch);");
-        w.writeln("add(subPanel);");
-//        w.writeln("add(\"new JPanel( + "\");");
-//        w.writeln("add(" + entityMember.getValue() + "TextField);");
+        w.writeln("subPanel.add(searchButton);");
+        w.writeln("topPanel.add(subPanel);");
         while (itr.hasNext()) {
             String nextValue = itr.next().getValue();
-            w.writeln("add(" + nextValue + "Label);");
-            w.writeln("add(" + nextValue + "TextField);");
+            w.writeln("topPanel.add(" + nextValue + "Label);");
+            w.writeln("topPanel.add(" + nextValue + "TextField);");
         }
+        w.writeln("bottomPanel.add(updateButton);");
+        w.writeln("updateButton.setMaximumSize"
+                + "(updateButton.getPreferredSize());");
     }
 
-    private void generateBtSearchActionListener() {
-        w.writeln_r("btSearch.setOnAction((e) -> {");
+    private void generateSearchActionListener() {
+        w.writeln_r("searchButton.setOnAction((e) -> {");
         w.writeln_r("if(" + entity.getEntityMembers().get(0).getValue()
                 + "TextField.getText().equals(\"\")) {");
         w.writeln("JOptionPane.showMessageDialog(this,"
@@ -93,60 +83,73 @@ public class UpdateEntityPanel {
                 .append(" = ");
         if (entity.getEntityMembers().get(0).getKey().equals("int")
                 || entity.getEntityMembers().get(0).getKey().equals("double")) {
-            w.writeln("StringBuilder selectQuery = \"" + selectQuery + "\" + " 
-                    + entity.getEntityMembers().get(0).getValue() 
+            w.writeln("StringBuilder selectQuery = \"" + selectQuery + "\" + "
+                    + entity.getEntityMembers().get(0).getValue()
                     + "TextField.getText();");
-//            selectQuery.append(entity.getEntityMembers().get(0).getValue());
-//            w.writeln("selectQuery.append("
-//                    + entity.getEntityMembers().get(0).getValue()
-//                    + "TextField.getText()');");
         } else {
-            w.writeln("StringBuilder selectQuery = \"" + selectQuery + "'\" + " 
-                    + entity.getEntityMembers().get(0).getValue() 
+            w.writeln("StringBuilder selectQuery = \"" + selectQuery + "'\" + "
+                    + entity.getEntityMembers().get(0).getValue()
                     + "TextField.getText() + \"'\";");
         }
-    //More code yet to come       
-    //Here we go bitches!
         w.writeln("DatabaseUtil.rs "
                 + "= DatabaseUtil.stmt.executeQuery(selectQuery);");
-//        w.writeln("");
         entity.getEntityMembers().forEach((entityMember) -> {
             StringBuilder getFromResultSet = new StringBuilder();
             getFromResultSet.append("rs.get")
-                    .append(Character.toUpperCase(entityMember.getKey().charAt(0))) 
+                    .append(Character.toUpperCase(entityMember.getKey().charAt(0)))
                     .append(entityMember.getKey().substring(1))
-                   .append("(\"").append(entityMember.getValue()).append("\")");
+                    .append("(\"").append(entityMember.getValue()).append("\")");
             StringBuilder setTextField = new StringBuilder();
             setTextField.append(entityMember.getValue()).append("TextField.setText");
-            w.writeln(setTextField.toString() + "(" 
+            w.writeln(setTextField.toString() + "("
                     + getFromResultSet.toString() + " + \"\");");
-//            w.writeln("rs.get" 
-//                    + Character.toUpperCase(entityMember.getKey().charAt(0)) 
-//                    + entityMember.getKey().substring(1) + "(\"" 
-//                    + entityMember.getValue() + "\")");
         });
         w.writeln_l("}");
         w.writeln_l("});");
     }
 
-    private void generateConstructor() {
+    private void generateUpdateActionListener() {
+        w.writeln_r("updateButton.setOnAction((e) -> {");
+        StringBuilder updateQuery = new StringBuilder("UPDATE tbl_");
+        updateQuery.append(entity.getEntityName().toLowerCase()).append(" SET ");
+        entity.getEntityMembers().forEach((entityMember) -> {
+            updateQuery.append(entityMember.getValue()).append(" = ")
+                    .append("\" + ");
+            if (entityMember.getKey().equals("String")
+                    || entityMember.getKey().equals("char")) {
+                //More code to come
+                //Here we go!
+                updateQuery.append("'\" + ").append(entityMember.getValue())
+                        .append("TextField.getText()").append(" + \"', ");
+            }
+            else {
+                updateQuery.append("\" + ").append(entityMember.getValue())
+                        .append("TextField.getText()").append(" + \", ");
+            }
+        });
+        w.writeln("int i = DatabaseUtil.stmt.executeUpdate(insertQuery);");
+        w.writeln_r("if(i==1) {");
+        w.writeln("JOptionPane.showMessageDialog(this,\""
+                + entity.getEntityName() + " updated successfully!\");");
+        w.writeln_lr("} else if {");
+        w.writeln("JOptionPane.showMessageDialog(this,"
+                + "\"Unexpected error occured. It might be due to "
+                + "faulty internet or duplication in your primary key!\");");
+        w.writeln_l("}");
+        w.writeln_l("});");        
+    }
+
+    @Override
+    protected void generateConstructor() {
         w.writeln_r("public Update" + entity.getEntityName() + "Panel() {");
-        w.writeln("setLayout(new GridLayout(" + entity.getEntityMembers().size()
+        w.writeln("setLayout(new BorderLayout());");
+        w.writeln("JPanel topPanel = new JPanel();");
+        w.writeln("JPanel bottomPanel = new JPanel();");
+        w.writeln("topPanel.setLayout(new GridLayout(" + entity.getEntityMembers().size()
                 + "," + entity.getEntityMembers().size() + ",10,10));");
         generateAddComponents();
-        generateBtSearchActionListener();
+        generateSearchActionListener();
+        generateUpdateActionListener();
         w.writeln_l("}");
-    }
-
-    private void finish() {
-        w.writeln_l("}");
-    }
-
-    private void generateCode() throws IOException {
-        File writeFile = new File(EntityManager.getDirectoryName()
-                + "\\Update" + entity.getEntityName() + "Panel.java");
-        FileWriter out = new FileWriter(writeFile);
-        out.write(w.toString());
-        out.close();
     }
 }
