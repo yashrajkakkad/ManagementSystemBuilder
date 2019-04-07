@@ -14,6 +14,7 @@ public class GUITest {
         EntityManager.setProjectName("School Management System");        
         EntityManager.generateDBName();
         EntityManager.createDB();
+        EntityManager.createDirectory();
         System.out.println(EntityManager.getDBName());
         GenerateDatabaseUtil.generateCode(EntityManager.getDBName());
         entityMembers1.add(new Pair("int", "studentID"));
@@ -21,7 +22,8 @@ public class GUITest {
         Entity entity1 = new Entity("Student", entityMembers1);        
         AddEntityPanel studentPanel = new AddEntityPanel(entity1);
         MainFrame mainFrame = new MainFrame();
-        AddEntityButton studentButton = new AddEntityButton(entity1);
+//        AddEntityButton studentButton = new AddEntityButton(entity1);
         UpdateEntityPanel updateStudentPanel = new UpdateEntityPanel(entity1);
+        ViewAllPanel viewStudentPanel = new ViewAllPanel(entity1);
     }
 }

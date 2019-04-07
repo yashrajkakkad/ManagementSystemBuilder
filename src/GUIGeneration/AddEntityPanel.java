@@ -84,6 +84,7 @@ public class AddEntityPanel extends CRUDPanel {
         w.writeln("setLayout(new BorderLayout());");
         w.writeln("JPanel topPanel = new JPanel();");
         w.writeln("JPanel bottomPanel = new JPanel();");
+        w.writeln("add(new JLabel(\"Add " + entity.getEntityName() + "\"), BorderLayout.NORTH);");
         w.writeln("topPanel.setLayout(new GridLayout(" + entity.getEntityMembers().size()
                 + "," + entity.getEntityMembers().size() + ",10,10));");
         generateAddComponents();

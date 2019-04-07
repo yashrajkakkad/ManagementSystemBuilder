@@ -143,6 +143,7 @@ public class UpdateEntityPanel extends CRUDPanel {
     protected void generateConstructor() {
         w.writeln_r("public Update" + entity.getEntityName() + "Panel() {");
         w.writeln("setLayout(new BorderLayout());");
+        w.writeln("add(new JLabel(\"Update " + entity.getEntityName() + "\"), BorderLayout.NORTH);");
         w.writeln("JPanel topPanel = new JPanel();");
         w.writeln("JPanel bottomPanel = new JPanel();");
         w.writeln("topPanel.setLayout(new GridLayout(" + entity.getEntityMembers().size()

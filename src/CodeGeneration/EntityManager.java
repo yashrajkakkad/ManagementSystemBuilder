@@ -41,7 +41,7 @@ public final class EntityManager {
     public static void setDBName(String DBName) {
         EntityManager.DBName = DBName;
     }
-
+    
     public static void generateDBName() {
         DBName = "db_" + projectName.trim().toLowerCase().replaceAll(" ", "");
     }
