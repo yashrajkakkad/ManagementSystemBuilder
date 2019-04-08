@@ -58,8 +58,8 @@ public class ViewAllPanel {
                         .append(entityMember.getValue()).append("\")));");
             }
             w.writeln(addToColumn.toString());
-            w.writeln("table.add(column);");
         });
+        w.writeln("table.add(column);");
         w.writeln_l("}");
         w.writeln("String[][] tableArray = table.stream().map(u -> u.toArray(new String[0])).toArray(String[][]::new);");
     }

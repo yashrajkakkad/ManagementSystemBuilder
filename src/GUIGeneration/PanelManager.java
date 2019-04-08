@@ -1,3 +1,6 @@
+/*
+    Generates the panels as asked by the user.
+*/
 package GUIGeneration;
 
 import java.util.ArrayList;
@@ -20,7 +23,7 @@ public class PanelManager {
     private void generatePanels() {
         entityPanels.forEach((entityPanel) -> {
             switch (entityPanel.getValue()) {
-                case "Add": {
+                case "add": {
                     try {
                         crudPanel = new AddEntityPanel(entityPanel.getKey());
                     } catch (IOException ex) {
@@ -28,7 +31,7 @@ public class PanelManager {
                     }
                 }
                 break;
-                case "Update": {
+                case "update": {
                     try {
                         crudPanel = new UpdateEntityPanel(entityPanel.getKey());
                     } catch (IOException ex) {
@@ -36,10 +39,10 @@ public class PanelManager {
                     }
                 }
                 break;
-                case "Delete":
+                case "delete":
 //Ridham                    
                     break;
-                case "View":
+                case "view":
 //Ridham                    
                     break;
             }
