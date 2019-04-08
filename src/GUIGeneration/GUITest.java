@@ -1,8 +1,6 @@
 package GUIGeneration;
 
-import CodeGeneration.Entity;
-import CodeGeneration.EntityManager;
-import CodeGeneration.GenerateDatabaseUtil;
+import CodeGeneration.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,7 +20,6 @@ public class GUITest {
         Entity entity1 = new Entity("Student", entityMembers1);        
         AddEntityPanel studentPanel = new AddEntityPanel(entity1);
         MainFrame mainFrame = new MainFrame();
-//        AddEntityButton studentButton = new AddEntityButton(entity1);
         UpdateEntityPanel updateStudentPanel = new UpdateEntityPanel(entity1);
         ViewAllPanel viewStudentPanel = new ViewAllPanel(entity1);
     }

@@ -7,7 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class MainFrame {
-    private PicoWriter w;
+    private final PicoWriter w;
     private final String TITLEFONT = "Arial";
     private final int TITLEFONTSIZE = 24;
 
