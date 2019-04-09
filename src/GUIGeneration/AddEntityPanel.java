@@ -13,30 +13,30 @@ public class AddEntityPanel extends CRUDPanel {
         super.finish("Add" + entity.getEntityName() + "Panel");
     }
 
-    private void generateLabels() {
-        entity.getEntityMembers().forEach((entityMember) -> {
-            w.writeln("private JLabel " + entityMember.getValue()
-                    + "Label = new JLabel(\"" + entityMember.getValue() + "\");");
-        });
-    }
+//    private void generateLabels() {
+//        entity.getEntityMembers().forEach((entityMember) -> {
+//            w.writeln("private JLabel " + entityMember.getValue()
+//                    + "Label = new JLabel(\"" + entityMember.getValue() + "\");");
+//        });
+//    }
+//
+//    private void generateTextFields() {
+//        entity.getEntityMembers().forEach((entityMember) -> {
+//            w.writeln("private JTextField " + entityMember.getValue()
+//                    + "TextField = new JTextField();");
+//        });
+//    }
 
-    private void generateTextFields() {
-        entity.getEntityMembers().forEach((entityMember) -> {
-            w.writeln("private JTextField " + entityMember.getValue()
-                    + "TextField = new JTextField();");
-        });
-    }
-
-    private void generateButton() {
-        w.writeln("JButton addButton = new JButton(\"Add "
-                + entity.getEntityName() + "\");");
-    }
+//    private void generateButton() {
+//        w.writeln("JButton addButton = new JButton(\"Add "
+//                + entity.getEntityName() + "\");");
+//    }
 
     @Override
-    protected void generateComponents() {
+    protected final void generateComponents() {
         generateLabels();
         generateTextFields();
-        generateButton();
+        generateButton("Add");
     }
 
     @Override
@@ -79,7 +79,7 @@ public class AddEntityPanel extends CRUDPanel {
     }
     
     @Override
-    protected void generateConstructor() {
+    protected final void generateConstructor() {
         w.writeln_r("public Add" + entity.getEntityName() + "Panel() {");
         w.writeln("setLayout(new BorderLayout());");
         w.writeln("JPanel topPanel = new JPanel();");

@@ -16,7 +16,7 @@ public class TestEntity {
         GenerateDatabaseUtil.generateCode(EntityManager.getDBName());
         entityMembers1.add(new Pair("int", "studentID"));
         entityMembers1.add(new Pair("String", "name"));
-        Entity entity1 = new Entity("Student", entityMembers1);
+        Entity entity1 = new Entity("Student", entityMembers1);        
         CRUDLogicGenerator.writeClassName(entity1);
         CRUDLogicGenerator.generateAddEntity(entity1);
         CRUDLogicGenerator.generateDeleteEntity(entity1);

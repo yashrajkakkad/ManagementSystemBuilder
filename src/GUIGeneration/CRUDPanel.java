@@ -22,7 +22,27 @@ abstract class CRUDPanel {
         w.writeln_r("public class " + className + " extends JPanel {");
         w.writeln("");        
     }
-    
+
+    protected void generateLabels() {
+        entity.getEntityMembers().forEach((entityMember) -> {
+            w.writeln("private JLabel " + entityMember.getValue()
+                    + "Label = new JLabel(\"" + entityMember.getValue() + "\");");
+        });
+    }
+
+    protected void generateTextFields() {
+        entity.getEntityMembers().forEach((entityMember) -> {
+            w.writeln("private JTextField " + entityMember.getValue()
+                    + "TextField = new JTextField();");
+        });
+    }
+
+    protected void generateButton(String CRUD) {
+        w.writeln("JButton " + CRUD.toLowerCase() 
+                + "Button = new JButton(\""+CRUD+" " + entity.getEntityName() 
+                + "\");");
+    }
+
     abstract protected void generateComponents();
     
     abstract protected void generateAddComponents();

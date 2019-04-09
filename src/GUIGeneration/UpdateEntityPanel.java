@@ -15,38 +15,34 @@ public class UpdateEntityPanel extends CRUDPanel {
         super.finish("Update" + entity.getEntityName() + "Panel");
     }
 
-    private void generateLabels() {
-        entity.getEntityMembers().forEach((entityMember) -> {
-            w.writeln("private JLabel " + entityMember.getValue()
-                    + "Label = new JLabel(\"" + entityMember.getValue() + "\");");
-        });
-    }
-
-    private void generateTextFields() {
-        entity.getEntityMembers().forEach((entityMember) -> {
-            w.writeln("private JTextField " + entityMember.getValue()
-                    + "TextField = new JTextField();");
-        });
-    }
-
-    private void generateSearchButton() {
-        w.writeln("private JButton searchButton = new JButton(\"searchButton\");");
-    }
-
-    private void generateUpdateButton() {
-        w.writeln("JButton updateButton = new JButton(\"Update " + entity.getEntityName() + "\");");
-    }
-
+//    private void generateLabels() {
+//        entity.getEntityMembers().forEach((entityMember) -> {
+//            w.writeln("private JLabel " + entityMember.getValue()
+//                    + "Label = new JLabel(\"" + entityMember.getValue() + "\");");
+//        });
+//    }
+//    private void generateTextFields() {
+//        entity.getEntityMembers().forEach((entityMember) -> {
+//            w.writeln("private JTextField " + entityMember.getValue()
+//                    + "TextField = new JTextField();");
+//        });
+//    }
+//    private void generateSearchButton() {
+//        w.writeln("private JButton searchButton = new JButton(\"searchButton\");");
+//    }
+//    private void generateUpdateButton() {
+//        w.writeln("JButton updateButton = new JButton(\"Update " + entity.getEntityName() + "\");");
+//    }
     private void generateSubPanel() {
         w.writeln("JPanel subPanel = new JPanel();");
     }
 
     @Override
-    protected void generateComponents() {
+    protected final void generateComponents() {
         generateLabels();
         generateTextFields();
-        generateSearchButton();
-        generateUpdateButton();
+        generateButton("Search");
+        generateButton("Update");
         generateSubPanel();
     }
 
@@ -121,8 +117,7 @@ public class UpdateEntityPanel extends CRUDPanel {
                 //Here we go!
                 updateQuery.append("'\" + ").append(entityMember.getValue())
                         .append("TextField.getText()").append(" + \"', ");
-            }
-            else {
+            } else {
                 updateQuery.append("\" + ").append(entityMember.getValue())
                         .append("TextField.getText()").append(" + \", ");
             }
@@ -136,11 +131,11 @@ public class UpdateEntityPanel extends CRUDPanel {
                 + "\"Unexpected error occured. It might be due to "
                 + "faulty internet or duplication in your primary key!\");");
         w.writeln_l("}");
-        w.writeln_l("});");        
+        w.writeln_l("});");
     }
 
     @Override
-    protected void generateConstructor() {
+    protected final void generateConstructor() {
         w.writeln_r("public Update" + entity.getEntityName() + "Panel() {");
         w.writeln("setLayout(new BorderLayout());");
         w.writeln("add(new JLabel(\"Update " + entity.getEntityName() + "\"), BorderLayout.NORTH);");
@@ -151,6 +146,8 @@ public class UpdateEntityPanel extends CRUDPanel {
         generateAddComponents();
         generateSearchActionListener();
         generateUpdateActionListener();
+        w.writeln("add(topPanel,BorderLayout.CENTER);");
+        w.writeln("add(bottomPanel, BorderLayout.SOUTH);");
         w.writeln_l("}");
     }
 }

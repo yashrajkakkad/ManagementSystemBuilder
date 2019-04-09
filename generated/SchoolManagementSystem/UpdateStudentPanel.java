@@ -9,7 +9,9 @@ public class UpdateStudentPanel extends JPanel {
    private JTextField studentIDTextField = new JTextField();
    private JTextField nameTextField = new JTextField();
    private JButton btSearch = new JButton("btSearch");
+
    JPanel subPanel = new JPanel();
+
    public UpdateStudentPanel() {
       setLayout(new GridLayout(2,2,10,10));
       add(studentIDLabel);

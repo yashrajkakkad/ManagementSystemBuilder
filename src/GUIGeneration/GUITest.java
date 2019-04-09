@@ -22,5 +22,6 @@ public class GUITest {
         MainFrame mainFrame = new MainFrame();
         UpdateEntityPanel updateStudentPanel = new UpdateEntityPanel(entity1);
         ViewAllPanel viewStudentPanel = new ViewAllPanel(entity1);
+        AboutPanel aboutPanel = new AboutPanel("This is an about panel sample text!");
     }
 }
