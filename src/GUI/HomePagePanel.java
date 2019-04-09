@@ -51,13 +51,13 @@ public class HomePagePanel extends JPanel
             @Override
             public void mouseEntered(MouseEvent e)
             {
-
+                getStarted.setForeground(Color.blue);
             }
 
             @Override
             public void mouseExited(MouseEvent e)
             {
-
+                getStarted.setForeground(Color.BLACK);
             }
         });
     }

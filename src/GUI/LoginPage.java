@@ -127,10 +127,12 @@ public class LoginPage extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
+                openSignUpPage.setForeground(Color.BLUE);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
+                openSignUpPage.setForeground(Color.BLACK);
             }
         });
     }

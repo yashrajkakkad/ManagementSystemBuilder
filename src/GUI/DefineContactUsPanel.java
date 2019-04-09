@@ -64,7 +64,7 @@ public class DefineContactUsPanel extends JPanel
 
         c.gridy++;
         JLabel useEmailAddress = new JLabel("Click here to use your already entered email address");
-        useEmailAddress.setFont(new Font("Century Gothic",Font.PLAIN,36));
+        useEmailAddress.setFont(new Font("Century Gothic",Font.PLAIN,28));
         defineContactUsContentPanel.add(useEmailAddress,c);
 
         useEmailAddress.addMouseListener(new MouseListener()
@@ -87,8 +87,12 @@ public class DefineContactUsPanel extends JPanel
             }
             @Override public void mousePressed(MouseEvent e){}
             @Override public void mouseReleased(MouseEvent e){}
-            @Override public void mouseEntered(MouseEvent e){}
-            @Override public void mouseExited(MouseEvent e){}
+            @Override public void mouseEntered(MouseEvent e){
+                useEmailAddress.setForeground(Color.BLUE);
+            }
+            @Override public void mouseExited(MouseEvent e){
+                useEmailAddress.setForeground(Color.BLACK);
+            }
         });
 
         c.gridy++;

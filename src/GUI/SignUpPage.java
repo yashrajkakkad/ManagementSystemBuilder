@@ -150,7 +150,14 @@ public class SignUpPage extends JPanel
                 HomePageFrame.changeLoginPanel(1);
             }
 
-            @Override public void mousePressed(MouseEvent e){}@Override public void mouseReleased(MouseEvent e){}@Override public void mouseEntered(MouseEvent e){}@Override public void mouseExited(MouseEvent e){}
+            @Override public void mousePressed(MouseEvent e){}
+            @Override public void mouseReleased(MouseEvent e){}
+            @Override public void mouseEntered(MouseEvent e){
+                openLoginPage.setForeground(Color.BLUE);
+            }
+            @Override public void mouseExited(MouseEvent e){
+                openLoginPage.setForeground(Color.BLACK);
+            }
         });
     }
 }
