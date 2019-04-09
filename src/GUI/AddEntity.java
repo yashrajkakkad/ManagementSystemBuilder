@@ -6,6 +6,9 @@ package GUI;
  */
 
 
+import CodeGeneration.Entity;
+import CodeGeneration.EntityManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,7 +17,7 @@ import java.util.ArrayList;
 
 public class AddEntity extends JPanel
 {
-    private int entityCount = 1;
+    private static int entityCount = 1;
     private int rowCount = 0;
     private static String currentEntityName;
     private static String currentDefineButton;
@@ -23,6 +26,11 @@ public class AddEntity extends JPanel
     private ArrayList<JButton> addButtons = new ArrayList<>();
     private static ArrayList<JButton> defineButtons = new ArrayList<>();
     private ArrayList<JButton> removeButtons = new ArrayList<>();
+
+    public static int getEntityCount()
+    {
+        return entityCount;
+    }
 
     public static String getCurrentEntityName() {
         return currentEntityName;
@@ -47,11 +55,6 @@ public class AddEntity extends JPanel
         titleLabel.setFont(new Font("Century Gothic",Font.PLAIN,48));
         titlePanel.setBackground(new Color(103, 228, 255));
         titlePanel.add(titleLabel,tc);
-        tc.gridy++;
-        tc.gridx = 0;
-        JLabel primaryKeyNote = new JLabel("Note: The first entity that you add will be automatically set to be the primary key for your database");
-        primaryKeyNote.setFont(new Font("Century Gothic",Font.PLAIN,24));
-        titlePanel.add(primaryKeyNote,tc);
 
         JPanel addEntityPanel = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -224,6 +227,7 @@ public class AddEntity extends JPanel
             if (flag)
             {
                 JOptionPane.showMessageDialog(null, "DONE! Your system has been created!");
+                SystemCreationRootPanel.changeSystemCreationProcessPanel(3);
             }
         });
 
