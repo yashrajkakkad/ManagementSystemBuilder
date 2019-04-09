@@ -37,6 +37,12 @@ public class AddDataFields extends JPanel
         titleLabel.setFont(new Font("Century Gothic",Font.PLAIN,60));
         titlePanel.setBackground(new Color(103, 228, 255));
         titlePanel.add(titleLabel,c);
+        c.gridy++;
+        c.gridx = 0;
+        JLabel primaryKeyNote = new JLabel("Note: The first datafield that you add will be automatically set to be the primary key for the given entity");
+        primaryKeyNote.setFont(new Font("Century Gothic",Font.PLAIN,24));
+        titlePanel.add(primaryKeyNote,c);
+
 
         JPanel addDatafieldPanel = new JPanel(gridBagLayout);
         addDatafieldPanel.setBackground(Color.WHITE);
@@ -206,6 +212,8 @@ public class AddDataFields extends JPanel
                 Entity entity1;
                 try {
                     entity1 = new Entity(AddEntity.getCurrentEntityName(), datafieldList);
+                    EntityManager.addEntity(entity1);
+                    DefineAddEntityPanels.addLine(entity1);
                     CRUDLogicGenerator.writeClassName(entity1);
                     CRUDLogicGenerator.generateAddEntity(entity1);
                     CRUDLogicGenerator.generateDeleteEntity(entity1);
