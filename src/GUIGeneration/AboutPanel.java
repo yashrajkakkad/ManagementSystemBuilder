@@ -10,8 +10,9 @@ public class AboutPanel {
 
     public AboutPanel(String aboutMessage) throws IOException {
         this.aboutMessage = "<html>" + aboutMessage;
-        this.aboutMessage.replaceAll("\n", "<br>");
+        this.aboutMessage = this.aboutMessage.replaceAll("\n", "<br>");
         this.aboutMessage += "</html>";
+        System.out.println(this.aboutMessage);
         w = new PicoWriter();
         initialize();
         generateConstructor();
