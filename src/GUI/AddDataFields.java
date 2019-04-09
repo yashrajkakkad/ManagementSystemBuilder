@@ -213,7 +213,7 @@ public class AddDataFields extends JPanel
                 try {
                     entity1 = new Entity(AddEntity.getCurrentEntityName(), datafieldList);
                     EntityManager.addEntity(entity1);
-                    DefineAddEntityPanels.addLine(entity1);
+                    DefineEntityPanels.addLine(entity1);
                     CRUDLogicGenerator.writeClassName(entity1);
                     CRUDLogicGenerator.generateAddEntity(entity1);
                     CRUDLogicGenerator.generateDeleteEntity(entity1);

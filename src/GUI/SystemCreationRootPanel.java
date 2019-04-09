@@ -28,7 +28,9 @@ public class SystemCreationRootPanel extends JPanel
         systemCreationCardPanel.setLayout(systemCreationCardLayout);
         systemCreationCardPanel.add("Add Entities",new AddEntity());
         systemCreationCardPanel.add("Add Datafields",new AddDataFields());
-        systemCreationCardPanel.add("Define Add Entity Panels", new DefineAddEntityPanels());
+        systemCreationCardPanel.add("Define Add Entity Panels", new DefineEntityPanels());
+        systemCreationCardPanel.add("Define About us Panel", new DefineAboutPanel());
+        systemCreationCardPanel.add("Define Contact us Panel", new DefineContactUsPanel());
         systemCreationCardLayout.show(systemCreationCardPanel,"Add Entities");
 
         JPanel bottomPanel = new JPanel();
@@ -55,6 +57,10 @@ public class SystemCreationRootPanel extends JPanel
             case 2: systemCreationCardLayout.show(systemCreationCardPanel,"Add Entities");
                     break;
             case 3: systemCreationCardLayout.show(systemCreationCardPanel,"Define Add Entity Panels");
+                    break;
+            case 4: systemCreationCardLayout.show(systemCreationCardPanel,"Define About us Panel");
+                    break;
+            case 5: systemCreationCardLayout.show(systemCreationCardPanel, "Define Contact us Panel");
                     break;
         }
     }

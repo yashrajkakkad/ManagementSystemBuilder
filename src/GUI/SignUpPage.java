@@ -99,6 +99,7 @@ public class SignUpPage extends JPanel
                             {
                                 System.out.println("Exception caught during registration " + ex);
                             }
+                            DefineContactUsPanel.setCurrentUser(username.getText());
                             HomePageFrame.changeRootPanel(2);
                         }
                         else

@@ -55,6 +55,8 @@ public class SystemMenu extends JPanel
         c.gridwidth = 1;
         c.anchor = GridBagConstraints.CENTER;
         JTextArea systemUseCase = new JTextArea(4,20);
+        systemUseCase.setLineWrap(true);
+        systemUseCase.setWrapStyleWord(true);
         systemUseCase.setFont(new Font("Century Gothic",Font.PLAIN,18));
         add(systemUseCase,c);
 

@@ -74,6 +74,7 @@ public class LoginPage extends JPanel {
                             DatabaseUtil.rs = DatabaseUtil.ps.executeQuery();
                             if (DatabaseUtil.rs.next()) {
                                 JOptionPane.showMessageDialog(null, "Login Sucessfull");
+                                DefineContactUsPanel.setCurrentUser(username.getText());
                                 HomePageFrame.changeRootPanel(2);
                             } else {
                                 JOptionPane.showMessageDialog(null, "Username or password incorrect");
