@@ -21,7 +21,7 @@ public class CRUDLogicGenerator {
     }
 
     public static void generateAddEntity(Entity entity) {
-        w.writeln_r("public void add" + entity.getEntityName()
+        w.writeln_r("public boolean add" + entity.getEntityName()
                 + "(" + entity.getEntityName() + " "
                 + entity.getEntityName().toLowerCase() + ") throws SQLException {");
         StringBuilder fields = new StringBuilder("(");
@@ -43,8 +43,9 @@ public class CRUDLogicGenerator {
                 + " VALUES " + values.toString() + "\"; ");
         w.writeln("int i = DatabaseUtil.stmt.executeUpdate(insertQuery);");
         w.writeln_r("if(i!=1) {");
-        w.writeln("System.out.println(\"Error occured in adding " + entity.getEntityName() + "\");");
+        w.writeln("return false;");
         w.writeln_l("}");
+        w.writeln("return true;");
         w.writeln_l("}");
         w.writeln("");
     }
@@ -73,7 +74,7 @@ public class CRUDLogicGenerator {
     }
 
     public static void generateViewEntity(Entity entity) {
-        w.writeln_r("public ArrayList<" + entity.getEntityName() + "> view" + entity.getEntityName()
+        w.writeln_r("public " + entity.getEntityName() + " view" + entity.getEntityName()
                 + "(String dataField, String value) throws SQLException {");
         w.writeln("StringBuilder conditionString = new StringBuilder();");
         w.writeln("conditionString.append(dataField).append(\"=\");");
@@ -93,8 +94,8 @@ public class CRUDLogicGenerator {
         w.writeln_r("while(DatabaseUtil.rs.next()) {");
         StringBuilder toRetrieve = new StringBuilder();
         toRetrieve
-                .append(Character.toLowerCase(entity.getEntityName().charAt(0)))
-                .append(entity.getEntityName().substring(1)).append(".add(")
+//                .append(Character.toLowerCase(entity.getEntityName().charAt(0)))
+//                .append(entity.getEntityName().substring(1)).append(".add(")
                 .append("new ").append(entity.getEntityName()).append("( ");
         entity.getEntityMembers().forEach((entityMember) -> {
             toRetrieve.append("DatabaseUtil.rs.").append("get")
@@ -104,11 +105,11 @@ public class CRUDLogicGenerator {
                     .append("), ");
         });
         toRetrieve.deleteCharAt(toRetrieve.length()-2);
-        toRetrieve.append(" ));");
-        w.writeln(toRetrieve.toString());
+//        toRetrieve.append(" ));");
+        w.writeln("return " + toRetrieve.toString());
         w.writeln_l("}");
-        w.writeln("return " + Character.toLowerCase(entity.getEntityName().charAt(0))
-                + entity.getEntityName().substring(1) + ";");
+//        w.writeln("return " + Character.toLowerCase(entity.getEntityName().charAt(0))
+//                + entity.getEntityName().substring(1) + ";");
         w.writeln_l("}");
         w.writeln("");
     }
