@@ -10,7 +10,7 @@ public class FileManager {
     
     public static void writeCode(String fileName, PicoWriter w) throws IOException {
         File writeFile = new File(EntityManager.getDirectoryName() + "\\" + fileName);
-        FileWriter out = new FileWriter(fileName + ".java");
+        FileWriter out = new FileWriter(writeFile + ".java");
         out.write(w.toString());
         out.close();
     }
