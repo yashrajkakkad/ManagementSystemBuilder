@@ -13,8 +13,8 @@ public class AboutPanel {
         this.aboutMessage.replaceAll("\n", "<br>");
         this.aboutMessage += "</html>";
         w = new PicoWriter();
-        generateConstructor();
         initialize();
+        generateConstructor();
         finish();
     }
 
@@ -31,7 +31,7 @@ public class AboutPanel {
         w.writeln_r("public AboutPanel() {");
         w.writeln("setLayout(new BorderLayout());");
         w.writeln("add(new JLabel(\"About Us\"), BorderLayout.NORTH);");
-        w.writeln("add(new JLabel(\"" + aboutMessage + "\")");
+        w.writeln("add(new JLabel(\"" + aboutMessage + "\", BorderLayout.CENTER)");
         w.writeln_l("}");
     }
     

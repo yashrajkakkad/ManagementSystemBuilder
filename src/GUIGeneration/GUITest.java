@@ -23,5 +23,6 @@ public class GUITest {
         UpdateEntityPanel updateStudentPanel = new UpdateEntityPanel(entity1);
         ViewAllPanel viewStudentPanel = new ViewAllPanel(entity1);
         AboutPanel aboutPanel = new AboutPanel("This is an about panel sample text!");
+        ContactPanel contactPanel = new ContactPanel("prayag.s@ahduni.edu.in");
     }
 }
