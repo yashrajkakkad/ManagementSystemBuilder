@@ -48,12 +48,19 @@ public class AddDataFields extends JPanel
         addDatafieldPanel.setBackground(Color.WHITE);
         JScrollPane scrollPane = new JScrollPane(addDatafieldPanel);
         add(scrollPane,BorderLayout.CENTER);
-        c.insets = new Insets(5,5,5,5);
-        c.anchor = GridBagConstraints.PAGE_START;
-        c.fill = GridBagConstraints.NORTH;
 
         c.gridy = 0;
         c.gridx = 1;
+        c.anchor = GridBagConstraints.CENTER;
+        c.insets = new Insets(10,500,30,1);
+        JLabel currentEntity = new JLabel(AddEntity.getCurrentEntityName());
+        currentEntity.setFont(new Font("Century Gothic",Font.PLAIN,48));
+        addDatafieldPanel.add(currentEntity,c);
+
+        c.anchor = GridBagConstraints.PAGE_START;
+        c.fill = GridBagConstraints.NORTH;
+        c.insets = new Insets(5,5,5,5);
+        c.gridy++;
         JLabel datafieldNameLabel = new JLabel("Datafield Name");
         datafieldNameLabel.setFont(new Font("Century Gothic",Font.PLAIN,24));
         addDatafieldPanel.add(datafieldNameLabel,c);
