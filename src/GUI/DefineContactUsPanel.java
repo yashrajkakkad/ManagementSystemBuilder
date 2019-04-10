@@ -22,6 +22,12 @@ public class DefineContactUsPanel extends JPanel
 {
     private static String receiverEmailAddress;
     private static String currentUser;
+    private static boolean accessed;
+
+    public static boolean isAccessed()
+    {
+        return accessed;
+    }
 
     public static void setCurrentUser(String currentUser)
     {
@@ -107,6 +113,7 @@ public class DefineContactUsPanel extends JPanel
             try
             {
                 ContactPanel contactPanel = new ContactPanel(receiverEmailAddress);
+                accessed = true;
             } catch (IOException ex)
             {
                 ex.printStackTrace();
