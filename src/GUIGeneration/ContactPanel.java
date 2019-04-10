@@ -21,6 +21,7 @@ public class ContactPanel {
         w.writeln("import javax.swing.*;");
         w.writeln("import java.awt.*;");
         w.writeln("import java.awt.Event.*;");
+        w.writeln("import Utility.Email;");
         w.writeln("");
         w.writeln_r("public class ContactPanel extends JPanel {");        
         w.writeln("");                
