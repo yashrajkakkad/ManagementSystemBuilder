@@ -259,32 +259,14 @@ public class AddEntity extends JPanel
         wc.insets = new Insets(30,30,30,30);
         wc.gridy = 0;
         JLabel entityInfo = new JLabel("INFO");
-        entityInfo.setFont(new Font("Century Gothic",Font.PLAIN,30));
+        entityInfo.setFont(new Font("Century Gothic",Font.PLAIN,48));
         westPanel.add(entityInfo,wc);
 
         wc.insets = new Insets(30,30,3,30);
         wc.gridy++;
-        JLabel entityDetails = new JLabel("<html>Entity blah blah<br>Entity blah blah<br>Entity blah blah<br>Entity blah blah<br>Entity blah blah");
-        entityDetails.setFont(new Font("Century Gothic",Font.PLAIN,24));
+        JLabel entityDetails = new JLabel("<html>Entities are the users or<br>the meaningful components<br>of your system.");
+        entityDetails.setFont(new Font("Century Gothic",Font.PLAIN,36));
         westPanel.add(entityDetails,wc);
-
-        JPanel eastPanel = new JPanel();
-        eastPanel.setLayout(new GridBagLayout());
-        eastPanel.setBackground(new Color(113, 211, 238));
-        GridBagConstraints ec = new GridBagConstraints();
-        add(eastPanel,BorderLayout.LINE_END);
-        ec.anchor = GridBagConstraints.LINE_START;
-        ec.insets = new Insets(30,30,30,30);
-        ec.gridy = 0;
-        JLabel primaryKeyInfo = new JLabel("What is a primary key?");
-        primaryKeyInfo.setFont(new Font("Century Gothic",Font.PLAIN,30));
-        eastPanel.add(primaryKeyInfo,ec);
-
-        ec.insets = new Insets(30,30,3,30);
-        ec.gridy++;
-        JLabel primaryKeyDetails = new JLabel("<html>Primary Key blah blah<br>Primary Key blah blah<br>Primary Key blah blah<br>Primary Key blah blah<br>Primary Key blah blah");
-        primaryKeyDetails.setFont(new Font("Century Gothic",Font.PLAIN,24));
-        eastPanel.add(primaryKeyDetails,ec);
     }
 }
 
