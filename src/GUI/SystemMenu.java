@@ -75,7 +75,13 @@ public class SystemMenu extends JPanel
             {
                 if (!systemName.getText().equals(""))
                 {
-                    EntityManager.setProjectName(systemName.getText());        
+                    try
+                    {
+                        EntityManager.setProjectName(systemName.getText());
+                    } catch (IOException ex)
+                    {
+                        ex.printStackTrace();
+                    }
                     EntityManager.generateDBName();
                     try {
                         EntityManager.createDB();
