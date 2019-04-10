@@ -4,8 +4,8 @@ import java.awt.Event.*;
 
 public class UpdateStudentPanel extends JPanel {
    
-   private JLabel studentIDLabel = new JLabel("studentID");
-   private JLabel nameLabel = new JLabel("name");
+   private JLabel studentIDLabel = new JLabel("StudentID");
+   private JLabel nameLabel = new JLabel("Name");
    private JTextField studentIDTextField = new JTextField();
    private JTextField nameTextField = new JTextField();
    JButton searchButton = new JButton("Search Student");
@@ -19,27 +19,21 @@ public class UpdateStudentPanel extends JPanel {
       topPanel.setLayout(new GridLayout(2,2,10,10));
       topPanel.add(studentIDLabel);
       subPanel.add(studentIDTextField);
-      subPanel.add(searchButton);
+      subPanel.add(SearchButton);
       topPanel.add(subPanel);
       topPanel.add(nameLabel);
       topPanel.add(nameTextField);
       bottomPanel.add(updateButton);
       updateButton.setMaximumSize(updateButton.getPreferredSize());
-      searchButton.setOnAction((e) -> {
-         if(studentIDTextField.getText().equals("")) {
-            JOptionPane.showMessageDialog(this,"Please enter a valid value to search!");
-         } else {
-            StringBuilder selectQuery = "SELECT * FROM tbl_student WHERE studentID = " + studentIDTextField.getText();
-            DatabaseUtil.rs = DatabaseUtil.stmt.executeQuery(selectQuery);
-            studentIDTextField.setText(rs.getInt("studentID") + "");
-            nameTextField.setText(rs.getString("name") + "");
-         }
+      SearchButton.addActionListener((e) -> {
+         JTextField studentIDTextField.setText(Student.get(StudentID));
+         JTextField nameTextField.setText(Student.get(Name));
       });
-      updateButton.setOnAction((e) -> {
-         int i = DatabaseUtil.stmt.executeUpdate(insertQuery);
-         if(i==1) {
-            JOptionPane.showMessageDialog(this,"Student updated successfully!");
-         } else if {
+      updateButton.addActionListener((e) -> {
+         boolean isUpdateded = updateStudent("" + studentIDTextField.getText() + ", " + nameTextField.getText()+","+studentID);
+         if(isUpdateded) {
+            JOptionPane.showMessageDialog(this,"Student Updated successfully!");
+         } else {
             JOptionPane.showMessageDialog(this,"Unexpected error occured. It might be due to faulty internet or duplication in your primary key!");
          }
       });

@@ -26,7 +26,9 @@ abstract class CRUDPanel {
     protected void generateLabels() {
         entity.getEntityMembers().forEach((entityMember) -> {
             w.writeln("private JLabel " + entityMember.getValue()
-                    + "Label = new JLabel(\"" + entityMember.getValue() + "\");");
+                    + "Label = new JLabel(\"" 
+                    + Character.toUpperCase(entityMember.getValue().charAt(0)) 
+                    + entityMember.getValue().substring(1) + "\");");
         });
     }
 

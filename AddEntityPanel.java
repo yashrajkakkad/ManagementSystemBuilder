@@ -46,7 +46,7 @@ public class AddEntityPanel extends CRUDPanel {
             w.writeln("topPanel.add(" + entityMember.getValue() + "TextField);");
         });
         w.writeln("bottomPanel.add(AddButton);");
-        w.writeln("AddButton.setMaximumSize(AddButton.getPreferredSize());");
+        w.writeln("addButton.setMaximumSize(AddButton.getPreferredSize());");
     }
 
 //    private void generateButtonActionListener() {
@@ -80,32 +80,11 @@ public class AddEntityPanel extends CRUDPanel {
     
     private void generateButtonActionListener() {
         w.writeln_r("AddButton.addActionListener((e) -> {");
-        StringBuilder addFunctionCall = new StringBuilder("boolean isAdded = add" + entity.getEntityName() + "(");
-        addFunctionCall.append("new ").append(entity.getEntityName()).append("(");
+        StringBuilder addFunctionCall = new StringBuilder("boolean isAdded = add" + entity.getEntityName() + "(\"");
         entity.getEntityMembers().forEach((entityMember) -> {
-//            addFunctionCall.append(entityMember.getValue()).append("TextField.getText()").append(" + \", ");
-              switch(entityMember.getKey()) {
-                  case "int":
-                      addFunctionCall.append("Integer.parseInt(")
-                              .append(entityMember.getValue())
-                              .append("TextField.getText())").append(", ");
-                      break;
-                  case "char":
-                      addFunctionCall.append(entityMember.getValue())
-                              .append("TextField.getText().charAt(0)").append(", ");
-                      break;
-                  case "double":
-                      addFunctionCall.append("Double.parseDouble(")
-                              .append(entityMember.getValue())
-                              .append("TextField.getText())").append(", ");                      
-                      break;
-                  case "String":
-                      addFunctionCall.append(entityMember.getValue())
-                              .append("TextField.getText()").append(", ");
-                      break;
-              }
+            addFunctionCall.append("\" + ").append(entityMember.getValue()).append("TextField.getText()").append(" + \", ");
         });        
-//        addFunctionCall.delete(addFunctionCall.length()-6, addFunctionCall.length());
+        addFunctionCall.delete(addFunctionCall.length()-6, addFunctionCall.length());
         addFunctionCall.deleteCharAt(addFunctionCall.length()-1);
         addFunctionCall.deleteCharAt(addFunctionCall.length()-1);
         addFunctionCall.append(");");

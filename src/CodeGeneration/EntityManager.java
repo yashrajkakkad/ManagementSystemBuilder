@@ -6,7 +6,6 @@ package CodeGeneration;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import javafx.util.Pair;
 import Utility.*;
 import java.io.File;
 
@@ -61,7 +60,7 @@ public final class EntityManager {
         dir.mkdir();
     }
 
-    public static void addEntity(String entityName, ArrayList<Pair<String, String>> entityMembers) throws IOException, SQLException {
-        entities.add(new Entity(entityName, entityMembers));
+    public static void addEntity(Entity entity) throws IOException, SQLException {
+        entities.add(entity);
     }
 }
