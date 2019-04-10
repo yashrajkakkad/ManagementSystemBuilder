@@ -32,16 +32,6 @@ abstract class CRUDPanel {
         });
     }
 
-    protected void generateLabels2() {
-        entity.getEntityMembers().forEach((entityMember) -> {
-            w.writeln("private JLabel " + entityMember.getValue()
-                    + "Label2 = new JLabel(\"" 
-                    + Character.toUpperCase(entityMember.getValue().charAt(0)) 
-                    + entityMember.getValue().substring(1) + "\");");
-        });
-        
-    }
-    
     protected void generateTextFields() {
         entity.getEntityMembers().forEach((entityMember) -> {
             w.writeln("private JTextField " + entityMember.getValue()

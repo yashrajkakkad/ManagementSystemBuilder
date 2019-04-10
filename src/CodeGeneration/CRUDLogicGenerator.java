@@ -51,27 +51,84 @@ public class CRUDLogicGenerator {
     }
 
     public static void generateDeleteEntity(Entity entity) {
-        w.writeln_r("public boolean delete" + entity.getEntityName()
-                + "(String dataField, String value) throws SQLException {");
-        w.writeln("StringBuilder conditionString = new StringBuilder();");
-        w.writeln("conditionString.append(dataField).append(\"=\");");
-        w.writeln_r("if(dataField.equals(\"int\") || dataField.equals(\"double\")) {");
-        w.writeln("conditionString.append(value);");
+        w.writeln_r("public " + entity.getEntityName() + " delete" + entity.getEntityName()
+                + "(" + entity.getEntityMembers().get(0).getKey() + " value) throws SQLException {");
+//        w.writeln("StringBuilder conditionString = new StringBuilder();");
+//        w.writeln("conditionString.append(dataField).append(\"=\");");
+//        w.writeln_r("if(dataField.equals(\"int\") || dataField.equals(\"double\")) {");
+//        w.writeln("conditionString.append(value);");
+//        w.writeln_l("}");
+//        w.writeln_r("else {");
+//        w.writeln("conditionString.append(\"'\" + value + \"'\");");
+//        w.writeln_l("}");
+        StringBuilder deleteQuery = new StringBuilder("\"DELETE FROM tbl_");
+        deleteQuery.append(entity.getEntityName().toLowerCase()).append(" WHERE ")
+                .append(entity.getEntityMembers().get(0).getValue()).append(" = ");
+        if(!(entity.getEntityMembers().get(0).getKey().equals("int") ||
+                entity.getEntityMembers().get(0).getKey().equals("double"))) {
+            deleteQuery.append("' \" + ").append("value").append(" + \" ' \"");
+        }
+        else {
+            deleteQuery.append("\" + ").append("value");
+        }
+        deleteQuery.append(";");
+        w.writeln("String deleteQuery = " + deleteQuery.toString());
+//        w.writeln("String viewQuery = \"SELECT * FROM tbl_"
+//                + entity.getEntityName().toLowerCase()
+//                + " WHERE \" + conditionString.toString() +  \";\";");
+//        StringBuilder viewQuery = new StringBuilder("SELECT * from tbl_");
+//        viewQuery.append(entity.getEntityName().toLowerCase()).append(" WHERE ");
+//        if()
+        w.writeln("int i = DatabaseUtil.stmt.executeUpdate(viewQuery);");
+        w.writeln_r("if(i==1) {");
+        w.writeln("JOptionPane.showMessageDialog(this,\"Deleted successfully!\"");
+        w.writeln_lr("} else {");
+        w.writeln("JOptionPane.showMessageDialog(this,\"Unexpected error occured!\"");
         w.writeln_l("}");
-        w.writeln_r("else {");
-        w.writeln("conditionString.append(\"'\" + value + \"'\");");
-        w.writeln_l("}");
-        w.writeln("String deleteQuery = \"DELETE FROM tbl_"
-                + entity.getEntityName().toLowerCase()
-                + " WHERE \" + conditionString.toString();");
-        w.writeln("int i = DatabaseUtil.stmt.executeUpdate(deleteQuery);");
-        w.writeln_r("if(i!=1) {");
-//        w.writeln("System.out.println(\"Error occured in deleting " + entity.getEntityName() + "\");");
-        w.writeln("return false;");
-        w.writeln_l("}");
-        w.writeln("return true;");
+//        w.writeln("ArrayList<" + entity.getEntityName() + "> "
+//                + Character.toLowerCase(entity.getEntityName().charAt(0))
+//                + entity.getEntityName().substring(1) + " = new ArrayList<>();");
+//        w.writeln_r("while(DatabaseUtil.rs.next()) {");
+//        StringBuilder toRetrieve = new StringBuilder();
+//        toRetrieve
+////                .append(Character.toLowerCase(entity.getEntityName().charAt(0)))
+////                .append(entity.getEntityName().substring(1)).append(".add(")
+//                .append("new ").append(entity.getEntityName()).append("( ");
+//        entity.getEntityMembers().forEach((entityMember) -> {
+//            toRetrieve.append("DatabaseUtil.rs.").append("get")
+//                    .append(Character.toUpperCase(entityMember.getKey().charAt(0)))
+//                    .append(entityMember.getKey().substring(1)).append("(")
+//                    .append("\"").append(entityMember.getValue()).append("\"")
+//                    .append("), ");
+//        });
+//        toRetrieve.deleteCharAt(toRetrieve.length()-2);
+//        toRetrieve.append(" );");
+//        w.writeln("return " + toRetrieve.toString());
+//        w.writeln_l("}");
         w.writeln_l("}");
         w.writeln("");
+
+//        w.writeln_r("public boolean delete" + entity.getEntityName()
+//                + "(String dataField, String value) throws SQLException {");
+//        w.writeln("StringBuilder conditionString = new StringBuilder();");
+//        w.writeln("conditionString.append(dataField).append(\"=\");");
+//        w.writeln_r("if(dataField.equals(\"int\") || dataField.equals(\"double\")) {");
+//        w.writeln("conditionString.append(value);");
+//        w.writeln_l("}");
+//        w.writeln_r("else {");
+//        w.writeln("conditionString.append(\"'\" + value + \"'\");");
+//        w.writeln_l("}");
+//        w.writeln("String deleteQuery = \"DELETE FROM tbl_"
+//                + entity.getEntityName().toLowerCase()
+//                + " WHERE \" + conditionString.toString();");
+//        w.writeln("int i = DatabaseUtil.stmt.executeUpdate(deleteQuery);");
+//        w.writeln_r("if(i!=1) {");
+////        w.writeln("System.out.println(\"Error occured in deleting " + entity.getEntityName() + "\");");
+//        w.writeln("return false;");
+//        w.writeln_l("}");
+//        w.writeln("return true;");
+//        w.writeln_l("}");
+//        w.writeln("");
     }
 
     public static void generateViewEntity(Entity entity) {
