@@ -53,10 +53,18 @@ public class PanelManager {
                 }
                 break;
                 case DELETE:
-//Ridham                    
+                    try {
+                        crudPanel = new DeleteEntityPanel(entityPanel.getKey());
+                    } catch (IOException ex) {
+                        Logger.getLogger(PanelManager.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     break;
                 case VIEW:
-//Ridham                    
+                    try {
+                        crudPanel = new ViewEntityPanel(entityPanel.getKey());
+                    } catch (IOException ex) {
+                        Logger.getLogger(PanelManager.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     break;
             }
         });

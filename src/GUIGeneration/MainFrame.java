@@ -1,5 +1,6 @@
 package GUIGeneration;
 
+import GUI.DefineContactUsPanel;
 import Picocog.*;
 import CodeGeneration.*;
 import java.io.File;
@@ -56,6 +57,7 @@ public class MainFrame {
 
     private void generateCentralLayout() {
         w.writeln("JPanel centralPanel = new JPanel();");
+        w.writeln("add(centralPanel,BorderLayout.CENTER);");
         w.writeln("CardLayout cl = new CardLayout();");
         w.writeln("JPanel homePanel = new JPanel();");
         w.writeln("centralPanel.setLayout(cl);");
@@ -109,6 +111,18 @@ public class MainFrame {
         }
 //        w.writeln_l("}");
 //        w.writeln("add(new JScrollPane(new AddStudentPanel()), BorderLayout.CENTER);");
+        w.writeln("JPanel bottomPanel = new JPanel();");
+        w.writeln("add(bottomPanel,BorderLayout.SOUTH);");
+        w.writeln("bottomPanel.setLayout(new GridLayout(1,3,10,10));");
+        w.writeln("JButton backToHomebtn = new JButton(\"Back to Home\");");
+        w.writeln("bottomPanel.add(backToHomebtn);");
+        w.writeln("JButton aboutUsbtn = new JButton(\"About Us\");");
+        w.writeln("bottomPanel.add(aboutUsbtn);");
+        if (DefineContactUsPanel.isAccessed())
+        {
+            w.writeln("JButton contactUsbtn = new JButton(\"Contact Us\");");
+            w.writeln("bottomPanel.add(contactUsbtn);");
+        }
     }
 
     private void generateMain() {
