@@ -12,19 +12,28 @@ import java.util.logging.Logger;
 
 public class PanelManager {
 
-    private final ArrayList<Pair<Entity, Integer>> entityPanels;
-    private CRUDPanel crudPanel;
-    private final int ADD = 0;
-    private final int UPDATE = 1;
-    private final int DELETE = 2;
-    private final int VIEW = 3;
+    private static ArrayList<Pair<Entity, Integer>> entityPanels;
+    private static CRUDPanel crudPanel;
+    private static final int ADD = 0;
+    private static final int UPDATE = 1;
+    private static final int DELETE = 2;
+    private static final int VIEW = 3;
 
-    public PanelManager(ArrayList<Pair<Entity, Integer>> entityPanels) {
-        this.entityPanels = entityPanels;
+//    public PanelManager(ArrayList<Pair<Entity, Integer>> entityPanels) {
+//        this.entityPanels = entityPanels;
+//        generatePanels();
+//    }
+
+    public static ArrayList<Pair<Entity, Integer>> getEntityPanels() {
+        return entityPanels;
+    }
+
+    public static void setEntityPanels(ArrayList<Pair<Entity, Integer>> entityPanels) {
+        PanelManager.entityPanels = entityPanels;
         generatePanels();
     }
 
-    private void generatePanels() {
+    private static void generatePanels() {
         entityPanels.forEach((entityPanel) -> {
             switch (entityPanel.getValue()) {
                 case ADD: {
