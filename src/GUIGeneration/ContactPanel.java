@@ -28,11 +28,11 @@ public class ContactPanel {
     
     private void generateComponents() {
         w.writeln("private JLabel nameLabel = new JLabel(\"Name : \");");
-        w.writeln("private JLabel emailLabel = new JLabel(\"E-mail : \")");
+        w.writeln("private JLabel emailLabel = new JLabel(\"E-mail : \");");
         w.writeln("private JLabel messageLabel = new JLabel(\"Message\");");
         w.writeln("private JTextField nameTextField = new JTextField(\"John Doe\");");
         w.writeln("private JTextField emailTextField = new JTextField(\"abc@xyz.com\");");
-        w.writeln("private JTextArea textArea = new JTextArea"
+        w.writeln("private JTextArea messageTextArea = new JTextArea"
                 + "(\"Your message comes here....\");");
         w.writeln("private JButton submitButton = new JButton(\"Submit\");");        
     }
@@ -41,7 +41,7 @@ public class ContactPanel {
         w.writeln_r("public ContactPanel() {");
         w.writeln("setLayout(new BorderLayout());");
         w.writeln("add(new JLabel(\"Contact Us\"), BorderLayout.NORTH);");        
-        w.writeln("JPanel bottomPanel = new bottomPanel();");
+        w.writeln("JPanel bottomPanel = new JPanel();");
         w.writeln("bottomPanel.setLayout(new GridLayout(6,2,10,10););");
         w.writeln("bottomPanel.add(nameLabel);");
         w.writeln("bottomPanel.add(nameTextField);");
@@ -52,11 +52,11 @@ public class ContactPanel {
         w.writeln("add(bottomPanel,BorderLayout.CENTER);");
         w.writeln("submitButton.setMaximumSize(submitButton.getPreferredSize());");
         w.writeln("add(submitButton,BorderLayout.SOUTH);");
-        w.writeln_r("submitButton.setOnAction((e) -> {");
+        w.writeln_r("submitButton.addActionListener(e -> {");
         w.writeln("Email.sendEmail(\"" + contactEmail +"\","
                 + "\"You have a new contact message!\",messageTextArea.getText());");
         w.writeln("JOptionPane.showMessageDialog(this,\"Thank you for contacting us!\");");
-        w.writeln_l("}");
+        w.writeln_l("});");
         w.writeln_l("}");
     }
     

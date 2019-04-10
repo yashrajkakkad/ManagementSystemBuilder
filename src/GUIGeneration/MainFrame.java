@@ -88,6 +88,7 @@ public class MainFrame {
             } else {
                 while (count <= 4) {
                     w.writeln("homePanel.add(new JLabel());");
+                    count++;
                 }
                 w.writeln("JLabel " + tempPair.getKey().getEntityName()
                         + "Label = new JLabel(\"" + tempPair.getKey().getEntityName() + "\");");
@@ -96,7 +97,7 @@ public class MainFrame {
             w.writeln("JButton " + codeToString(tempPair.getValue())
                     + tempPair.getKey().getEntityName()
                     + "Button = new JButton(\"" + codeToStringCaps(tempPair.getValue()) + "\");");
-            w.writeln("homePanel.add(" + codeToString(tempPair.getValue()) + "Button);");
+            w.writeln("homePanel.add(" + codeToString(tempPair.getValue()) + tempPair.getKey().getEntityName() + "Button);");
             w.writeln_r(codeToString(tempPair.getValue())
                     + tempPair.getKey().getEntityName()
                     + "Button.addActionListener((e) -> {");

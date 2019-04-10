@@ -32,7 +32,7 @@ public class AboutPanel {
         w.writeln_r("public AboutPanel() {");
         w.writeln("setLayout(new BorderLayout());");
         w.writeln("add(new JLabel(\"About Us\"), BorderLayout.NORTH);");
-        w.writeln("add(new JLabel(\"" + aboutMessage + "\", BorderLayout.CENTER)");
+        w.writeln("add(new JLabel(\"" + aboutMessage + "\", BorderLayout.CENTER);");
         w.writeln_l("}");
     }
     
