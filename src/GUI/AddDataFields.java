@@ -49,18 +49,11 @@ public class AddDataFields extends JPanel
         JScrollPane scrollPane = new JScrollPane(addDatafieldPanel);
         add(scrollPane,BorderLayout.CENTER);
 
-        c.gridy = 0;
-        c.gridx = 1;
-        c.anchor = GridBagConstraints.CENTER;
-        c.insets = new Insets(10,500,30,1);
-        JLabel currentEntity = new JLabel(AddEntity.getCurrentEntityName());
-        currentEntity.setFont(new Font("Century Gothic",Font.PLAIN,48));
-        addDatafieldPanel.add(currentEntity,c);
-
         c.anchor = GridBagConstraints.PAGE_START;
         c.fill = GridBagConstraints.NORTH;
         c.insets = new Insets(5,5,5,5);
-        c.gridy++;
+        c.gridy = 0;
+        c.gridx = 1;
         JLabel datafieldNameLabel = new JLabel("Datafield Name");
         datafieldNameLabel.setFont(new Font("Century Gothic",Font.PLAIN,24));
         addDatafieldPanel.add(datafieldNameLabel,c);
@@ -72,6 +65,7 @@ public class AddDataFields extends JPanel
 
         c.gridy++;
         c.fill = GridBagConstraints.BOTH;
+        c.insets = new Insets(5,5,5,5);
 
         c.gridx = 0;
 
@@ -264,7 +258,7 @@ public class AddDataFields extends JPanel
 
         wc.insets = new Insets(30,15,3,15);
         wc.gridy++;
-        JLabel datafieldDetails = new JLabel("<html>Datafield blah blah<br>Datafield blah blah<br>Datafield blah blah<br>Datafield blah blah<br>Datafield blah blah");
+        JLabel datafieldDetails = new JLabel("<html>Datafields are the meaningful<br>attributes of the entity you are<br>defining. Primary key<br>means the datafield which will<br>always be unique and used<br>to retrieve information<br>of given entities.");
         datafieldDetails.setFont(new Font("Century Gothic",Font.PLAIN,24));
         westPanel.add(datafieldDetails,wc);
 
@@ -282,7 +276,7 @@ public class AddDataFields extends JPanel
 
         ec.insets = new Insets(30,15,3,15);
         ec.gridy++;
-        JLabel datatypeDetails = new JLabel("<html>Datatype blah blah<br>Integer blah blah<br>Floating point number blah blah<br>String of characters blah blah<br>Character blah blah");
+        JLabel datatypeDetails = new JLabel("<html>Datatypes are the type<br>of data that a<br>given datafield stores.<br>Integer stores a number<br>with no decimal places.<br>Floating Point Decimal stores<br>a number with decimal places<br>String stores a group of<br>characters while a character<br>only stores one character.");
         datatypeDetails.setFont(new Font("Century Gothic",Font.PLAIN,24));
         eastPanel.add(datatypeDetails,ec);
     }
