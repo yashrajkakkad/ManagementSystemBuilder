@@ -13,7 +13,7 @@ public class Email {
 //    private static final int LOGIN = 1;
 //Not needed as of now!
     
-    private static void sendEmail(String to, String subject, String body) throws AddressException, MessagingException {
+    public static void sendEmail(String to, String subject, String body){
         Properties props = System.getProperties();
         String host = "smtp.gmail.com";
         props.put("mail.smtp.starttls.enable", "true");
