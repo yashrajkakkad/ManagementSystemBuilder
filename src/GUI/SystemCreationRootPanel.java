@@ -8,6 +8,7 @@ public class SystemCreationRootPanel extends JPanel
     private static CardLayout systemCreationCardLayout = new CardLayout();
     private static JPanel systemCreationCardPanel;
     private static JLabel placeFiller;
+    private static JButton startYourSystem;
 
     public SystemCreationRootPanel()
     {
@@ -45,9 +46,14 @@ public class SystemCreationRootPanel extends JPanel
         bc.gridx = 0;
         bc.gridy = 0;
         bc.insets = new Insets(10,10,10,10);
-        placeFiller = new JLabel("Step 1 of 4");
+        placeFiller = new JLabel("Step 1 of 3  ");
         placeFiller.setFont(new Font("Century Gothic",Font.PLAIN,36));
         bottomPanel.add(placeFiller,bc);
+
+        bc.gridx++;
+        startYourSystem = new JButton("Start your System");
+        startYourSystem.setFont(new Font("Century Gothic",Font.PLAIN,36));
+        startYourSystem.setEnabled(false);
     }
 
     public static void changeSystemCreationProcessPanel(int code)
@@ -60,16 +66,17 @@ public class SystemCreationRootPanel extends JPanel
             case 2: systemCreationCardLayout.show(systemCreationCardPanel,"Add Entities");
                     break;
             case 3: systemCreationCardLayout.show(systemCreationCardPanel,"Define Entity Panels");
-                    placeFiller.setText("Step 2 of 4");
+                    placeFiller.setText("Step 2 of 3");
                     break;
             case 4: systemCreationCardLayout.show(systemCreationCardPanel,"Define About us Panel");
-                    placeFiller.setText("Step 3 of 4");
+                    placeFiller.setText("Step 3 of 3");
                     break;
             case 5: systemCreationCardLayout.show(systemCreationCardPanel, "Define Contact us Panel");
-                    placeFiller.setText("Step 3 of 4");
+                    placeFiller.setText("Step 3 of 3");
                     break;
             case 6: systemCreationCardLayout.show(systemCreationCardPanel, "Finish Page");
                     placeFiller.setText("Step 4 of 4");
+                    startYourSystem.setEnabled(true);
                     break;
         }
     }

@@ -8,6 +8,7 @@
 package GUI;
 
 import GUIGeneration.ContactPanel;
+import GUIGeneration.MainFrame;
 import Utility.DatabaseUtil;
 
 import javax.swing.*;
@@ -111,7 +112,8 @@ public class DefineContactUsPanel extends JPanel
                 ex.printStackTrace();
             }
             JOptionPane.showMessageDialog(null,"DONE! Your Contact Us Panel has been generated");
-            SystemCreationRootPanel.changeSystemCreationProcessPanel(6);
+            //SystemCreationRootPanel.changeSystemCreationProcessPanel(6);
+            SystemCreationRootPanel.changeSystemCreationProcessPanel(4);
         });
 
     }

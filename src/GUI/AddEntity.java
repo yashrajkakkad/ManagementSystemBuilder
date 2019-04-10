@@ -55,6 +55,11 @@ public class AddEntity extends JPanel
         titleLabel.setFont(new Font("Century Gothic",Font.PLAIN,48));
         titlePanel.setBackground(new Color(103, 228, 255));
         titlePanel.add(titleLabel,tc);
+        tc.gridy++;
+        tc.gridx = 0;
+        JLabel entityNameNote = new JLabel("Note: All entity names should start with an uppercase letter");
+        entityNameNote.setFont(new Font("Century Gothic",Font.PLAIN,24));
+        titlePanel.add(entityNameNote,tc);
 
         JPanel addEntityPanel = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();

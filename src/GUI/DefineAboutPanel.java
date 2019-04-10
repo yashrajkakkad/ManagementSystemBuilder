@@ -14,6 +14,7 @@ import java.awt.event.MouseListener;
 import java.io.IOException;
 
 import GUIGeneration.AboutPanel;
+import GUIGeneration.MainFrame;
 
 public class DefineAboutPanel extends JPanel
 {
@@ -90,7 +91,15 @@ public class DefineAboutPanel extends JPanel
             {
                 System.out.println(aboutUsContent.getText());
                 AboutPanel aboutPanel = new AboutPanel(aboutUsContent.getText());
-                SystemCreationRootPanel.changeSystemCreationProcessPanel(6);
+                //SystemCreationRootPanel.changeSystemCreationProcessPanel(6);
+                JOptionPane.showMessageDialog(null,"DONE! Your system is complete");
+                try
+                {
+                    MainFrame mainFrame = new MainFrame();
+                } catch (IOException ex)
+                {
+                    ex.printStackTrace();
+                }
             } catch (IOException ex)
             {
                 ex.printStackTrace();
