@@ -42,7 +42,7 @@ public class ContactPanel {
         w.writeln("setLayout(new BorderLayout());");
         w.writeln("add(new JLabel(\"Contact Us\"), BorderLayout.NORTH);");        
         w.writeln("JPanel bottomPanel = new JPanel();");
-        w.writeln("bottomPanel.setLayout(new GridLayout(6,2,10,10););");
+        w.writeln("bottomPanel.setLayout(new GridLayout(6,2,10,10));");
         w.writeln("bottomPanel.add(nameLabel);");
         w.writeln("bottomPanel.add(nameTextField);");
         w.writeln("bottomPanel.add(emailLabel);");

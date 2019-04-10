@@ -50,13 +50,13 @@ public class DeleteEntityPanel extends CRUDPanel {
                 = entity.getEntityMembers().iterator();
         String firstValue = itr.next().getValue();
         w.writeln("topPanel.add(" + firstValue + "Label);");
-        w.writeln("subPanel.add(" + firstValue + "TextField);");
+        w.writeln("subPanel.add(" + firstValue + "Label2);");
         w.writeln("subPanel.add(SearchButton);");
         w.writeln("topPanel.add(subPanel);");
         while (itr.hasNext()) {
             String nextValue = itr.next().getValue();
             w.writeln("topPanel.add(" + nextValue + "Label);");
-            w.writeln("topPanel.add(" + nextValue + "TextField);");
+            w.writeln("topPanel.add(" + nextValue + "Label2);");
         }
         w.writeln("bottomPanel.add(DeleteButton);");
         w.writeln("DeleteButton.setMaximumSize"
@@ -64,59 +64,83 @@ public class DeleteEntityPanel extends CRUDPanel {
     }
 
     private void generateSearchActionListener() {
-        w.writeln_r("SearchButton.AddActionListener((e) -> {");
-        StringBuilder viewFunctionCall = new StringBuilder(entity.getEntityName());
-        viewFunctionCall.append(" retrieve").append(entity.getEntityName())
-                .append(" = view").append(entity.getEntityName()).append("(");
+        w.writeln_r("SearchButton.addActionListener((e) -> {");
+        StringBuilder deleteFunctionCall = new StringBuilder("");
+        deleteFunctionCall.append("retrieve").append(entity.getEntityName())
+                .append(" = ").append(entity.getEntityName()).append("CRUD.view").append(entity.getEntityName()).append("(");
         switch (entity.getEntityMembers().get(0).getKey()) {
             case "int":
-                viewFunctionCall.append("Integer.parseInt(").append(entity.getEntityMembers().get(0).getValue()).append("TextField.getText())");
+                deleteFunctionCall.append("Integer.parseInt(").append(entity.getEntityMembers().get(0).getValue()).append("Label2.getText())");
                 break;
             case "double":
-                viewFunctionCall.append("Double.parseDouble(").append(entity.getEntityMembers().get(0).getValue()).append("TextField.getText())");
+                deleteFunctionCall.append("Double.parseDouble(").append(entity.getEntityMembers().get(0).getValue()).append("Label2.getText())");
                 break;
             case "char":
-                viewFunctionCall.append(entity.getEntityMembers().get(0).getValue()).append("TextField.getText().charAt(0)");
+                deleteFunctionCall.append(entity.getEntityMembers().get(0).getValue()).append("Label2.getText().charAt(0)");
                 break;
             case "String":
-                viewFunctionCall.append(entity.getEntityMembers().get(0).getValue()).append("TextField.getText()");
+                deleteFunctionCall.append(entity.getEntityMembers().get(0).getValue()).append("Label2.getText()");
                 break;
         }
 
-        viewFunctionCall.append(");");
-        w.writeln(viewFunctionCall.toString());
-        w.writeln_r("if(retrieve" + entity.getEntityMembers().get(0).getValue() + "==null) {");
+        deleteFunctionCall.append(");");
+        w.writeln(entity.getEntityName() + " retrieve" + entity.getEntityName() + " = null;");
+        w.writeln_r("try {");
+        w.writeln(deleteFunctionCall.toString());
+        w.writeln_lr("} catch(SQLException ex) {");
+        w.writeln("ex.printStackTrace();");
+        w.writeln_l("}");
+        w.writeln_r("if(retrieve" + entity.getEntityName() + "==null) {");
         w.writeln("JOptionPane.showMessageDialog(this,\"Unexpected error occured!\");");
         w.writeln_lr("} else {");
         w.writeln("JOptionPane.showMessageDialog(this,\"Data retrieved successfully!\");");
-        w.writeln_l("});");
+        w.writeln_l("}");
         w.writeln_l("});");
 
-//        StringBuilder viewFunctionCall = new StringBuilder( entity.getEntityName() + " retrieve"+entity.getEntityName()+ " =  view"+entity.getEntityName()+"(\"");
+//        StringBuilder deleteFunctionCall = new StringBuilder( entity.getEntityName() + " retrieve"+entity.getEntityName()+ " =  view"+entity.getEntityName()+"(\"");
 //        
-//        viewFunctionCall.append(entity.getEntityMembers().get(0).getKey()).append("\",\"").append(entity.getEntityMembers().get(0).getValue()).append("\"); ");
-//        w.writeln(viewFunctionCall.toString());
+//        deleteFunctionCall.append(entity.getEntityMembers().get(0).getKey()).append("\",\"").append(entity.getEntityMembers().get(0).getValue()).append("\"); ");
+//        w.writeln(deleteFunctionCall.toString());
 //        entity.getEntityMembers().forEach((entityMember) -> {
-//            //viewFunctionCall.append("\" + ").append(entityMember.getKey()).append(",").append(entityMember.getValue()).append(" + \", ");
+//            //deleteFunctionCall.append("\" + ").append(entityMember.getKey()).append(",").append(entityMember.getValue()).append(" + \", ");
 //            w.writeln("JLabel "+ entityMember.getValue() + "Label.setText(\""+entityMember.getValue()+"\" );");
 //            w.writeln("JLabel "+entityMember.getValue()+"Label2.setText(retrieved"+entity.getEntityName()+".get("+entityMember.getValue().substring(0, 1).toUpperCase() + entityMember.getValue().substring(1)+"));");
 //        });
-        //viewFunctionCall.delete(viewFunctionCall.length()-6,viewFunctionCall.length());
+        //deleteFunctionCall.delete(deleteFunctionCall.length()-6,deleteFunctionCall.length());
     }
 
     private void generateDeleteActionListener() {
-        w.writeln_r("deleteButton.setOnAction((e) -> {");
-        StringBuilder deleteFunctionCall = new StringBuilder("boolean isDeleted = delete" + entity.getEntityName() + "(\"");
-        entity.getEntityMembers().get(0);
+        w.writeln_r("DeleteButton.addActionListener((e) -> {");
+        StringBuilder deleteFunctionCall = new StringBuilder("isDeleted = "+entity.getEntityName()+"CRUD.delete" + entity.getEntityName() + "(");
+        switch (entity.getEntityMembers().get(0).getKey()) {
+            case "int":
+                deleteFunctionCall.append("Integer.parseInt(").append(entity.getEntityMembers().get(0).getValue()).append("Label2.getText())");
+                break;
+            case "double":
+                deleteFunctionCall.append("Double.parseDouble(").append(entity.getEntityMembers().get(0).getValue()).append("Label2.getText())");
+                break;
+            case "char":
+                deleteFunctionCall.append(entity.getEntityMembers().get(0).getValue()).append("Label2.getText().charAt(0)");
+                break;
+            case "String":
+                deleteFunctionCall.append(entity.getEntityMembers().get(0).getValue()).append("Label2.getText()");
+                break;
+        }
+
 //        entity.getEntityMembers().forEach((entityMember) -> {
-        deleteFunctionCall.append(entity.getEntityMembers().get(0).getKey()).append("\",\"").append(entity.getEntityMembers().get(0).getValue()).append("\" ");
+//        deleteFunctionCall.append(entity.getEntityMembers().get(0).getKey()).append("\",\"").append(entity.getEntityMembers().get(0).getValue()).append("\" ");
         //w.writeln("JLabel "+ entityMember.getValue() + "Label.setText(\""+entityMember.getValue()+"\" );");
         //w.writeln("JLabel "+entityMember.getValue()+"Label2.setText("+entity.getEntityName()+".get("+entityMember.getValue().substring(0, 1).toUpperCase() + entityMember.getValue().substring(1)+"));");
 //        });
         //deleteFunctionCall.delete(deleteFunctionCall.length()-6,deleteFunctionCall.length());
         deleteFunctionCall.append(");");
+        w.writeln("boolean isDeleted" + " = false;");
+        w.writeln_r("try {");
         w.writeln(deleteFunctionCall.toString());
-        w.writeln_r("if(isDeleteed) {");
+        w.writeln_lr("} catch(SQLException ex) {");
+        w.writeln("ex.printStackTrace();");
+        w.writeln_l("}");
+        w.writeln_r("if(isDeleted) {");
         w.writeln("JOptionPane.showMessageDialog(this,\""
                 + entity.getEntityName() + " deleted successfully!\");");
         w.writeln_lr("} else {");
@@ -129,7 +153,7 @@ public class DeleteEntityPanel extends CRUDPanel {
 
     @Override
     protected final void generateConstructor() {
-        w.writeln_r("public Delete" + entity.getEntityName() + "Panel() {");
+        w.writeln_r("public Delete" + entity.getEntityName() + "Panel() throws SQLException{");
         w.writeln("setLayout(new BorderLayout());");
         w.writeln("add(new JLabel(\"Delete " + entity.getEntityName() + "\"), BorderLayout.NORTH);");
         w.writeln("JPanel topPanel = new JPanel();");
@@ -141,6 +165,6 @@ public class DeleteEntityPanel extends CRUDPanel {
         generateDeleteActionListener();
         w.writeln("add(topPanel,BorderLayout.CENTER);");
         w.writeln("add(bottomPanel, BorderLayout.SOUTH);");
-
+        w.writeln("}");
     }
 }

@@ -18,6 +18,7 @@ abstract class CRUDPanel {
         w.writeln("import javax.swing.*;");
         w.writeln("import java.awt.*;");
         w.writeln("import java.awt.Event.*;");
+        w.writeln("import java.sql.SQLException;");
         w.writeln("");
         w.writeln_r("public class " + className + " extends JPanel {");
         w.writeln("");        
@@ -50,7 +51,7 @@ abstract class CRUDPanel {
     }
 
     protected void generateButton(String CRUD) {
-        w.writeln("JButton " + CRUD.toLowerCase() 
+        w.writeln("JButton " + CRUD
                 + "Button = new JButton(\""+CRUD+" " + entity.getEntityName() 
                 + "\");");
     }

@@ -31,7 +31,7 @@ public class UpdateEntityPanel extends CRUDPanel {
 //        w.writeln("private JButton searchButton = new JButton(\"searchButton\");");
 //    }
 //    private void generateUpdateButton() {
-//        w.writeln("JButton updateButton = new JButton(\"Update " + entity.getEntityName() + "\");");
+//        w.writeln("JButton UpdateButton = new JButton(\"Update " + entity.getEntityName() + "\");");
 //    }
     private void generateSubPanel() {
         w.writeln("JPanel subPanel = new JPanel();");
@@ -60,16 +60,16 @@ public class UpdateEntityPanel extends CRUDPanel {
             w.writeln("topPanel.add(" + nextValue + "Label);");
             w.writeln("topPanel.add(" + nextValue + "TextField);");
         }
-        w.writeln("bottomPanel.add(updateButton);");
-        w.writeln("updateButton.setMaximumSize"
-                + "(updateButton.getPreferredSize());");
+        w.writeln("bottomPanel.add(UpdateButton);");
+        w.writeln("UpdateButton.setMaximumSize"
+                + "(UpdateButton.getPreferredSize());");
     }
 
     private void generateSearchActionListener() {
         w.writeln_r("SearchButton.addActionListener((e) -> {");
-        StringBuilder viewFunctionCall = new StringBuilder(entity.getEntityName());
-        viewFunctionCall.append(" retrieve").append(entity.getEntityName())
-                .append(" = view").append(entity.getEntityName()).append("(");
+        StringBuilder viewFunctionCall = new StringBuilder("");
+        viewFunctionCall.append("retrieve").append(entity.getEntityName())
+                .append(" = ").append(entity.getEntityName()).append("CRUD.view").append(entity.getEntityName()).append("(");
         switch (entity.getEntityMembers().get(0).getKey()) {
             case "int":
                 viewFunctionCall.append("Integer.parseInt(").append(entity.getEntityMembers().get(0).getValue()).append("TextField.getText())");
@@ -86,8 +86,13 @@ public class UpdateEntityPanel extends CRUDPanel {
         }
 
         viewFunctionCall.append(");");
+        w.writeln(entity.getEntityName() + " retrieve" + entity.getEntityName() + " = null;");
+        w.writeln_r("try {");
         w.writeln(viewFunctionCall.toString());
-        w.writeln_r("if(retrieve" + entity.getEntityMembers().get(0).getValue() + "==null) {");
+        w.writeln_lr("} catch(SQLException ex) {");
+        w.writeln("ex.printStackTrace();");
+        w.writeln_l("}");
+        w.writeln_r("if(retrieve" + entity.getEntityName() + "==null) {");
         w.writeln("JOptionPane.showMessageDialog(this,\"Unexpected error occured!\");");
         w.writeln_lr("} else {");
         w.writeln("JOptionPane.showMessageDialog(this,\"Data retrieved successfully!\");");
@@ -97,7 +102,7 @@ public class UpdateEntityPanel extends CRUDPanel {
 //           w.writeln("JTextField "+entityMember.getValue()+"TextField.setText("+entity.getEntityName()+".get("+entityMember.getValue().substring(0, 1).toUpperCase() + entityMember.getValue().substring(1)+"));");
 //        });
 //        viewFunctionCall.delete(viewFunctionCall.length()-6,viewFunctionCall.length());                
-        w.writeln_l("});");
+        w.writeln_l("}});");
 //        w.writeln_r("searchButton.setOnAction((e) -> {");
 //        w.writeln_r("if(" + entity.getEntityMembers().get(0).getValue()
 //                + "TextField.getText().equals(\"\")) {");
@@ -138,8 +143,8 @@ public class UpdateEntityPanel extends CRUDPanel {
 //
 
     private void generateUpdateActionListener() {
-        w.writeln_r("updateButton.addActionListener((e) -> {");
-        StringBuilder updateFunctionCall = new StringBuilder("boolean isUpdated = update" + entity.getEntityName() + "(");
+        w.writeln_r("UpdateButton.addActionListener((e) -> {");
+        StringBuilder updateFunctionCall = new StringBuilder("isUpdated = " + entity.getEntityName() + "CRUD.update" + entity.getEntityName() + "(");
         updateFunctionCall.append("new ").append(entity.getEntityName()).append("(");
         entity.getEntityMembers().forEach((entityMember) -> {
             switch(entityMember.getKey()) {
@@ -162,8 +167,29 @@ public class UpdateEntityPanel extends CRUDPanel {
             });        
             updateFunctionCall.deleteCharAt(updateFunctionCall.length()-1);
             updateFunctionCall.deleteCharAt(updateFunctionCall.length()-1);
+            updateFunctionCall.append("), ");
+            switch(entity.getEntityMembers().get(0).getKey()) {
+            case "int":
+                updateFunctionCall.append("Integer.parseInt(").append(entity.getEntityMembers().get(0).getValue()).append("TextField.getText())");
+                break;
+            case "double":
+                updateFunctionCall.append("Double.parseDouble(").append(entity.getEntityMembers().get(0).getValue()).append("TextField.getText())");
+                break;
+            case "char":
+                updateFunctionCall.append(entity.getEntityMembers().get(0).getValue()).append("TextField.getText().charAt(0)");
+                break;
+            case "String":
+                updateFunctionCall.append(entity.getEntityMembers().get(0).getValue()).append("TextField.getText()");
+                break;
+        }
+//            updateFunctionCall.append(", ").append(entity.getEntityMembers().get(0).getValue()).append("TextField.getText()");
             updateFunctionCall.append(");");
-            w.writeln(updateFunctionCall.toString());
+        w.writeln("boolean isUpdated = false;");
+        w.writeln_r("try {");
+        w.writeln(updateFunctionCall.toString());
+        w.writeln_lr("} catch(SQLException ex) {");
+        w.writeln("ex.printStackTrace();");
+        w.writeln_l("}");
 //            addFunctionCall.delete(addFunctionCall.length()-6, addFunctionCall.length());
             //addFunctionCall.deleteCharAt(addFunctionCall.length()-1);
 //            addFunctionCall.append("+\",\"+").append(entity.getEntityMembers().get(0).getValue());
@@ -179,7 +205,7 @@ public class UpdateEntityPanel extends CRUDPanel {
             w.writeln_l("}");        
             w.writeln_l("});");  
             }
-//        w.writeln_r("updateButton.setOnAction((e) -> {");
+//        w.writeln_r("UpdateButton.setOnAction((e) -> {");
 //        StringBuilder updateQuery = new StringBuilder("UPDATE tbl_");
 //        updateQuery.append(entity.getEntityName().toLowerCase()).append(" SET ");
 //        entity.getEntityMembers().forEach((entityMember) -> {
@@ -211,7 +237,7 @@ public class UpdateEntityPanel extends CRUDPanel {
     @Override
 
     protected final void generateConstructor() {
-        w.writeln_r("public Update" + entity.getEntityName() + "Panel() {");
+        w.writeln_r("public Update" + entity.getEntityName() + "Panel() throws SQLException{");
         w.writeln("setLayout(new BorderLayout());");
         w.writeln("add(new JLabel(\"Update " + entity.getEntityName() + "\"), BorderLayout.NORTH);");
         w.writeln("JPanel topPanel = new JPanel();");

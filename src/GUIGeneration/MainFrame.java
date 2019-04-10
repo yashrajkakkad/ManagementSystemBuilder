@@ -29,16 +29,18 @@ public class MainFrame {
         w.writeln("import javax.swing.*;");
         w.writeln("import java.awt.*;");
         w.writeln("import java.awt.Event.*;");
+        w.writeln("import java.sql.SQLException;");
         w.writeln("");
-        w.writeln_r("public class MainFrame extends JFrame {");
+        w.writeln_r("public class MainFrame extends JFrame{");
         w.writeln("");
     }
 
     private void generateConstructor() {
-        w.writeln_r("public MainFrame() {");
+        w.writeln_r("public MainFrame() throws SQLException{");
         w.writeln("setLayout(new BorderLayout());");
         generateTitle();
         w.writeln("setLocationRelativeTo(null);");
+        w.writeln("pack();");
         w.writeln("setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);");
         generateCentralLayout();
         w.writeln_l("}");
@@ -62,7 +64,7 @@ public class MainFrame {
         w.writeln("JPanel homePanel = new JPanel();");
         w.writeln("centralPanel.setLayout(cl);");
         w.writeln("centralPanel.add(new JScrollPane(homePanel),\"homePanel\");");
-        w.writeln("homePanel.setLayout(new GridLayout(0,2,10,10));");
+        w.writeln("homePanel.setLayout(new GridLayout(0,4,10,10));");
         int count = 0;
         Entity previousEntity = PanelManager.getEntityPanels().get(0).getKey();
         w.writeln("JLabel " + PanelManager.getEntityPanels().get(0)
@@ -71,6 +73,8 @@ public class MainFrame {
                 + "\");");
         w.writeln("homePanel.add(" + PanelManager.getEntityPanels().get(0)
                 .getKey().getEntityName() + "Label);");
+        w.writeln("homePanel.add(new JLabel());");
+        w.writeln("homePanel.add(new JLabel());");
         w.writeln("homePanel.add(new JLabel());");
         javax.swing.JButton button1 = new javax.swing.JButton();
         Iterator<Pair<Entity, Integer>> itr = PanelManager.getEntityPanels().iterator();
@@ -94,6 +98,10 @@ public class MainFrame {
                 }
                 w.writeln("JLabel " + tempPair.getKey().getEntityName()
                         + "Label = new JLabel(\"" + tempPair.getKey().getEntityName() + "\");");
+                w.writeln("homePanel.add(new JLabel());");
+                w.writeln("homePanel.add(new JLabel());");
+                w.writeln("homePanel.add(new JLabel());");
+
                 count = 0;
             }
             w.writeln("JButton " + codeToString(tempPair.getValue())
@@ -115,18 +123,29 @@ public class MainFrame {
         w.writeln("add(bottomPanel,BorderLayout.SOUTH);");
         w.writeln("bottomPanel.setLayout(new GridLayout(1,3,10,10));");
         w.writeln("JButton backToHomebtn = new JButton(\"Back to Home\");");
+        w.writeln_r("backToHomebtn.addActionListener(e -> {");
+        w.writeln("cl.show(centralPanel, \"homePanel\");");
+        w.writeln_l("});");
         w.writeln("bottomPanel.add(backToHomebtn);");
+        w.writeln("centralPanel.add(new AboutPanel(), \"aboutUsPanel\");");
         w.writeln("JButton aboutUsbtn = new JButton(\"About Us\");");
+        w.writeln_r("aboutUsbtn.addActionListener(e -> {");
+        w.writeln("cl.show(centralPanel, \"aboutUsPanel\");");
+        w.writeln_l("});");
         w.writeln("bottomPanel.add(aboutUsbtn);");
         if (DefineContactUsPanel.isAccessed())
         {
+            w.writeln("centralPanel.add(new ContactPanel(), \"contactUsPanel\");");
             w.writeln("JButton contactUsbtn = new JButton(\"Contact Us\");");
+            w.writeln_r("contactUsbtn.addActionListener(e -> {");
+            w.writeln("cl.show(centralPanel, \"contactUsPanel\");");
+            w.writeln_l("});");
             w.writeln("bottomPanel.add(contactUsbtn);");
         }
     }
 
     private void generateMain() {
-        w.writeln_r("public static void main(String[] args) {");
+        w.writeln_r("public static void main(String[] args) throws SQLException{");
         w.writeln("MainFrame mainFrame = new MainFrame();");
         w.writeln("mainFrame.setVisible(true);");
         w.writeln_l("}");
