@@ -105,7 +105,7 @@ public class CRUDLogicGenerator {
                     .append("), ");
         });
         toRetrieve.deleteCharAt(toRetrieve.length()-2);
-//        toRetrieve.append(" ));");
+        toRetrieve.append(" );");
         w.writeln("return " + toRetrieve.toString());
         w.writeln_l("}");
 //        w.writeln("return " + Character.toLowerCase(entity.getEntityName().charAt(0))

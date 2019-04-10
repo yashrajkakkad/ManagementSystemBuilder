@@ -8,13 +8,11 @@
 package GUI;
 
 import CodeGeneration.Entity;
-import CodeGeneration.EntityManager;
 import GUIGeneration.*;
 import javafx.util.Pair;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class DefineEntityPanels extends JPanel
@@ -92,7 +90,7 @@ public class DefineEntityPanels extends JPanel
                 }
 
             }
-            PanelManager panelManager = new PanelManager(entityPanels);
+            PanelManager.setEntityPanels(entityPanels);
             JOptionPane.showMessageDialog(null, "DONE! Your GUI Panels are created!");
             SystemCreationRootPanel.changeSystemCreationProcessPanel(4);
         });

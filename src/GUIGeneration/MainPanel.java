@@ -54,9 +54,9 @@ public class MainPanel {
                         + "Label = new JLabel(\"" + tempPair.getKey().getEntityName() + "\");");
                 count = 0;
             }
-            w.writeln("JButton " + codeToString(tempPair.getValue())
-                    + "Button = new JButton(\"" + codeToStringCaps(tempPair.getValue()) + "\");");
-            w.writeln("add(" + codeToString(tempPair.getValue()) + "Button);");
+//            w.writeln("JButton " + codeToString(tempPair.getValue())
+//                    + "Button = new JButton(\"" + codeToStringCaps(tempPair.getValue()) + "\");");
+//            w.writeln("add(" + codeToString(tempPair.getValue()) + "Button);");
             previousEntity = tempPair.getKey();
         }
         w.writeln_l("}");  

@@ -60,7 +60,7 @@ public class MainFrame {
         w.writeln("JPanel homePanel = new JPanel();");
         w.writeln("centralPanel.setLayout(cl);");
         w.writeln("centralPanel.add(new JScrollPane(homePanel),\"homePanel\");");
-        w.writeln("homePanel.setLayout(new GridLayout(0,2,10,10);");
+        w.writeln("homePanel.setLayout(new GridLayout(0,2,10,10));");
         int count = 0;
         Entity previousEntity = PanelManager.getEntityPanels().get(0).getKey();
         w.writeln("JLabel " + PanelManager.getEntityPanels().get(0)
@@ -76,7 +76,7 @@ public class MainFrame {
             Pair<Entity, Integer> tempPair = itr.next();
             w.writeln("centralPanel.add(new "
                     + codeToStringCaps(tempPair.getValue())
-                    + tempPair.getKey().getEntityName() + "Panel, \""
+                    + tempPair.getKey().getEntityName() + "Panel(), \""
                     + codeToStringCaps(tempPair.getValue())
                     + tempPair.getKey().getEntityName() + "\");");
         }
@@ -103,7 +103,7 @@ public class MainFrame {
             w.writeln("cl.show(centralPanel,\""
                     + codeToStringCaps(tempPair.getValue())
                     + tempPair.getKey().getEntityName() + "\");");
-            w.writeln_l("}");
+            w.writeln_l("});");
             previousEntity = tempPair.getKey();
         }
 //        w.writeln_l("}");

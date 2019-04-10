@@ -3,12 +3,13 @@ import java.sql.SQLException;
 
 public class StudentCRUD {
    
-   public void addStudent(Student student) throws SQLException {
+   public boolean addStudent(Student student) throws SQLException {
       String insertQuery = "INSERT INTO tbl_student (studentID, name ) VALUES ('" + student.getStudentID() + "', '" + student.getName() + "' );"; 
       int i = DatabaseUtil.stmt.executeUpdate(insertQuery);
       if(i!=1) {
-         System.out.println("Error occured in adding Student");
+         return false;
       }
+      return true;
    }
    
    public void deleteStudent(String dataField, String value) throws SQLException {
@@ -34,7 +35,7 @@ public class StudentCRUD {
       String updateQuery = "UPDATE " + updatedValues.toString() + " WHERE studentID = " + studentID;
    }
    
-   public ArrayList<Student> viewStudent(String dataField, String value) throws SQLException {
+   public Student viewStudent(String dataField, String value) throws SQLException {
       StringBuilder conditionString = new StringBuilder();
       conditionString.append(dataField).append("=");
       if(dataField.equals("int") || dataField.equals("double")) {
@@ -47,9 +48,8 @@ public class StudentCRUD {
       DatabaseUtil.rs = DatabaseUtil.stmt.executeQuery(viewQuery);
       ArrayList<Student> student = new ArrayList<>();
       while(DatabaseUtil.rs.next()) {
-         student.add(new Student( DatabaseUtil.rs.getInt("studentID"), DatabaseUtil.rs.getString("name")  ));
+         return new Student( DatabaseUtil.rs.getInt("studentID"), DatabaseUtil.rs.getString("name") 
       }
-      return student;
    }
    
    
