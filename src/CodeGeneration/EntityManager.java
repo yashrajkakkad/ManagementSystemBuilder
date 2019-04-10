@@ -4,6 +4,7 @@ Manages all entities of the project
 package CodeGeneration;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import Utility.*;
@@ -32,9 +33,10 @@ public final class EntityManager {
         return directoryName;
     }
     
-    public static void setProjectName(String projectName) {
+    public static void setProjectName(String projectName) throws IOException {
         EntityManager.projectName = projectName;
         createDirectory();
+        generateEmailUtil();
     }
 
     public static void setDBName(String DBName) {
@@ -58,6 +60,12 @@ public final class EntityManager {
         directoryName = "generated\\" + projectName.replaceAll(" ","");
         File dir = new File(directoryName);
         dir.mkdir();
+    }
+
+    private static void generateEmailUtil() throws IOException {
+        File source = new File("src\\Utility\\Email.java");
+        File dest = new File(directoryName+"\\Email.java");
+        Files.copy(source.toPath(), dest.toPath());
     }
 
     public static void addEntity(Entity entity) throws IOException, SQLException {

@@ -21,7 +21,7 @@ public class CRUDLogicGenerator {
     }
 
     public static void generateAddEntity(Entity entity) {
-        w.writeln_r("public boolean add" + entity.getEntityName()
+        w.writeln_r("public static boolean add" + entity.getEntityName()
                 + "(" + entity.getEntityName() + " "
                 + entity.getEntityName().toLowerCase() + ") throws SQLException {");
         StringBuilder fields = new StringBuilder("(");
@@ -51,7 +51,7 @@ public class CRUDLogicGenerator {
     }
 
     public static void generateDeleteEntity(Entity entity) {
-        w.writeln_r("public " + entity.getEntityName() + " delete" + entity.getEntityName()
+        w.writeln_r("public static boolean delete" + entity.getEntityName()
                 + "(" + entity.getEntityMembers().get(0).getKey() + " value) throws SQLException {");
 //        w.writeln("StringBuilder conditionString = new StringBuilder();");
 //        w.writeln("conditionString.append(dataField).append(\"=\");");
@@ -79,12 +79,15 @@ public class CRUDLogicGenerator {
 //        StringBuilder viewQuery = new StringBuilder("SELECT * from tbl_");
 //        viewQuery.append(entity.getEntityName().toLowerCase()).append(" WHERE ");
 //        if()
-        w.writeln("int i = DatabaseUtil.stmt.executeUpdate(viewQuery);");
+        w.writeln("int i = DatabaseUtil.stmt.executeUpdate(deleteQuery);");
         w.writeln_r("if(i==1) {");
-        w.writeln("JOptionPane.showMessageDialog(this,\"Deleted successfully!\"");
-        w.writeln_lr("} else {");
-        w.writeln("JOptionPane.showMessageDialog(this,\"Unexpected error occured!\"");
+//        w.writeln("JOptionPane.showMessageDialog(this,\"Deleted successfully!\");");
+        w.writeln("return true;");
+//        w.writeln_lr("} else {");
+//        w.writeln("JOptionPane.showMessageDialog(this,\"Unexpected error occured!\");");
+//        w.writeln_l("}");
         w.writeln_l("}");
+        w.writeln("return false;");
 //        w.writeln("ArrayList<" + entity.getEntityName() + "> "
 //                + Character.toLowerCase(entity.getEntityName().charAt(0))
 //                + entity.getEntityName().substring(1) + " = new ArrayList<>();");
@@ -132,7 +135,7 @@ public class CRUDLogicGenerator {
     }
 
     public static void generateViewEntity(Entity entity) {
-        w.writeln_r("public " + entity.getEntityName() + " view" + entity.getEntityName()
+        w.writeln_r("public static " + entity.getEntityName() + " view" + entity.getEntityName()
                 + "(" + entity.getEntityMembers().get(0).getKey() + " value) throws SQLException {");
 //        w.writeln("StringBuilder conditionString = new StringBuilder();");
 //        w.writeln("conditionString.append(dataField).append(\"=\");");
@@ -171,11 +174,20 @@ public class CRUDLogicGenerator {
 //                .append(entity.getEntityName().substring(1)).append(".add(")
                 .append("new ").append(entity.getEntityName()).append("( ");
         entity.getEntityMembers().forEach((entityMember) -> {
-            toRetrieve.append("DatabaseUtil.rs.").append("get")
-                    .append(Character.toUpperCase(entityMember.getKey().charAt(0)))
-                    .append(entityMember.getKey().substring(1)).append("(")
-                    .append("\"").append(entityMember.getValue()).append("\"")
-                    .append("), ");
+            toRetrieve.append("DatabaseUtil.rs.").append("get");
+            if (entityMember.getKey().equals("char"))
+            {
+                toRetrieve.append("String").append("(")
+                          .append("\"").append(entityMember.getValue()).append("\"")
+                          .append(").charAt(0), ");
+            }
+            else
+            {
+                toRetrieve.append(Character.toUpperCase(entityMember.getKey().charAt(0)))
+                          .append(entityMember.getKey().substring(1)).append("(")
+                          .append("\"").append(entityMember.getValue()).append("\"")
+                          .append("), ");
+            }
         });
         toRetrieve.deleteCharAt(toRetrieve.length()-2);
         toRetrieve.append(" );");
@@ -183,12 +195,13 @@ public class CRUDLogicGenerator {
         w.writeln_l("}");
 //        w.writeln("return " + Character.toLowerCase(entity.getEntityName().charAt(0))
 //                + entity.getEntityName().substring(1) + ";");
+        w.writeln("return null;");
         w.writeln_l("}");
         w.writeln("");
     }
 
     public static void generateUpdateEntity(Entity entity) {
-        w.writeln_r("public boolean update" + entity.getEntityName() + "("
+        w.writeln_r("public static boolean update" + entity.getEntityName() + "("
                 + entity.getEntityName() + " " + entity.getEntityName().toLowerCase()
                 + ", " + entity.getEntityMembers().get(0).getKey() + " "
                 + entity.getEntityMembers().get(0).getValue() + ") throws SQLException {");
@@ -228,19 +241,22 @@ public class CRUDLogicGenerator {
         });
         updateQuery.deleteCharAt(updateQuery.length()-1);
         updateQuery.deleteCharAt(updateQuery.length()-1);
-        updateQuery.append(" SET ");
+        updateQuery.append(" WHERE ");
         if(entity.getEntityMembers().get(0).getKey().equals("String") 
                 || entity.getEntityMembers().get(0).getKey().equals("char")) {
             updateQuery
                     .append(entity.getEntityMembers().get(0).getValue())
                     .append(" = '\" + ").append(entity.getEntityMembers().get(0).getValue()).append(" + \"'");
+            w.writeln("String updateQuery = \"" + updateQuery.toString() + "\";");
         }
-        else {
+        else
+        {
             updateQuery.append(entity.getEntityMembers().get(0).getValue())
-                    .append(" = \" + ").append(entity.getEntityMembers().get(0).getValue())
-                    .append(" + \";\"");
+                    .append(" = \" + ").append(entity.getEntityMembers().get(0).getValue());
+//                    .append(" + \";\"");
+            w.writeln("String updateQuery = \"" + updateQuery.toString() + ";");
+//        }
         }
-        w.writeln("String updateQuery = \"" + updateQuery.toString() + "\";");
         w.writeln("int i = DatabaseUtil.stmt.executeUpdate(updateQuery);");
         w.writeln_r("if(i==1) {");
         w.writeln("return true;");
@@ -259,5 +275,6 @@ public class CRUDLogicGenerator {
         FileWriter out = new FileWriter(writeFile);
         out.write(w.toString());
         out.close();
+        w = new PicoWriter();
     }
 }
