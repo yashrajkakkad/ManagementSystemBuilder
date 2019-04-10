@@ -111,7 +111,7 @@ public class DefineContactUsPanel extends JPanel
                 ex.printStackTrace();
             }
             JOptionPane.showMessageDialog(null,"DONE! Your Contact Us Panel has been generated");
-            SystemCreationRootPanel.changeSystemCreationProcessPanel(4);
+            SystemCreationRootPanel.changeSystemCreationProcessPanel(6);
         });
 
     }

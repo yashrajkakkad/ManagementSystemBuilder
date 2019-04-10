@@ -8,11 +8,13 @@
 package GUI;
 
 import CodeGeneration.Entity;
+import CodeGeneration.EntityManager;
 import GUIGeneration.*;
 import javafx.util.Pair;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class DefineEntityPanels extends JPanel

@@ -7,6 +7,7 @@ public class SystemCreationRootPanel extends JPanel
 {
     private static CardLayout systemCreationCardLayout = new CardLayout();
     private static JPanel systemCreationCardPanel;
+    private static JLabel placeFiller;
 
     public SystemCreationRootPanel()
     {
@@ -28,10 +29,12 @@ public class SystemCreationRootPanel extends JPanel
         systemCreationCardPanel.setLayout(systemCreationCardLayout);
         systemCreationCardPanel.add("Add Entities",new AddEntity());
         systemCreationCardPanel.add("Add Datafields",new AddDataFields());
-        systemCreationCardPanel.add("Define Add Entity Panels", new DefineEntityPanels());
+        systemCreationCardPanel.add("Define Entity Panels", new DefineEntityPanels());
         systemCreationCardPanel.add("Define About us Panel", new DefineAboutPanel());
         systemCreationCardPanel.add("Define Contact us Panel", new DefineContactUsPanel());
+        systemCreationCardPanel.add("Finish Page",new FinishPanel());
         systemCreationCardLayout.show(systemCreationCardPanel,"Add Entities");
+        //systemCreationCardLayout.show(systemCreationCardPanel,"Finish Page");
 
         JPanel bottomPanel = new JPanel();
         add(bottomPanel,BorderLayout.PAGE_END);
@@ -42,8 +45,8 @@ public class SystemCreationRootPanel extends JPanel
         bc.gridx = 0;
         bc.gridy = 0;
         bc.insets = new Insets(10,10,10,10);
-        JLabel placeFiller = new JLabel("System being created.....");
-        placeFiller.setFont(new Font("Century Gothic",Font.PLAIN,24));
+        placeFiller = new JLabel("Step 1 of 4");
+        placeFiller.setFont(new Font("Century Gothic",Font.PLAIN,36));
         bottomPanel.add(placeFiller,bc);
     }
 
@@ -56,11 +59,17 @@ public class SystemCreationRootPanel extends JPanel
                     break;
             case 2: systemCreationCardLayout.show(systemCreationCardPanel,"Add Entities");
                     break;
-            case 3: systemCreationCardLayout.show(systemCreationCardPanel,"Define Add Entity Panels");
+            case 3: systemCreationCardLayout.show(systemCreationCardPanel,"Define Entity Panels");
+                    placeFiller.setText("Step 2 of 4");
                     break;
             case 4: systemCreationCardLayout.show(systemCreationCardPanel,"Define About us Panel");
+                    placeFiller.setText("Step 3 of 4");
                     break;
             case 5: systemCreationCardLayout.show(systemCreationCardPanel, "Define Contact us Panel");
+                    placeFiller.setText("Step 3 of 4");
+                    break;
+            case 6: systemCreationCardLayout.show(systemCreationCardPanel, "Finish Page");
+                    placeFiller.setText("Step 4 of 4");
                     break;
         }
     }
