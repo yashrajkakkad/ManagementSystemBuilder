@@ -53,12 +53,15 @@ public final class EntityManager {
         DatabaseUtil.resetConnection();
     }
     
-    public static void createDirectory() {
+    public static void createDirectory() throws IOException{
         File tempFile = new File("generated");
         tempFile.mkdir();
         directoryName = "generated\\" + projectName.replaceAll(" ","");
         File dir = new File(directoryName);
         dir.mkdir();
+        File emailFile = new File("src\\Utility\\Email.java");
+        File destEmailFile = new File(directoryName+"\\Email.java");
+        Files.copy(emailFile.toPath(),destEmailFile.toPath());
     }
 
     public static void addEntity(Entity entity) throws IOException, SQLException {
