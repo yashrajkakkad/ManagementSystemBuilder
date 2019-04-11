@@ -46,7 +46,7 @@ abstract class CRUDPanel {
     protected void generateTextFields() {
         entity.getEntityMembers().forEach((entityMember) -> {
             w.writeln("private JTextField " + entityMember.getValue()
-                    + "TextField = new JTextField();");
+                    + "TextField = new JTextField(20);");
         });
     }
 

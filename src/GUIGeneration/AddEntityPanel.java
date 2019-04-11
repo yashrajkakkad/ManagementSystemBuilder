@@ -130,6 +130,9 @@ public class AddEntityPanel extends CRUDPanel {
     protected final void generateConstructor() {
         w.writeln_r("public Add" + entity.getEntityName() + "Panel() throws SQLException{");
         w.writeln("setLayout(new BorderLayout());");
+        entity.getEntityMembers().forEach(entityMember -> {
+            w.writeln(entityMember.getValue() + "TextField.setMaximumSize(" + entityMember.getValue() + "TextField.getPreferredSize());");
+        });
         w.writeln("JPanel topPanel = new JPanel();");
         w.writeln("JPanel bottomPanel = new JPanel();");
         w.writeln("add(new JLabel(\"Add " + entity.getEntityName() + "\"), BorderLayout.NORTH);");

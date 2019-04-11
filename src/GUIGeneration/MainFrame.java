@@ -76,7 +76,7 @@ public class MainFrame {
         w.writeln("homePanel.add(new JLabel());");
         w.writeln("homePanel.add(new JLabel());");
         w.writeln("homePanel.add(new JLabel());");
-        javax.swing.JButton button1 = new javax.swing.JButton();
+//        javax.swing.JButton button1 = new javax.swing.JButton();
         Iterator<Pair<Entity, Integer>> itr = PanelManager.getEntityPanels().iterator();
         while (itr.hasNext()) {
             Pair<Entity, Integer> tempPair = itr.next();
@@ -98,6 +98,7 @@ public class MainFrame {
                 }
                 w.writeln("JLabel " + tempPair.getKey().getEntityName()
                         + "Label = new JLabel(\"" + tempPair.getKey().getEntityName() + "\");");
+                w.writeln("homePanel.add(" + tempPair.getKey().getEntityName() + "Label);");
                 w.writeln("homePanel.add(new JLabel());");
                 w.writeln("homePanel.add(new JLabel());");
                 w.writeln("homePanel.add(new JLabel());");
