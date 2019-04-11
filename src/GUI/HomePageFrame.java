@@ -14,7 +14,8 @@ public class HomePageFrame extends JFrame {
 
     public HomePageFrame() {
         createView();
-        setTitle("Home Page");
+        setTitle("Management System Builder");
+        setIconImage(new ImageIcon("MSBtransparent.png").getImage());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1920, 1080);
         setVisible(true);

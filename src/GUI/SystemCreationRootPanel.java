@@ -66,7 +66,7 @@ public class SystemCreationRootPanel extends JPanel
                     .append("xcopy production D:\\Study\\Semester_2_2018-19\\OOP_Lab\\Java_Projects\\MSBuilderGUI\\").append(EntityManager.getDirectoryName()).append(" /i /s && ")
                     .append("cd D:\\Study\\Semester_2_2018-19\\OOP_Lab\\Java_Projects\\MSBuilderGUI\\").append(EntityManager.getDirectoryName()).append(" && ")
                     .append("dir /s /B *.java > sources.txt && ")
-                    .append("javac -cp \"production/*\" @sources.txt -d out && ")
+                    .append("javac -cp \"mysql-connector-java-5.1.11-bin.jar;javax.mail.jar;activation.jar\" @sources.txt -d out && ")
                     .append("jar cfm ").append(EntityManager.getProjectName()).append(".jar").append(" Manifest.txt -C out/ . && ")
                     .append("java -jar ").append(EntityManager.getProjectName()).append(".jar && ")
                     .append("exit");
@@ -74,6 +74,14 @@ public class SystemCreationRootPanel extends JPanel
             try
             {
                 Runtime.getRuntime().exec("cmd /c start cmd.exe /K \""+command.toString()+"\"");
+                try
+                {
+                    Thread.sleep(7500);
+                } catch (InterruptedException ex)
+                {
+                    ex.printStackTrace();
+                }
+                Runtime.getRuntime().exec("taskkill /f /im cmd.exe");
             } catch (IOException ex)
             {
                 ex.printStackTrace();
