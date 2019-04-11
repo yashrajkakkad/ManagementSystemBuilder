@@ -6,9 +6,6 @@ package GUI;
  */
 
 
-import CodeGeneration.Entity;
-import CodeGeneration.EntityManager;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -26,6 +23,7 @@ public class AddEntity extends JPanel
     private ArrayList<JButton> addButtons = new ArrayList<>();
     private static ArrayList<JButton> defineButtons = new ArrayList<>();
     private ArrayList<JButton> removeButtons = new ArrayList<>();
+    private static int btnPressedCount = 0;
 
     public static int getEntityCount()
     {
@@ -78,7 +76,7 @@ public class AddEntity extends JPanel
 
         c.gridy++;
         c.fill = GridBagConstraints.BOTH;
-        
+
         c.gridx = 0;
         labels.add(0,new JLabel("Entity no. "+entityCount+":"));
         labels.get(0).setFont(new Font("Century Gothic",Font.PLAIN,24));
@@ -117,9 +115,20 @@ public class AddEntity extends JPanel
             }
             if (flag)
             {
-                currentEntityName = entities.get(Integer.parseInt(((JButton)e.getSource()).getName())).getText();
-                currentDefineButton = ((JButton)e.getSource()).getName();
-                SystemCreationRootPanel.changeSystemCreationProcessPanel(1);
+                if (btnPressedCount == 0)
+                {
+                    currentEntityName = entities.get(Integer.parseInt(((JButton)e.getSource()).getName())).getText();
+                    currentDefineButton = ((JButton)e.getSource()).getName();
+                    SystemCreationRootPanel.changeSystemCreationProcessPanel(1);
+                    ++btnPressedCount;
+                }
+                else
+                {
+                    ((JButton)e.getSource()).setName(currentDefineButton);
+                    currentEntityName = entities.get(Integer.parseInt(((JButton)e.getSource()).getName())).getText();
+                    currentDefineButton = ((JButton)e.getSource()).getName();
+                    SystemCreationRootPanel.changeSystemCreationProcessPanel(1);
+                }
             }
         };
         defineButtons.get(0).addActionListener(defineDatafields);

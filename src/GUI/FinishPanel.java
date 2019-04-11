@@ -9,8 +9,15 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import CodeGeneration.EntityManager;
 import GUIGeneration.*;
 
 public class FinishPanel extends JPanel
@@ -39,39 +46,26 @@ public class FinishPanel extends JPanel
 
         c.gridy = 0;
         c.gridx = 0;
-        c.anchor = GridBagConstraints.PAGE_START;
-        c.fill = GridBagConstraints.BOTH;
+        c.anchor = GridBagConstraints.CENTER;
 
-        JLabel chooseLocationLabel = new JLabel("Choose where to save the JAR file");
+        JLabel chooseLocationLabel = new JLabel("Your system is ready!");
         chooseLocationLabel.setFont(new Font("Century Gothic",Font.PLAIN,36));
         finishPanel.add(chooseLocationLabel,c);
 
-        c.gridx++;
-        JTextField filePath = new JTextField(30);
-        filePath.setFont(new Font("Century Gothic",Font.PLAIN,18));
-        finishPanel.add(filePath,c);
+        c.gridy++;
+        JLabel donationPromptLabel = new JLabel("Consider donating a small amount to support us");
+        donationPromptLabel.setFont(new Font("Century Gothic",Font.PLAIN,30));
+        finishPanel.add(donationPromptLabel,c);
 
         c.gridy++;
-        JButton chooseLocation = new JButton("Choose Location");
-        chooseLocation.setFont(new Font("Century Gothic",Font.PLAIN,30));
-        finishPanel.add(chooseLocation,c);
+        JLabel donationLabel = new JLabel("Scan the below QR code to donate");
+        donationLabel.setFont(new Font("Century Gothic",Font.PLAIN,30));
+        finishPanel.add(donationLabel,c);
 
-        chooseLocation.addActionListener(e ->
-        {
-            JFileChooser jFileChooser = new JFileChooser();
-            int response = jFileChooser.showSaveDialog(null);
-            if (response == JFileChooser.APPROVE_OPTION)
-            {
-                filePath.setText(jFileChooser.getSelectedFile().getAbsolutePath());
-            }
-            try
-            {
-                MainFrame mainFrame = new MainFrame();
-            } catch (IOException ex)
-            {
-                ex.printStackTrace();
-            }
-        });
+        c.gridy++;
+        JLabel qrCodeLabel = new JLabel();
+        qrCodeLabel.setIcon(new ImageIcon("QRCode.jpeg"));
+        finishPanel.add(qrCodeLabel,c);
     }
 }
 
