@@ -25,6 +25,11 @@ public class AddEntity extends JPanel
     private ArrayList<JButton> removeButtons = new ArrayList<>();
     private static int btnPressedCount = 0;
 
+    public static void setBtnPressedCount()
+    {
+        ++AddEntity.btnPressedCount;
+    }
+
     public static int getEntityCount()
     {
         return entityCount;
@@ -32,11 +37,6 @@ public class AddEntity extends JPanel
 
     public static String getCurrentEntityName() {
         return currentEntityName;
-    }
-
-    public static void changeButtonName()
-    {
-        defineButtons.get(Integer.parseInt(currentDefineButton)).setName("Button Pressed");
     }
 
     public AddEntity()
@@ -91,7 +91,6 @@ public class AddEntity extends JPanel
         addButtons.add(0,new JButton("Add Entity"));
         addButtons.get(0).setFont(new Font("Century Gothic",Font.PLAIN,24));
         addEntityPanel.add(addButtons.get(0),c);
-        ++entityCount;
 
         c.gridx++;
         defineButtons.add(0,new JButton("Define Datafields"));
@@ -115,20 +114,9 @@ public class AddEntity extends JPanel
             }
             if (flag)
             {
-                if (btnPressedCount == 0)
-                {
-                    currentEntityName = entities.get(Integer.parseInt(((JButton)e.getSource()).getName())).getText();
-                    currentDefineButton = ((JButton)e.getSource()).getName();
-                    SystemCreationRootPanel.changeSystemCreationProcessPanel(1);
-                    ++btnPressedCount;
-                }
-                else
-                {
-                    ((JButton)e.getSource()).setName(currentDefineButton);
-                    currentEntityName = entities.get(Integer.parseInt(((JButton)e.getSource()).getName())).getText();
-                    currentDefineButton = ((JButton)e.getSource()).getName();
-                    SystemCreationRootPanel.changeSystemCreationProcessPanel(1);
-                }
+                currentEntityName = entities.get(Integer.parseInt(((JButton)e.getSource()).getName())).getText();
+                currentDefineButton = ((JButton)e.getSource()).getName();
+                SystemCreationRootPanel.changeSystemCreationProcessPanel(1);
             }
         };
         defineButtons.get(0).addActionListener(defineDatafields);
@@ -228,20 +216,14 @@ public class AddEntity extends JPanel
 
         submitButton.addActionListener(e ->
         {
-            boolean flag = true;
-            for (int i=0; i<=rowCount; ++i)
-            {
-                if (!defineButtons.get(i).getName().equals("Button Pressed"))
-                {
-                    flag = false;
-                    JOptionPane.showMessageDialog(null, "Please define datafields for all entities before submitting.");
-                    break;
-                }
-            }
-            if (flag)
+            if (btnPressedCount >= entityCount)
             {
                 JOptionPane.showMessageDialog(null, "DONE! Your system has been created!");
                 SystemCreationRootPanel.changeSystemCreationProcessPanel(3);
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null,"Please define datafields for all the entities");
             }
         });
 

@@ -225,7 +225,7 @@ public class AddDataFields extends JPanel
                 } catch (IOException | SQLException ex) {
                     Logger.getLogger(AddDataFields.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                AddEntity.changeButtonName();
+                AddEntity.setBtnPressedCount();
                 SystemCreationRootPanel.changeSystemCreationProcessPanel(2);
             }
         });
