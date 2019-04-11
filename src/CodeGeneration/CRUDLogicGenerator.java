@@ -66,7 +66,7 @@ public class CRUDLogicGenerator {
                 .append(entity.getEntityMembers().get(0).getValue()).append(" = ");
         if(!(entity.getEntityMembers().get(0).getKey().equals("int") ||
                 entity.getEntityMembers().get(0).getKey().equals("double"))) {
-            deleteQuery.append("' \" + ").append("value").append(" + \" ' \"");
+            deleteQuery.append("'\" + ").append("value").append(" + \"'\"");
         }
         else {
             deleteQuery.append("\" + ").append("value");
@@ -150,7 +150,7 @@ public class CRUDLogicGenerator {
                 .append(entity.getEntityMembers().get(0).getValue()).append(" = ");
         if(!(entity.getEntityMembers().get(0).getKey().equals("int") ||
                 entity.getEntityMembers().get(0).getKey().equals("double"))) {
-            viewQuery.append("' \" + ").append("value").append(" + \" ' \"");
+            viewQuery.append("'\" + ").append("value").append(" + \"'\"");
         }
         else {
             viewQuery.append("\" + ").append("value");
@@ -223,12 +223,12 @@ public class CRUDLogicGenerator {
         entity.getEntityMembers().forEach((entityMember) -> {
             updateQuery.append(entityMember.getValue()).append(" = ");
             if(entityMember.getKey().equals("String") || entityMember.getKey().equals("char")) {
-                updateQuery.append("' \" + ")
+                updateQuery.append("'\" + ")
                         .append(entity.getEntityName().toLowerCase())
                         .append(".get")
                         .append(Character.toUpperCase(entityMember.getValue().charAt(0)))
                         .append(entityMember.getValue().substring(1))
-                        .append("()").append(" + \" ', ");
+                        .append("()").append(" + \"', ");
             }
             else {
                 updateQuery.append("\" + ")
@@ -246,7 +246,7 @@ public class CRUDLogicGenerator {
                 || entity.getEntityMembers().get(0).getKey().equals("char")) {
             updateQuery
                     .append(entity.getEntityMembers().get(0).getValue())
-                    .append(" = '\" + ").append(entity.getEntityMembers().get(0).getValue()).append(" + \"'");
+                    .append(" ='\" + ").append(entity.getEntityMembers().get(0).getValue()).append(" + \"'");
             w.writeln("String updateQuery = \"" + updateQuery.toString() + "\";");
         }
         else

@@ -36,7 +36,6 @@ public final class EntityManager {
     public static void setProjectName(String projectName) throws IOException {
         EntityManager.projectName = projectName;
         createDirectory();
-        generateEmailUtil();
     }
 
     public static void setDBName(String DBName) {
@@ -60,12 +59,6 @@ public final class EntityManager {
         directoryName = "generated\\" + projectName.replaceAll(" ","");
         File dir = new File(directoryName);
         dir.mkdir();
-    }
-
-    private static void generateEmailUtil() throws IOException {
-        File source = new File("src\\Utility\\Email.java");
-        File dest = new File(directoryName+"\\Email.java");
-        Files.copy(source.toPath(), dest.toPath());
     }
 
     public static void addEntity(Entity entity) throws IOException, SQLException {
