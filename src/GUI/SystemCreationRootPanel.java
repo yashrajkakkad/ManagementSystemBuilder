@@ -62,9 +62,13 @@ public class SystemCreationRootPanel extends JPanel
         startYourSystembtn.addActionListener(e ->
         {
             StringBuilder command = new StringBuilder("");
-            command.append("cd D:\\Study\\Semester_2_2018-19\\OOP_Lab\\Java_Projects\\MSBuilderGUI && ")
-                    .append("xcopy production D:\\Study\\Semester_2_2018-19\\OOP_Lab\\Java_Projects\\MSBuilderGUI\\").append(EntityManager.getDirectoryName()).append(" /i /s && ")
-                    .append("cd D:\\Study\\Semester_2_2018-19\\OOP_Lab\\Java_Projects\\MSBuilderGUI\\").append(EntityManager.getDirectoryName()).append(" && ")
+            String currentDirectory = System.getProperty("user.dir");
+            command.append("cd ").append(currentDirectory).append(" && ")
+                    .append("xcopy production ").append(currentDirectory)
+                    .append("\\").append(EntityManager.getDirectoryName())
+                    .append(" /i /s && ")
+                    .append("cd ").append(currentDirectory).append("\\")
+                    .append(EntityManager.getDirectoryName()).append(" && ")
                     .append("dir /s /B *.java > sources.txt && ")
                     .append("javac -cp \"mysql-connector-java-5.1.11-bin.jar;javax.mail.jar;activation.jar\" @sources.txt -d out && ")
                     .append("jar cfm ").append(EntityManager.getProjectName()).append(".jar").append(" Manifest.txt -C out/ . && ")
@@ -81,7 +85,7 @@ public class SystemCreationRootPanel extends JPanel
                 {
                     ex.printStackTrace();
                 }
-                Runtime.getRuntime().exec("taskkill /f /im cmd.exe");
+ //               Runtime.getRuntime().exec("taskkill /f /im cmd.exe");
             } catch (IOException ex)
             {
                 ex.printStackTrace();

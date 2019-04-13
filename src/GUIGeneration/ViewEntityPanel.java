@@ -4,6 +4,8 @@ package GUIGeneration;
 
 import CodeGeneration.*;
 import java.io.IOException;
+import java.util.Iterator;
+import javafx.util.Pair;
 
 public class ViewEntityPanel extends CRUDPanel {
 
@@ -25,7 +27,7 @@ public class ViewEntityPanel extends CRUDPanel {
     @Override
     protected final void generateComponents() {
         generateLabels();
-        generateLabels2();
+        generateViewLabels();
         generateButton("View");
     }
 
@@ -33,7 +35,7 @@ public class ViewEntityPanel extends CRUDPanel {
     protected void generateAddComponents() {
         entity.getEntityMembers().forEach((entityMember) -> {
             w.writeln("topPanel.add(" + entityMember.getValue() + "Label);");
-            w.writeln("topPanel.add(" + entityMember.getValue() + "Label2);");
+            w.writeln("topPanel.add(" + entityMember.getValue() + "ViewLabel);");
         });
         w.writeln("bottomPanel.add(ViewButton);");
         w.writeln("ViewButton.setMaximumSize(ViewButton.getPreferredSize());");
@@ -70,6 +72,16 @@ public class ViewEntityPanel extends CRUDPanel {
         w.writeln("JOptionPane.showMessageDialog(this,\"Unexpected error occured!\");");
         w.writeln_lr("} else {");
         w.writeln("JOptionPane.showMessageDialog(this,\"Data retrieved successfully!\");");
+//        w.writeln("");
+        Iterator<Pair<String,String>> iterator = entity.getEntityMembers().iterator();
+        iterator.next();
+        while(iterator.hasNext()) {
+            Pair<String,String> tempPair = iterator.next();
+            w.writeln(tempPair.getValue() + "ViewLabel.setText(retrieve" 
+                    + entity.getEntityName() + ".get" 
+                    + Character.toUpperCase(tempPair.getValue().charAt(0)) 
+                    + tempPair.getValue().substring(1) + "());");
+        }
 //                .append();
 //        entity.getEntityMembers().forEach((entityMember) -> {
 //            viewFunctionCall.append("\" + ").append(entityMember.getKey()).append(",").append(entityMember.getValue()).append(" + \", ");

@@ -38,7 +38,7 @@ public class DeleteEntityPanel extends CRUDPanel {
     @Override
     protected final void generateComponents() {
         generateLabels();
-        generateLabels2();
+        generateViewLabels();
         generateButton("Delete");
         generateButton("Search");
         generateSubPanel();
@@ -50,7 +50,7 @@ public class DeleteEntityPanel extends CRUDPanel {
                 = entity.getEntityMembers().iterator();
         String firstValue = itr.next().getValue();
         w.writeln("topPanel.add(" + firstValue + "Label);");
-        w.writeln("subPanel.add(" + firstValue + "Label2);");
+        w.writeln("subPanel.add(" + firstValue + "ViewLabel);");
         w.writeln("subPanel.add(SearchButton);");
         w.writeln("topPanel.add(subPanel);");
         while (itr.hasNext()) {

@@ -4,6 +4,8 @@ import Picocog.*;
 import CodeGeneration.*;
 import Utility.*;
 import java.io.IOException;
+import java.util.Iterator;
+import javafx.util.Pair;
 
 abstract class CRUDPanel {
     protected final Entity entity;
@@ -33,13 +35,25 @@ abstract class CRUDPanel {
         });
     }
 
-    protected void generateLabels2() {
-        entity.getEntityMembers().forEach((entityMember) -> {
-            w.writeln("private JLabel " + entityMember.getValue()
-                    + "Label2 = new JLabel(\"" 
-                    + Character.toUpperCase(entityMember.getValue().charAt(0)) 
-                    + entityMember.getValue().substring(1) + "\");");
-        });
+    protected void generateViewLabels() {
+        Iterator<Pair<String,String>> iterator = entity.getEntityMembers().iterator();
+        Pair<String,String> tempPair;
+        if(iterator.hasNext()) {
+            tempPair = iterator.next();
+            w.writeln("private JTextField " + entity.getEntityName() 
+                    + "ViewTextField = new JTextField(10);");
+        }
+        while(iterator.hasNext()) {
+            tempPair = iterator.next();
+            w.writeln("private JLabel " + tempPair.getValue()
+                    + "ViewLabel = new JLabel();");             
+        }
+//        entity.getEntityMembers().forEach((entityMember) -> {
+//            w.writeln("private JLabel " + entityMember.getValue()
+//                    + "ViewLabel = new JLabel()"); 
+//                    + Character.toUpperCase(entityMember.getValue().charAt(0)) 
+ //                   + entityMember.getValue().substring(1) + "\");");
+//        });
         
     }
     

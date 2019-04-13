@@ -9,13 +9,15 @@ public class TestEntity {
     
     public static void main(String[] args) throws IOException, SQLException {
         ArrayList<Pair<String, String>> entityMembers1 = new ArrayList<>();
-        EntityManager.setProjectName("School Management System");        
+        EntityManager.setProjectName("Rusk Manment System");        
         EntityManager.generateDBName();
         EntityManager.createDB();
         System.out.println(EntityManager.getDBName());
         GenerateDatabaseUtil.generateCode(EntityManager.getDBName());
-        entityMembers1.add(new Pair("int", "studentID"));
+        entityMembers1.add(new Pair("int", "ruskID"));
         entityMembers1.add(new Pair("String", "name"));
+        entityMembers1.add(new Pair("char", "secretCode"));
+        entityMembers1.add(new Pair("double", "randomDoubleValue"));
         Entity entity1 = new Entity("Student", entityMembers1);        
         CRUDLogicGenerator.writeClassName(entity1);
         CRUDLogicGenerator.generateAddEntity(entity1);

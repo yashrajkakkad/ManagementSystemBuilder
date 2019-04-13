@@ -96,6 +96,15 @@ public class UpdateEntityPanel extends CRUDPanel {
         w.writeln("JOptionPane.showMessageDialog(this,\"Unexpected error occured!\");");
         w.writeln_lr("} else {");
         w.writeln("JOptionPane.showMessageDialog(this,\"Data retrieved successfully!\");");
+        Iterator<Pair<String,String>> iterator = entity.getEntityMembers().iterator();
+//        iterator.next();
+        while(iterator.hasNext()) {
+            Pair<String,String> tempPair = iterator.next();
+            w.writeln(tempPair.getValue() + "TextField.setText(\"\" + retrieve"
+                    + entity.getEntityName() + ".get" 
+                    + Character.toUpperCase(((String)tempPair.getValue()).charAt(0)) 
+                    + ((String)tempPair.getValue()).substring(1) + "());");
+        }
 //                .append();
 //        entity.getEntityMembers().forEach((entityMember) -> {
 //            viewFunctionCall.append("\" + ").append(entityMember.getKey()).append(",").append(entityMember.getValue()).append(" + \", ");
