@@ -1,5 +1,4 @@
 //Pending, courtesy Ridham
-
 package GUIGeneration;
 
 import CodeGeneration.*;
@@ -9,13 +8,13 @@ import javafx.util.Pair;
 
 public class ViewEntityPanel extends CRUDPanel {
 
-    public void generateTextLabels(){
+    public void generateTextLabels() {
         entity.getEntityMembers().forEach((entityMember) -> {
             w.writeln("private JLabel view" + entityMember.getValue()
                     + "Label = new JLabel(\"" + entityMember.getValue() + "\");");
         });
     }
-    
+
     public ViewEntityPanel(Entity entity) throws IOException {
         super(entity);
         super.initialize("View" + entity.getEntityName() + "Panel");
@@ -33,31 +32,39 @@ public class ViewEntityPanel extends CRUDPanel {
 
     @Override
     protected void generateAddComponents() {
-        entity.getEntityMembers().forEach((entityMember) -> {
-            w.writeln("topPanel.add(" + entityMember.getValue() + "Label);");
-            w.writeln("topPanel.add(" + entityMember.getValue() + "ViewLabel);");
-        });
+        Iterator<Pair<String, String>> iterator = entity.getEntityMembers().iterator();
+        Pair<String, String> tempPair = iterator.next();
+        w.writeln("topPanel.add(" + tempPair.getValue() + "Label);");
+        w.writeln("topPanel.add(" + tempPair.getValue() + "ViewTextField);");
+//        entity.getEntityMembers().forEach((entityMember) -> {
+        while(iterator.hasNext()) {
+            tempPair = iterator.next();
+            w.writeln("topPanel.add(" + tempPair.getValue() + "Label);");
+            w.writeln("topPanel.add(" + tempPair.getValue() + "ViewLabel);");            
+        }
+//        });
         w.writeln("bottomPanel.add(ViewButton);");
         w.writeln("ViewButton.setMaximumSize(ViewButton.getPreferredSize());");
     }
 
     private void generateViewActionListener() {
-        w.writeln_r("ViewButton.addActionListener((e) -> {");        
+        w.writeln_r("ViewButton.addActionListener((e) -> {");
         StringBuilder viewFunctionCall = new StringBuilder("");
         viewFunctionCall.append("retrieve").append(entity.getEntityName())
                 .append(" = ").append(entity.getEntityName()).append("CRUD.view").append(entity.getEntityName()).append("(");
         switch (entity.getEntityMembers().get(0).getKey()) {
             case "int":
-                viewFunctionCall.append("Integer.parseInt(").append(entity.getEntityMembers().get(0).getValue()).append("Label2.getText())");
+                viewFunctionCall.append("Integer.parseInt(").append(entity.getEntityMembers().get(0).getValue()).append("ViewTextField"
+                        + ".getText())");
                 break;
             case "double":
-                viewFunctionCall.append("Double.parseDouble(").append(entity.getEntityMembers().get(0).getValue()).append("Label2.getText())");
+                viewFunctionCall.append("Double.parseDouble(").append(entity.getEntityMembers().get(0).getValue()).append("ViewTextField.getText())");
                 break;
             case "char":
-                viewFunctionCall.append(entity.getEntityMembers().get(0).getValue()).append("Label2.getText().charAt(0)");
+                viewFunctionCall.append(entity.getEntityMembers().get(0).getValue()).append("ViewTextField.getText().charAt(0)");
                 break;
             case "String":
-                viewFunctionCall.append(entity.getEntityMembers().get(0).getValue()).append("Label2.getText()");
+                viewFunctionCall.append(entity.getEntityMembers().get(0).getValue()).append("ViewTextField.getText()");
                 break;
         }
 
@@ -73,13 +80,13 @@ public class ViewEntityPanel extends CRUDPanel {
         w.writeln_lr("} else {");
         w.writeln("JOptionPane.showMessageDialog(this,\"Data retrieved successfully!\");");
 //        w.writeln("");
-        Iterator<Pair<String,String>> iterator = entity.getEntityMembers().iterator();
+        Iterator<Pair<String, String>> iterator = entity.getEntityMembers().iterator();
         iterator.next();
-        while(iterator.hasNext()) {
-            Pair<String,String> tempPair = iterator.next();
-            w.writeln(tempPair.getValue() + "ViewLabel.setText(retrieve" 
-                    + entity.getEntityName() + ".get" 
-                    + Character.toUpperCase(tempPair.getValue().charAt(0)) 
+        while (iterator.hasNext()) {
+            Pair<String, String> tempPair = iterator.next();
+            w.writeln(tempPair.getValue() + "ViewLabel.setText(\"\" + retrieve"
+                    + entity.getEntityName() + ".get"
+                    + Character.toUpperCase(tempPair.getValue().charAt(0))
                     + tempPair.getValue().substring(1) + "());");
         }
 //                .append();
@@ -99,11 +106,10 @@ public class ViewEntityPanel extends CRUDPanel {
 //            w.writeln("JLabel "+entityMember.getValue()+"Label2.setText(retrieved"+entity.getEntityName()+".get("+entityMember.getValue().substring(0, 1).toUpperCase() + entityMember.getValue().substring(1)+"));");
 //        });
         //viewFunctionCall.delete(viewFunctionCall.length()-6,viewFunctionCall.length());
-        
-        
+
         w.writeln_l("});");
     }
-    
+
     @Override
     protected final void generateConstructor() {
         w.writeln_r("public View" + entity.getEntityName() + "Panel() {");
@@ -119,5 +125,5 @@ public class ViewEntityPanel extends CRUDPanel {
         w.writeln("add(bottomPanel, BorderLayout.SOUTH);");
         w.writeln_l("}");
     }
-    
+
 }

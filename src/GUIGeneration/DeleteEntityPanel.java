@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUIGeneration;
 
 import CodeGeneration.Entity;
@@ -10,10 +5,6 @@ import java.io.IOException;
 import java.util.Iterator;
 import javafx.util.Pair;
 
-/**
- *
- * @author HP
- */
 public class DeleteEntityPanel extends CRUDPanel {
 
     public void generateTextLabels() {
@@ -50,13 +41,13 @@ public class DeleteEntityPanel extends CRUDPanel {
                 = entity.getEntityMembers().iterator();
         String firstValue = itr.next().getValue();
         w.writeln("topPanel.add(" + firstValue + "Label);");
-        w.writeln("subPanel.add(" + firstValue + "ViewLabel);");
+        w.writeln("subPanel.add(" + firstValue + "ViewTextField);");
         w.writeln("subPanel.add(SearchButton);");
         w.writeln("topPanel.add(subPanel);");
         while (itr.hasNext()) {
             String nextValue = itr.next().getValue();
             w.writeln("topPanel.add(" + nextValue + "Label);");
-            w.writeln("topPanel.add(" + nextValue + "Label2);");
+            w.writeln("topPanel.add(" + nextValue + "ViewLabel);");
         }
         w.writeln("bottomPanel.add(DeleteButton);");
         w.writeln("DeleteButton.setMaximumSize"
@@ -70,16 +61,16 @@ public class DeleteEntityPanel extends CRUDPanel {
                 .append(" = ").append(entity.getEntityName()).append("CRUD.view").append(entity.getEntityName()).append("(");
         switch (entity.getEntityMembers().get(0).getKey()) {
             case "int":
-                deleteFunctionCall.append("Integer.parseInt(").append(entity.getEntityMembers().get(0).getValue()).append("Label2.getText())");
+                deleteFunctionCall.append("Integer.parseInt(").append(entity.getEntityMembers().get(0).getValue()).append("ViewTextField.getText())");
                 break;
             case "double":
-                deleteFunctionCall.append("Double.parseDouble(").append(entity.getEntityMembers().get(0).getValue()).append("Label2.getText())");
+                deleteFunctionCall.append("Double.parseDouble(").append(entity.getEntityMembers().get(0).getValue()).append("ViewTextField.getText())");
                 break;
             case "char":
-                deleteFunctionCall.append(entity.getEntityMembers().get(0).getValue()).append("Label2.getText().charAt(0)");
+                deleteFunctionCall.append(entity.getEntityMembers().get(0).getValue()).append("ViewTextField.getText().charAt(0)");
                 break;
             case "String":
-                deleteFunctionCall.append(entity.getEntityMembers().get(0).getValue()).append("Label2.getText()");
+                deleteFunctionCall.append(entity.getEntityMembers().get(0).getValue()).append("ViewTextField.getText()");
                 break;
         }
 
@@ -94,6 +85,15 @@ public class DeleteEntityPanel extends CRUDPanel {
         w.writeln("JOptionPane.showMessageDialog(this,\"Unexpected error occured!\");");
         w.writeln_lr("} else {");
         w.writeln("JOptionPane.showMessageDialog(this,\"Data retrieved successfully!\");");
+        Iterator<Pair<String, String>> iterator = entity.getEntityMembers().iterator();
+        iterator.next();
+        while (iterator.hasNext()) {
+            Pair<String, String> tempPair = iterator.next();
+            w.writeln(tempPair.getValue() + "ViewLabel.setText(\"\" + retrieve"
+                    + entity.getEntityName() + ".get"
+                    + Character.toUpperCase(tempPair.getValue().charAt(0))
+                    + tempPair.getValue().substring(1) + "());");
+        }        
         w.writeln_l("}");
         w.writeln_l("});");
 
@@ -104,7 +104,7 @@ public class DeleteEntityPanel extends CRUDPanel {
 //        entity.getEntityMembers().forEach((entityMember) -> {
 //            //deleteFunctionCall.append("\" + ").append(entityMember.getKey()).append(",").append(entityMember.getValue()).append(" + \", ");
 //            w.writeln("JLabel "+ entityMember.getValue() + "Label.setText(\""+entityMember.getValue()+"\" );");
-//            w.writeln("JLabel "+entityMember.getValue()+"Label2.setText(retrieved"+entity.getEntityName()+".get("+entityMember.getValue().substring(0, 1).toUpperCase() + entityMember.getValue().substring(1)+"));");
+//            w.writeln("JLabel "+entityMember.getValue()+"ViewLabel.setText(retrieved"+entity.getEntityName()+".get("+entityMember.getValue().substring(0, 1).toUpperCase() + entityMember.getValue().substring(1)+"));");
 //        });
         //deleteFunctionCall.delete(deleteFunctionCall.length()-6,deleteFunctionCall.length());
     }
@@ -114,23 +114,23 @@ public class DeleteEntityPanel extends CRUDPanel {
         StringBuilder deleteFunctionCall = new StringBuilder("isDeleted = "+entity.getEntityName()+"CRUD.delete" + entity.getEntityName() + "(");
         switch (entity.getEntityMembers().get(0).getKey()) {
             case "int":
-                deleteFunctionCall.append("Integer.parseInt(").append(entity.getEntityMembers().get(0).getValue()).append("Label2.getText())");
+                deleteFunctionCall.append("Integer.parseInt(").append(entity.getEntityMembers().get(0).getValue()).append("ViewTextField.getText())");
                 break;
             case "double":
-                deleteFunctionCall.append("Double.parseDouble(").append(entity.getEntityMembers().get(0).getValue()).append("Label2.getText())");
+                deleteFunctionCall.append("Double.parseDouble(").append(entity.getEntityMembers().get(0).getValue()).append("ViewTextField.getText())");
                 break;
             case "char":
-                deleteFunctionCall.append(entity.getEntityMembers().get(0).getValue()).append("Label2.getText().charAt(0)");
+                deleteFunctionCall.append(entity.getEntityMembers().get(0).getValue()).append("ViewTextField.getText().charAt(0)");
                 break;
             case "String":
-                deleteFunctionCall.append(entity.getEntityMembers().get(0).getValue()).append("Label2.getText()");
+                deleteFunctionCall.append(entity.getEntityMembers().get(0).getValue()).append("ViewTextField.getText()");
                 break;
         }
 
 //        entity.getEntityMembers().forEach((entityMember) -> {
 //        deleteFunctionCall.append(entity.getEntityMembers().get(0).getKey()).append("\",\"").append(entity.getEntityMembers().get(0).getValue()).append("\" ");
         //w.writeln("JLabel "+ entityMember.getValue() + "Label.setText(\""+entityMember.getValue()+"\" );");
-        //w.writeln("JLabel "+entityMember.getValue()+"Label2.setText("+entity.getEntityName()+".get("+entityMember.getValue().substring(0, 1).toUpperCase() + entityMember.getValue().substring(1)+"));");
+        //w.writeln("JLabel "+entityMember.getValue()+"ViewLabel.setText("+entity.getEntityName()+".get("+entityMember.getValue().substring(0, 1).toUpperCase() + entityMember.getValue().substring(1)+"));");
 //        });
         //deleteFunctionCall.delete(deleteFunctionCall.length()-6,deleteFunctionCall.length());
         deleteFunctionCall.append(");");

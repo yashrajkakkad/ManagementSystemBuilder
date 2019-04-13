@@ -40,7 +40,8 @@ abstract class CRUDPanel {
         Pair<String,String> tempPair;
         if(iterator.hasNext()) {
             tempPair = iterator.next();
-            w.writeln("private JTextField " + entity.getEntityName() 
+            w.writeln("private JTextField " 
+                    + entity.getEntityMembers().get(0).getValue() 
                     + "ViewTextField = new JTextField(10);");
         }
         while(iterator.hasNext()) {
