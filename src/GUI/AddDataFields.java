@@ -210,11 +210,29 @@ public class AddDataFields extends JPanel
                 for (int i = 0; i <= rowCount; i++) {
                     datafieldList.add(new Pair(comboboxToDatatype((String)dataTypes.get(i).getSelectedItem()),dataFields.get(i).getText()));
                 }
-                Entity entity1;
                 try {
-                    entity1 = new Entity(AddEntity.getCurrentEntityName(), datafieldList);
-                    EntityManager.addEntity(entity1);
-                    DefineEntityPanels.addLine(entity1);
+                    boolean exists = false;
+                    int index = 0;
+                    Entity entity1 = null;
+                    for (int i=0; i<EntityManager.getEntities().size(); ++i)
+                    {
+                        if (AddEntity.getCurrentEntityName().equals(EntityManager.getEntities().get(i).getEntityName()))
+                        {
+                            exists = true;
+                            index = i;
+                        }
+                    }
+                    if (!exists)
+                    {
+                        entity1 = new Entity(AddEntity.getCurrentEntityName(), datafieldList);
+                        EntityManager.addEntity(entity1);
+                    }
+                    else
+                    {
+                        entity1 = new Entity(AddEntity.getCurrentEntityName(), datafieldList);
+                        EntityManager.getEntities().set(index,entity1);
+                    }
+                    //DefineEntityPanels.addLine(entity1);
                     CRUDLogicGenerator.writeClassName(entity1);
                     CRUDLogicGenerator.generateAddEntity(entity1);
                     CRUDLogicGenerator.generateDeleteEntity(entity1);

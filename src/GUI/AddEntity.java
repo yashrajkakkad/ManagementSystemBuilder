@@ -6,6 +6,8 @@ package GUI;
  */
 
 
+import CodeGeneration.EntityManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -219,6 +221,11 @@ public class AddEntity extends JPanel
             if (btnPressedCount >= entityCount)
             {
                 JOptionPane.showMessageDialog(null, "DONE! Your system has been created!");
+                System.out.println(EntityManager.getEntities().size());
+                for (int i = 0; i < EntityManager.getEntities().size(); ++i)
+                {
+                    DefineEntityPanels.addLine(EntityManager.getEntities().get(i));
+                }
                 SystemCreationRootPanel.changeSystemCreationProcessPanel(3);
             }
             else
