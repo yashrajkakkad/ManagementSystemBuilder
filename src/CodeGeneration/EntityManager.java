@@ -32,7 +32,11 @@ public final class EntityManager {
     public static String getDirectoryName() {
         return directoryName;
     }
-    
+
+    public static ArrayList<Entity> getEntities() {
+        return entities;
+    }
+        
     public static void setProjectName(String projectName) throws IOException {
         EntityManager.projectName = projectName;
         createDirectory();
