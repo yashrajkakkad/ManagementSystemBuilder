@@ -92,18 +92,17 @@ public class MainFrame {
             if (previousEntity.getEntityName().equals(tempPair.getKey().getEntityName())) {
                 count++;
             } else {
-                while (count <= 4) {
-                    w.writeln("homePanel.add(new JLabel());");
+                while (count < 4) {
+                    w.writeln("homePanel.add(new JLabel(\"\"));");
                     count++;
                 }
                 w.writeln("JLabel " + tempPair.getKey().getEntityName()
                         + "Label = new JLabel(\"" + tempPair.getKey().getEntityName() + "\");");
                 w.writeln("homePanel.add(" + tempPair.getKey().getEntityName() + "Label);");
-                w.writeln("homePanel.add(new JLabel());");
-                w.writeln("homePanel.add(new JLabel());");
-                w.writeln("homePanel.add(new JLabel());");
-
-                count = 0;
+                w.writeln("homePanel.add(new JLabel(\"\"));");
+                w.writeln("homePanel.add(new JLabel(\"\"));");
+                w.writeln("homePanel.add(new JLabel(\"\"));");
+                count = 1;
             }
             w.writeln("JButton " + codeToString(tempPair.getValue())
                     + tempPair.getKey().getEntityName()
@@ -118,8 +117,6 @@ public class MainFrame {
             w.writeln_l("});");
             previousEntity = tempPair.getKey();
         }
-//        w.writeln_l("}");
-//        w.writeln("add(new JScrollPane(new AddStudentPanel()), BorderLayout.CENTER);");
         w.writeln("JPanel bottomPanel = new JPanel();");
         w.writeln("add(bottomPanel,BorderLayout.SOUTH);");
         w.writeln("bottomPanel.setLayout(new GridLayout(1,3,10,10));");

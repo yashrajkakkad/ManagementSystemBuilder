@@ -94,7 +94,7 @@ public class SystemMenu extends JPanel
                     } catch (IOException | SQLException ex) {
                         Logger.getLogger(SystemMenu.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    HomePageFrame.changeRootPanel(3);
+                    Main.changeRootPanel(3);
                 }
                 else
                 {

@@ -244,7 +244,7 @@ public class AddEntity extends JPanel
                     JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (response == JOptionPane.YES_OPTION)
             {
-                HomePageFrame.changeRootPanel(2);
+                Main.changeRootPanel(2);
             }
         });
         bottomPanel.add(cancelButton,bc);

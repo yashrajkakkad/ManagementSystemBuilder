@@ -75,7 +75,7 @@ public class LoginPage extends JPanel {
                             if (DatabaseUtil.rs.next()) {
                                 JOptionPane.showMessageDialog(null, "Login Sucessfull");
                                 DefineContactUsPanel.setCurrentUser(username.getText());
-                                HomePageFrame.changeRootPanel(2);
+                                Main.changeRootPanel(2);
                             } else {
                                 JOptionPane.showMessageDialog(null, "Username or password incorrect");
                                 username.requestFocus();
@@ -114,7 +114,7 @@ public class LoginPage extends JPanel {
         openSignUpPage.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                HomePageFrame.changeLoginPanel(0);
+                Main.changeLoginPanel(0);
             }
 
             @Override

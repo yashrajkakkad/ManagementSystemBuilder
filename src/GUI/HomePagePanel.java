@@ -33,7 +33,7 @@ public class HomePagePanel extends JPanel
             @Override
             public void mouseClicked(MouseEvent e)
             {
-                HomePageFrame.changeRootPanel(1);
+                Main.changeRootPanel(1);
             }
 
             @Override

@@ -80,12 +80,12 @@ public class SystemCreationRootPanel extends JPanel
                 Runtime.getRuntime().exec("cmd /c start cmd.exe /K \""+command.toString()+"\"");
                 try
                 {
-                    Thread.sleep(7500);
+                    Thread.sleep(10000);
                 } catch (InterruptedException ex)
                 {
                     ex.printStackTrace();
                 }
- //               Runtime.getRuntime().exec("taskkill /f /im cmd.exe");
+                Runtime.getRuntime().exec("taskkill /f /im cmd.exe");
             } catch (IOException ex)
             {
                 ex.printStackTrace();

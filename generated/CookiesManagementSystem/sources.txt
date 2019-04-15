@@ -1,0 +1,16 @@
+F:\Java\ManagementSystemBuilder\generated\CookiesManagementSystem\AboutPanel.java
+F:\Java\ManagementSystemBuilder\generated\CookiesManagementSystem\AddCookyPanel.java
+F:\Java\ManagementSystemBuilder\generated\CookiesManagementSystem\AddDockyPanel.java
+F:\Java\ManagementSystemBuilder\generated\CookiesManagementSystem\Cocky.java
+F:\Java\ManagementSystemBuilder\generated\CookiesManagementSystem\CockyCRUD.java
+F:\Java\ManagementSystemBuilder\generated\CookiesManagementSystem\Cooky.java
+F:\Java\ManagementSystemBuilder\generated\CookiesManagementSystem\CookyCRUD.java
+F:\Java\ManagementSystemBuilder\generated\CookiesManagementSystem\DatabaseUtil.java
+F:\Java\ManagementSystemBuilder\generated\CookiesManagementSystem\DeleteCockyPanel.java
+F:\Java\ManagementSystemBuilder\generated\CookiesManagementSystem\DeleteCookyPanel.java
+F:\Java\ManagementSystemBuilder\generated\CookiesManagementSystem\Docky.java
+F:\Java\ManagementSystemBuilder\generated\CookiesManagementSystem\DockyCRUD.java
+F:\Java\ManagementSystemBuilder\generated\CookiesManagementSystem\Email.java
+F:\Java\ManagementSystemBuilder\generated\CookiesManagementSystem\MainFrame.java
+F:\Java\ManagementSystemBuilder\generated\CookiesManagementSystem\UpdateCockyPanel.java
+F:\Java\ManagementSystemBuilder\generated\CookiesManagementSystem\UpdateCookyPanel.java

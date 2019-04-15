@@ -100,7 +100,7 @@ public class SignUpPage extends JPanel
                                 System.out.println("Exception caught during registration " + ex);
                             }
                             DefineContactUsPanel.setCurrentUser(username.getText());
-                            HomePageFrame.changeRootPanel(2);
+                            Main.changeRootPanel(2);
                         }
                         else
                         {
@@ -147,7 +147,7 @@ public class SignUpPage extends JPanel
             @Override
             public void mouseClicked(MouseEvent e)
             {
-                HomePageFrame.changeLoginPanel(1);
+                Main.changeLoginPanel(1);
             }
 
             @Override public void mousePressed(MouseEvent e){}
