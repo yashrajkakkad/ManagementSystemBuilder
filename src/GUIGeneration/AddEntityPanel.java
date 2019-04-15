@@ -13,25 +13,6 @@ public class AddEntityPanel extends CRUDPanel {
         super.finish("Add" + entity.getEntityName() + "Panel");
     }
 
-//    private void generateLabels() {
-//        entity.getEntityMembers().forEach((entityMember) -> {
-//            w.writeln("private JLabel " + entityMember.getValue()
-//                    + "Label = new JLabel(\"" + entityMember.getValue() + "\");");
-//        });
-//    }
-//
-//    private void generateTextFields() {
-//        entity.getEntityMembers().forEach((entityMember) -> {
-//            w.writeln("private JTextField " + entityMember.getValue()
-//                    + "TextField = new JTextField();");
-//        });
-//    }
-
-//    private void generateButton() {
-//        w.writeln("JButton addButton = new JButton(\"Add "
-//                + entity.getEntityName() + "\");");
-//    }
-
     @Override
     protected final void generateComponents() {
         generateLabels();
@@ -49,41 +30,11 @@ public class AddEntityPanel extends CRUDPanel {
         w.writeln("AddButton.setMaximumSize(AddButton.getPreferredSize());");
     }
 
-//    private void generateButtonActionListener() {
-//        w.writeln_r("addButton.setOnAction((e) -> {");
-//        StringBuilder insertQuery = new StringBuilder("INSERT INTO tbl_");
-//        insertQuery.append(entity.getEntityName().toLowerCase())
-//                .append(" VALUES (");
-//        entity.getEntityMembers().forEach((entityMember) -> {
-//            if(entityMember.getKey().equals("String") 
-//                    || entityMember.getKey().equals("char"))
-//                insertQuery.append('\'').append(entityMember.getValue())
-//                        .append('\'').append(", ");
-//            else {
-//                insertQuery.append(entityMember.getValue()).append(", ");                
-//            }
-//        });
-//        insertQuery.deleteCharAt(insertQuery.length()-2);
-//        insertQuery.append(");");
-//        w.writeln("String insertQuery = \"" + insertQuery.toString() + "\";");
-//        w.writeln("int i = DatabaseUtil.stmt.executeUpdate(insertQuery);");
-//        w.writeln_r("if(i==1) {");
-//        w.writeln("JOptionPane.showMessageDialog(this,\"" 
-//                + entity.getEntityName() + " added successfully!\");");
-//        w.writeln_lr("} else if {");
-//        w.writeln("JOptionPane.showMessageDialog(this,"
-//                + "\"Unexpected error occured. It might be due to "
-//                + "faulty internet or duplication in your primary key!\");");
-//        w.writeln_l("}");
-//        w.writeln_l("});");        
-//    }
-    
     private void generateButtonActionListener() {
         w.writeln_r("AddButton.addActionListener((e) -> {");
         StringBuilder addFunctionCall = new StringBuilder("isAdded = "+entity.getEntityName()+"CRUD.add" +entity.getEntityName() + "(");
         addFunctionCall.append("new ").append(entity.getEntityName()).append("(");
         entity.getEntityMembers().forEach((entityMember) -> {
-//            addFunctionCall.append(entityMember.getValue()).append("TextField.getText()").append(" + \", ");
               switch(entityMember.getKey()) {
                   case "int":
                       addFunctionCall.append("Integer.parseInt(")
@@ -105,7 +56,6 @@ public class AddEntityPanel extends CRUDPanel {
                       break;
               }
         });        
-//        addFunctionCall.delete(addFunctionCall.length()-6, addFunctionCall.length());
         addFunctionCall.deleteCharAt(addFunctionCall.length()-1);
         addFunctionCall.deleteCharAt(addFunctionCall.length()-1);
         addFunctionCall.append("));");

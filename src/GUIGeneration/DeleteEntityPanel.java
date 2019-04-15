@@ -96,17 +96,6 @@ public class DeleteEntityPanel extends CRUDPanel {
         }        
         w.writeln_l("}");
         w.writeln_l("});");
-
-//        StringBuilder deleteFunctionCall = new StringBuilder( entity.getEntityName() + " retrieve"+entity.getEntityName()+ " =  view"+entity.getEntityName()+"(\"");
-//        
-//        deleteFunctionCall.append(entity.getEntityMembers().get(0).getKey()).append("\",\"").append(entity.getEntityMembers().get(0).getValue()).append("\"); ");
-//        w.writeln(deleteFunctionCall.toString());
-//        entity.getEntityMembers().forEach((entityMember) -> {
-//            //deleteFunctionCall.append("\" + ").append(entityMember.getKey()).append(",").append(entityMember.getValue()).append(" + \", ");
-//            w.writeln("JLabel "+ entityMember.getValue() + "Label.setText(\""+entityMember.getValue()+"\" );");
-//            w.writeln("JLabel "+entityMember.getValue()+"ViewLabel.setText(retrieved"+entity.getEntityName()+".get("+entityMember.getValue().substring(0, 1).toUpperCase() + entityMember.getValue().substring(1)+"));");
-//        });
-        //deleteFunctionCall.delete(deleteFunctionCall.length()-6,deleteFunctionCall.length());
     }
 
     private void generateDeleteActionListener() {
@@ -127,12 +116,6 @@ public class DeleteEntityPanel extends CRUDPanel {
                 break;
         }
 
-//        entity.getEntityMembers().forEach((entityMember) -> {
-//        deleteFunctionCall.append(entity.getEntityMembers().get(0).getKey()).append("\",\"").append(entity.getEntityMembers().get(0).getValue()).append("\" ");
-        //w.writeln("JLabel "+ entityMember.getValue() + "Label.setText(\""+entityMember.getValue()+"\" );");
-        //w.writeln("JLabel "+entityMember.getValue()+"ViewLabel.setText("+entity.getEntityName()+".get("+entityMember.getValue().substring(0, 1).toUpperCase() + entityMember.getValue().substring(1)+"));");
-//        });
-        //deleteFunctionCall.delete(deleteFunctionCall.length()-6,deleteFunctionCall.length());
         deleteFunctionCall.append(");");
         w.writeln("boolean isDeleted" + " = false;");
         w.writeln_r("try {");

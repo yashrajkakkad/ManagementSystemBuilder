@@ -1,4 +1,3 @@
-//Pending, courtesy Ridham
 package GUIGeneration;
 
 import CodeGeneration.*;
@@ -36,13 +35,11 @@ public class ViewEntityPanel extends CRUDPanel {
         Pair<String, String> tempPair = iterator.next();
         w.writeln("topPanel.add(" + tempPair.getValue() + "Label);");
         w.writeln("topPanel.add(" + tempPair.getValue() + "ViewTextField);");
-//        entity.getEntityMembers().forEach((entityMember) -> {
         while(iterator.hasNext()) {
             tempPair = iterator.next();
             w.writeln("topPanel.add(" + tempPair.getValue() + "Label);");
             w.writeln("topPanel.add(" + tempPair.getValue() + "ViewLabel);");            
         }
-//        });
         w.writeln("bottomPanel.add(ViewButton);");
         w.writeln("ViewButton.setMaximumSize(ViewButton.getPreferredSize());");
     }
@@ -79,7 +76,6 @@ public class ViewEntityPanel extends CRUDPanel {
         w.writeln("JOptionPane.showMessageDialog(this,\"Unexpected error occured!\");");
         w.writeln_lr("} else {");
         w.writeln("JOptionPane.showMessageDialog(this,\"Data retrieved successfully!\");");
-//        w.writeln("");
         Iterator<Pair<String, String>> iterator = entity.getEntityMembers().iterator();
         iterator.next();
         while (iterator.hasNext()) {
@@ -89,24 +85,7 @@ public class ViewEntityPanel extends CRUDPanel {
                     + Character.toUpperCase(tempPair.getValue().charAt(0))
                     + tempPair.getValue().substring(1) + "());");
         }
-//                .append();
-//        entity.getEntityMembers().forEach((entityMember) -> {
-//            viewFunctionCall.append("\" + ").append(entityMember.getKey()).append(",").append(entityMember.getValue()).append(" + \", ");
-//           w.writeln("JLabel2 "+entityMember.getValue()+"Label2.setText("+entity.getEntityName()+".get("+entityMember.getValue().substring(0, 1).toUpperCase() + entityMember.getValue().substring(1)+"));");
-//        });
-//        viewFunctionCall.delete(viewFunctionCall.length()-6,viewFunctionCall.length());                
         w.writeln_l("}");
-//        StringBuilder viewFunctionCall = new StringBuilder( entity.getEntityName() + " retrieve"+entity.getEntityName()+ " =  view"+entity.getEntityName()+"(\"");
-//        
-//        viewFunctionCall.append(entity.getEntityMembers().get(0).getKey()).append("\",\"").append(entity.getEntityMembers().get(0).getValue()).append("\"); ");
-//        w.writeln(viewFunctionCall.toString());
-//        entity.getEntityMembers().forEach((entityMember) -> {
-//            //viewFunctionCall.append("\" + ").append(entityMember.getKey()).append(",").append(entityMember.getValue()).append(" + \", ");
-//            w.writeln("JLabel "+ entityMember.getValue() + "Label.setText(\""+entityMember.getValue()+"\" );");
-//            w.writeln("JLabel "+entityMember.getValue()+"Label2.setText(retrieved"+entity.getEntityName()+".get("+entityMember.getValue().substring(0, 1).toUpperCase() + entityMember.getValue().substring(1)+"));");
-//        });
-        //viewFunctionCall.delete(viewFunctionCall.length()-6,viewFunctionCall.length());
-
         w.writeln_l("});");
     }
 
