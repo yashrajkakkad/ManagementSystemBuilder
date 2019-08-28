@@ -4,14 +4,15 @@ Generates entityName.java file with data fields, getters and setters
 
 package CodeGeneration;
 
+import Picocog.PicoWriter;
+import Utility.DatabaseUtil;
+import javafx.util.Pair;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import javafx.util.Pair;
-import Picocog.*;
-import Utility.*;
 
 public class Entity {
 
@@ -102,7 +103,7 @@ public class Entity {
     }
 
     private void generateCode() throws IOException {        
-        File writeFile = new File(EntityManager.getDirectoryName() + "\\"+ entityName + ".java");
+        File writeFile = new File(EntityManager.getDirectoryName() + "/"+ entityName + ".java");
         FileWriter out = new FileWriter(writeFile);
         out.write(w.toString());
         out.close();

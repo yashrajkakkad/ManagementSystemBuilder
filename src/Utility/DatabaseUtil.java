@@ -4,8 +4,8 @@ import java.sql.*;
 
 public class DatabaseUtil {
 
-    public static String dbURL = "jdbc:mysql://134.209.159.227:3306/db_mansys";
-    public static String rootURL = "jdbc:mysql://134.209.159.227:3306";
+    public static String dbURL = "jdbc:mysql://192.241.249.93:3306/db_mansys";
+    public static String rootURL = "jdbc:mysql://192.241.249.93:3306";
     public static Connection con = null;
     public static Statement stmt;
     public static ResultSet rs;

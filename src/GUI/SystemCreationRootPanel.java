@@ -5,7 +5,9 @@ import GUIGeneration.MainFrame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class SystemCreationRootPanel extends JPanel
 {
@@ -13,6 +15,7 @@ public class SystemCreationRootPanel extends JPanel
     private static JPanel systemCreationCardPanel;
     private static JLabel placeFiller;
     private static JButton startYourSystembtn;
+    private String currentDirectory = System.getProperty("user.dir");
 
     public SystemCreationRootPanel()
     {
@@ -61,43 +64,82 @@ public class SystemCreationRootPanel extends JPanel
         bottomPanel.add(startYourSystembtn,bc);
         startYourSystembtn.addActionListener(e ->
         {
-            StringBuilder command = new StringBuilder("");
-            String currentDirectory = System.getProperty("user.dir");
-            command.append("cd ").append(currentDirectory).append(" && ")
-                    .append("xcopy production ").append(currentDirectory)
-                    .append("\\").append(EntityManager.getDirectoryName())
-                    .append(" /i /s && ")
-                    .append("cd ").append(currentDirectory).append("\\")
-                    .append(EntityManager.getDirectoryName()).append(" && ")
-                    .append("dir /s /B *.java > sources.txt && ")
-                    .append("javac -cp \"mysql-connector-java-5.1.11-bin.jar;javax.mail.jar;activation.jar\" @sources.txt -d out && ")
-                    .append("jar cfm ").append(EntityManager.getProjectName()).append(".jar").append(" Manifest.txt -C out/ . && ")
-                    .append("java -jar ").append(EntityManager.getProjectName()).append(".jar && ")
-                    .append("exit");
-            System.out.println(command.toString());
-            try
+            if (System.getProperty("os.name").startsWith("Windows")){
+                createJARWindows();
+            }
+            else
             {
-                Runtime.getRuntime().exec("cmd /c start cmd.exe /K \""+command.toString()+"\"");
-                try
-                {
-                    Thread.sleep(10000);
-                } catch (InterruptedException ex)
-                {
+                try {
+                    createJARLinux();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-                Runtime.getRuntime().exec("taskkill /f /im cmd.exe");
-            } catch (IOException ex)
-            {
-                ex.printStackTrace();
-            }
-            try
-            {
-                MainFrame mainFrame = new MainFrame();
-            } catch (IOException ex)
-            {
-                ex.printStackTrace();
             }
         });
+    }
+
+    public void createJARWindows(){
+    StringBuilder command = new StringBuilder("");
+    command.append("cd ").append(currentDirectory).append(" && ")
+            .append("xcopy production ").append(currentDirectory)
+            .append("\\").append(EntityManager.getDirectoryName())
+            .append(" /i /s && ")
+            .append("cd ").append(currentDirectory).append("\\")
+            .append(EntityManager.getDirectoryName()).append(" && ")
+            .append("dir /s /B *.java > sources.txt && ")
+            .append("javac -cp \"mysql-connector-java-5.1.11-bin.jar;javax.mail.jar;activation.jar\" @sources.txt -d out && ")
+            .append("jar cfm ").append(EntityManager.getProjectName()).append(".jar").append(" Manifest.txt -C out/ . && ")
+            .append("java -jar ").append(EntityManager.getProjectName()).append(".jar && ")
+            .append("exit");
+    System.out.println(command.toString());
+    try
+    {
+        Runtime.getRuntime().exec("cmd /c start cmd.exe /K \""+command.toString()+"\"");
+        try
+        {
+            Thread.sleep(10000);
+        } catch (InterruptedException ex)
+        {
+            ex.printStackTrace();
+        }
+        Runtime.getRuntime().exec("taskkill /f /im cmd.exe");
+    } catch (IOException ex)
+    {
+        ex.printStackTrace();
+    }
+    try
+    {
+        MainFrame mainFrame = new MainFrame();
+    } catch (IOException ex)
+    {
+        ex.printStackTrace();
+    }
+}
+
+    public void createJARLinux() throws InterruptedException, IOException {
+
+        StringBuilder command = new StringBuilder("");
+        command.append("cp -r production generated && ")
+                .append("cd ").append(currentDirectory).append("/").append(EntityManager.getDirectoryName()).append(" && ")
+                .append("ls *.java >> sources.txt && ")
+                .append("javac -cp \"mysql-connector-java-5.1.11-bin.jar;javax.mail.jar;activation.jar\" @sources.txt -d out && ")
+                .append("jar cfm ").append(EntityManager.getProjectName()).append(".jar").append(" Manifest.txt -C out/ . && ")
+                .append("java -jar ").append(EntityManager.getProjectName()).append(".jar && ");
+
+        Process process = null;
+        try {
+            process = Runtime.getRuntime().exec(command.toString());
+            process.waitFor();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            System.out.println(line);
+        }
     }
 
     public static void changeSystemCreationProcessPanel(int code)

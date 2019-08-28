@@ -151,7 +151,7 @@ public class MainFrame {
 
     private void generateCode() throws IOException {
         File writeFile = new File(EntityManager.getDirectoryName()
-                + "\\MainFrame.java");
+                + "/MainFrame.java");
         FileWriter out = new FileWriter(writeFile);
         out.write(w.toString());
         out.close();

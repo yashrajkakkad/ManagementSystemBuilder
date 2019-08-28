@@ -15,7 +15,7 @@ public class GenerateDatabaseUtil {
         w.writeln("");
         w.writeln_r("public class DatabaseUtil {");
         w.writeln("");
-        w.writeln("static String dbURL = \"jdbc:mysql://134.209.159.227:3306/" +EntityManager.getDBName()+ "\";");
+        w.writeln("static String dbURL = \"jdbc:mysql://192.241.249.93:3306/" +EntityManager.getDBName()+ "\";");
         w.writeln("static Connection con = null;");
         w.writeln("static Statement stmt;");
         w.writeln("static ResultSet rs;");
@@ -51,7 +51,7 @@ public class GenerateDatabaseUtil {
 //        DatabaseUtil.con.close();        
 //        DatabaseUtil.con = DriverManager.getConnection("jdbc:mysql://134.209.159.227:3306", "mansys", "sysman$");
 //        DatabaseUtil.stmt = DatabaseUtil.con.createStatement();
-        File writeFile = new File(EntityManager.getDirectoryName() + "\\" + "DatabaseUtil.java");
+        File writeFile = new File(EntityManager.getDirectoryName() + "/" + "DatabaseUtil.java");
         try (FileWriter out = new FileWriter(writeFile)) {
             out.write(w.toString());
         }

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo $PWD
+cp -r production generated
+echo "DONE"

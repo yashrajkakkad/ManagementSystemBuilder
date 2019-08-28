@@ -107,7 +107,7 @@ public class LoginPage extends JPanel {
 
         c.gridy += 2;
         c.anchor = GridBagConstraints.LINE_START;
-        JLabel openSignUpPage = new JLabel("Haven't registered yet? Login here.");
+        JLabel openSignUpPage = new JLabel("Haven't registered yet? Sign up here.");
         openSignUpPage.setFont(new Font("Century Gothic", Font.PLAIN, 24));
         add(openSignUpPage, c);
 
