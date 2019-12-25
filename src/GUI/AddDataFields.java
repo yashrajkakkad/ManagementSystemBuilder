@@ -208,7 +208,7 @@ public class AddDataFields extends JPanel
             {
                 ArrayList<Pair<String, String>> datafieldList = new ArrayList<>();
                 for (int i = 0; i <= rowCount; i++) {
-                    datafieldList.add(new Pair(comboboxToDatatype((String)dataTypes.get(i).getSelectedItem()),dataFields.get(i).getText()));
+                    datafieldList.add(new Pair(comboboxToDatatype((String)dataTypes.get(i).getSelectedItem()),dataFields.get(i).getText().trim().toLowerCase().replaceAll(" ", "")));
                 }
                 try {
                     boolean exists = false;
@@ -224,12 +224,12 @@ public class AddDataFields extends JPanel
                     }
                     if (!exists)
                     {
-                        entity1 = new Entity(AddEntity.getCurrentEntityName(), datafieldList);
+                        entity1 = new Entity(AddEntity.getCurrentEntityName().trim().toLowerCase().replaceAll(" ", ""), datafieldList);
                         EntityManager.addEntity(entity1);
                     }
                     else
                     {
-                        entity1 = new Entity(AddEntity.getCurrentEntityName(), datafieldList);
+                        entity1 = new Entity(AddEntity.getCurrentEntityName().trim().toLowerCase().replaceAll(" ", ""), datafieldList);
                         EntityManager.getEntities().set(index,entity1);
                     }
                     //DefineEntityPanels.addLine(entity1);

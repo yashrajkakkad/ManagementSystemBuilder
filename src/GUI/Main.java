@@ -2,6 +2,7 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class Main extends JFrame {
 
@@ -10,7 +11,7 @@ public class Main extends JFrame {
     private static JPanel loginModulePanel = new JPanel();
     private static JPanel rootPanel = new JPanel();
 
-    public Main() {
+    public Main() throws IOException {
         createView();
         setTitle("Management System Builder");
         setIconImage(new ImageIcon("MSBtransparent.png").getImage());
@@ -19,7 +20,7 @@ public class Main extends JFrame {
         setVisible(true);
     }
 
-    private void createView() {
+    private void createView() throws IOException {
         add(rootPanel);
         rootPanel.setLayout(rootCardLayout);
 
@@ -72,7 +73,11 @@ public class Main extends JFrame {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Main();
+                try {
+                    new Main();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

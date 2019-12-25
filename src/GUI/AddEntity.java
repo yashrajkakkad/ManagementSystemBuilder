@@ -128,7 +128,7 @@ public class AddEntity extends JPanel
             if (rowCount > -1)
             {
                 int response = JOptionPane.showConfirmDialog(null,
-                        "Are you sure to delete this datafield?", "Warning",
+                        "Are you sure to delete this entity?", "Warning",
                         JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                 if (response == JOptionPane.YES_OPTION)
                 {

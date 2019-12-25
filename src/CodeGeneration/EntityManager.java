@@ -38,7 +38,7 @@ public final class EntityManager {
     }
         
     public static void setProjectName(String projectName) throws IOException {
-        EntityManager.projectName = projectName;
+        EntityManager.projectName = projectName.trim().toLowerCase().replaceAll(" ", "");
         createDirectory();
     }
 
@@ -47,7 +47,7 @@ public final class EntityManager {
     }
     
     public static void generateDBName() {
-        DBName = "db_" + projectName.trim().toLowerCase().replaceAll(" ", "");
+        DBName = "db_" + projectName;
     }
 
     public static void createDB() throws SQLException {
