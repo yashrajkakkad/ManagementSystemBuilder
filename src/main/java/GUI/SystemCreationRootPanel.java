@@ -107,10 +107,10 @@ public class SystemCreationRootPanel extends JPanel {
         System.out.println(jar);
 
         StringBuilder command_string = new StringBuilder("");
-        command_string.append("cd ").append(currentDirectory).append(" && ").append("xcopy production ")
-                .append(currentDirectory).append("\\").append(EntityManager.getDirectoryName()).append(" /i /s && ")
-                .append("cd ").append(currentDirectory).append("\\").append(EntityManager.getDirectoryName())
-                .append(" && ").append("dir /s /B *.java > sources.txt").append(" && ")
+        command_string.append("cd \"").append(currentDirectory).append("\" && ").append("xcopy deps \"")
+                .append(currentDirectory).append("\\").append(EntityManager.getDirectoryName()).append("\" /i /s && ")
+                .append("cd \"").append(currentDirectory).append("\\").append(EntityManager.getDirectoryName())
+                .append("\" && ").append("dir /s /B *.java > sources.txt").append(" && ")
                 .append("\"" + javac
                         + "\" -cp \"mysql-connector-java-5.1.11-bin.jar;javax.mail.jar;activation.jar\" @sources.txt -d out && ")
                 .append("\"" + jar + "\" cfm ").append(EntityManager.getProjectName()).append(".jar")
@@ -140,9 +140,9 @@ public class SystemCreationRootPanel extends JPanel {
     public void createJARLinux() throws InterruptedException, IOException {
 
         StringBuilder command = new StringBuilder("");
-        command.append("cd production && cp -r . " + currentDirectory + "/" + EntityManager.getDirectoryName() + " && ")
-                .append("cd ").append(currentDirectory).append("/").append(EntityManager.getDirectoryName())
-                .append(" && ").append("ls *.java >> sources.txt && ")
+        command.append("cd deps && cp -r . \"" + currentDirectory + "/" + EntityManager.getDirectoryName() + "\" && ")
+                .append("cd \"").append(currentDirectory).append("/").append(EntityManager.getDirectoryName())
+                .append("\" && ").append("ls *.java >> sources.txt && ")
                 .append("javac -cp \"mysql-connector-java-5.1.11-bin.jar:javax.mail.jar:activation.jar:\" @sources.txt -d out && ")
                 .append("jar cfm ").append(EntityManager.getProjectName()).append(".jar")
                 .append(" Manifest.txt -C out/ . && ").append("java -jar ").append(EntityManager.getProjectName())

@@ -15,8 +15,8 @@ public final class EntityManager {
     private static ArrayList<Entity> entities;
     private static String projectName;
     private static String DBName;
-    private static String directoryName; 
-    
+    private static String directoryName;
+
     static {
         entities = new ArrayList<>();
     }
@@ -36,7 +36,7 @@ public final class EntityManager {
     public static ArrayList<Entity> getEntities() {
         return entities;
     }
-        
+
     public static void setProjectName(String projectName) throws IOException {
         EntityManager.projectName = projectName.trim().toLowerCase().replaceAll(" ", "");
         createDirectory();
@@ -45,7 +45,7 @@ public final class EntityManager {
     public static void setDBName(String DBName) {
         EntityManager.DBName = DBName;
     }
-    
+
     public static void generateDBName() {
         DBName = "db_" + projectName;
     }
@@ -56,24 +56,24 @@ public final class EntityManager {
         DatabaseUtil.stmt.executeUpdate(query);
         DatabaseUtil.resetConnection();
     }
-    
-    public static void createDirectory() throws IOException{
+
+    public static void createDirectory() throws IOException {
         File tempFile = new File("generated");
         tempFile.mkdir();
         File emailFile;
         File destEmailFile;
         if (System.getProperty("os.name").startsWith("Windows")) {
-            directoryName = "generated\\" + projectName.replaceAll(" ","");
-            emailFile = new File("src\\Utility\\Email.java");
-            destEmailFile = new File(directoryName+"\\Email.java");
+            directoryName = "generated\\" + projectName.replaceAll(" ", "");
+            // emailFile = new File("src\\Utility\\Email.java");
+            // destEmailFile = new File(directoryName+"\\Email.java");
         } else {
-            directoryName = "generated/" + projectName.replaceAll(" ","");
-            emailFile = new File("src/Utility/Email.java");
-            destEmailFile = new File(directoryName+"/Email.java");
+            directoryName = "generated/" + projectName.replaceAll(" ", "");
+            // emailFile = new File("src/Utility/Email.java");
+            // destEmailFile = new File(directoryName+"/Email.java");
         }
         File dir = new File(directoryName);
         dir.mkdir();
-        Files.copy(emailFile.toPath(),destEmailFile.toPath());
+        // Files.copy(emailFile.toPath(), destEmailFile.toPath());
     }
 
     public static void addEntity(Entity entity) throws IOException, SQLException {

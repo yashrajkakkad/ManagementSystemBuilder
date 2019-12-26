@@ -30,7 +30,13 @@ task copyResources(type: Copy, dependsOn: setupDirectory){
     into "release"
 }
 
-task copyJAR(type: Copy, dependsOn: copyResources){
+task copyDeps(type: Copy, dependsOn:copyResources){
+    from"."
+    include "deps/**"
+    into "release"
+}
+
+task copyJAR(type: Copy, dependsOn: copyDeps){
     from "build/libs"
     include "*.jar"
     into "release"
