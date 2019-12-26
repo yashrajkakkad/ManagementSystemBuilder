@@ -13,6 +13,28 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/license-MIT-green">
-  <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg">
+  <a href="https://github.com/yashrajkakkad/ManagementSystemBuilder/blob/master/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-green">
+  </a>
+  <a href="https://github.com/yashrajkakkad/ManagementSystemBuilder/pull/new/master">
+    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg">
+  </a>
 </p>
+
+<p align="center">
+  <a href="#introduction">Introduction</a> •
+  <a href="#installation">Installation</a> •
+  <a href="#usage">Usage</a>
+</p>
+
+## Introduction
+
+blah blah blah
+
+## Installation
+
+blah blah
+
+## Usage
+
+blah blah
