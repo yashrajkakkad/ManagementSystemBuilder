@@ -2,6 +2,8 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -23,9 +25,39 @@ public class HomePagePanel extends JPanel
         add(welcomeMessage,c);
 
         c.gridy++;
+        JButton setupDBbtn = new JButton("Setup Database");
+        setupDBbtn.setFont(new Font("Century Gothic",Font.PLAIN,24));
+        add(setupDBbtn,c);
+
+        setupDBbtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                UIManager.getInstalledLookAndFeels();
+                try {
+                    UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+                } catch (ClassNotFoundException ex) {
+                    ex.printStackTrace();
+                } catch (InstantiationException ex) {
+                    ex.printStackTrace();
+                } catch (IllegalAccessException ex) {
+                    ex.printStackTrace();
+                } catch (UnsupportedLookAndFeelException ex) {
+                    ex.printStackTrace();
+                }
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        SetupDB setupDB = new SetupDB();
+                        setupDB.spawn();
+                    }
+                });
+            }
+        });
+
+        c.gridy++;
         c.anchor = GridBagConstraints.CENTER;
-        JLabel getStarted = new JLabel("Sign Up Here.");
-        getStarted.setFont(new Font("Century Gothic",Font.PLAIN,36));
+        JButton getStarted = new JButton("Sign Up Here.");
+        getStarted.setFont(new Font("Century Gothic",Font.PLAIN,24));
         add(getStarted,c);
 
         getStarted.addMouseListener(new MouseListener()
@@ -37,28 +69,16 @@ public class HomePagePanel extends JPanel
             }
 
             @Override
-            public void mousePressed(MouseEvent e)
-            {
-
-            }
+            public void mousePressed(MouseEvent e) {}
 
             @Override
-            public void mouseReleased(MouseEvent e)
-            {
-
-            }
+            public void mouseReleased(MouseEvent e) {}
 
             @Override
-            public void mouseEntered(MouseEvent e)
-            {
-                getStarted.setForeground(Color.blue);
-            }
+            public void mouseEntered(MouseEvent e) {}
 
             @Override
-            public void mouseExited(MouseEvent e)
-            {
-                getStarted.setForeground(Color.BLACK);
-            }
+            public void mouseExited(MouseEvent e) {}
         });
     }
 }

@@ -6,6 +6,7 @@ import GUIGeneration.MainFrame;
 import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -154,24 +155,35 @@ public class SystemCreationRootPanel extends JPanel
     public void createJARLinux() throws InterruptedException, IOException {
 
         StringBuilder command = new StringBuilder("");
-        command.append("cp -r production generated && ")
+        command.append("cd production && cp -r . "+currentDirectory+"/"+EntityManager.getDirectoryName()+" && ")
                 .append("cd ").append(currentDirectory).append("/").append(EntityManager.getDirectoryName()).append(" && ")
                 .append("ls *.java >> sources.txt && ")
-                .append("javac -cp \"mysql-connector-java-5.1.11-bin.jar;javax.mail.jar;activation.jar\" @sources.txt -d out && ")
+                .append("javac -cp \"mysql-connector-java-5.1.11-bin.jar:javax.mail.jar:activation.jar:\" @sources.txt -d out && ")
                 .append("jar cfm ").append(EntityManager.getProjectName()).append(".jar").append(" Manifest.txt -C out/ . && ")
-                .append("java -jar ").append(EntityManager.getProjectName()).append(".jar && ");
+                .append("java -jar ").append(EntityManager.getProjectName()).append(".jar");
 
-        Process process = null;
+        System.out.println(command.toString());
+//        Process process = null;
+//        try {
+//            process = Runtime.getRuntime().exec(command.toString());
+//            process.waitFor();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+//        String line;
+//        while ((line = reader.readLine()) != null) {
+//            System.out.println(line);
+//        }
         try {
-            process = Runtime.getRuntime().exec(command.toString());
+            FileWriter writer = new FileWriter("createJAR.sh");
+            writer.write("#!/bin/bash\n\n");
+            writer.write(command.toString());
+            writer.close();
+            Process process = Runtime.getRuntime().exec("./createJAR.sh");
             process.waitFor();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        String line;
-        while ((line = reader.readLine()) != null) {
-            System.out.println(line);
         }
     }
 

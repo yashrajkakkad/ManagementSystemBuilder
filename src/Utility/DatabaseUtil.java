@@ -21,40 +21,38 @@ public class DatabaseUtil {
     public static ResultSet rs;
     public static PreparedStatement ps;
 
-    static {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            dbURL = "jdbc:mysql://"+getCredentials("host")+":"+getCredentials("port")+"/"+getCredentials("db_name");
-            rootURL = "jdbc:mysql://"+getCredentials("host")+":"+getCredentials("port");
-            db_username = getCredentials("username");
-            db_password = getCredentials("password");
-            con = DriverManager.getConnection(dbURL, db_username, db_password);
-            stmt = con.createStatement();
-        } 
-        catch (Exception ex) {
-            System.out.println("ex = " + ex);
-            JOptionPane.showMessageDialog(null, "Your database is not configured correctly.");
-            SetupDB setupDB = new SetupDB();
-        }
 
+    public static void retryConnection() {
+        JOptionPane.showMessageDialog(null, "Your database is not configured correctly.");
+        SetupDB setupDB = new SetupDB();
+        setupDB.spawn();
     }
 
-    private static String getCredentials(String cred_type) {
+    public static void establishConnection() throws ClassNotFoundException{
+        Class.forName("com.mysql.jdbc.Driver");
+        try {
+            con = DriverManager.getConnection(dbURL, db_username, db_password);
+            stmt = con.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            retryConnection();
+        }
+    }
+
+    public static void getCredentials() {
         File configFile = new File("config.properties");
-        String cred = "";
         try {
             FileReader reader = new FileReader(configFile);
             Properties props = new Properties();
             props.load(reader);
-            cred = props.getProperty(cred_type);
+            dbURL = "jdbc:mysql://"+props.getProperty("host")+":"+props.getProperty("port")+"/"+props.getProperty("db_name");
+            rootURL = "jdbc:mysql://"+props.getProperty("host")+":"+props.getProperty("port");
+            db_username = props.getProperty("username");
+            db_password = props.getProperty("password");
             reader.close();
-        } catch (FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "Your database is not configured correctly.");
-            SetupDB setupDB = new SetupDB();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return cred;
     }
 
     public static Statement getStatement() throws SQLException {
@@ -63,8 +61,12 @@ public class DatabaseUtil {
     }
     
     public static void resetConnection() throws SQLException {
-        stmt.close();
-        con.close();
+        try {
+            stmt.close();
+            con.close();
+        }
+        catch (NullPointerException ex) {
+        }
         try {
             Class.forName("com.mysql.jdbc.Driver");
 //            dbURL = "jdbc:mysql://"+getCredentials("host")+":"+getCredentials("port")+"/"+getCredentials("db_name");
@@ -73,8 +75,6 @@ public class DatabaseUtil {
         } 
         catch (Exception ex) {
             System.out.println("Exception in resetConnection = " + ex);
-            JOptionPane.showMessageDialog(null, "Your database is not configured correctly.");
-            SetupDB setupDB = new SetupDB();
         }        
     }
 
@@ -89,8 +89,7 @@ public class DatabaseUtil {
         } 
         catch (Exception ex) {
             System.out.println("Exception in connectMain = " + ex);
-            JOptionPane.showMessageDialog(null, "Your database is not configured correctly.");
-            SetupDB setupDB = new SetupDB();
+            retryConnection();
         }
         
     }
@@ -107,8 +106,7 @@ public class DatabaseUtil {
         } 
         catch (Exception ex) {
             System.out.println("Exception in connectToProject = " + ex);
-            JOptionPane.showMessageDialog(null, "Your database is not configured correctly.");
-            SetupDB setupDB = new SetupDB();
+            retryConnection();
         }
     }
     

@@ -70,36 +70,36 @@ public class SignUpPage extends JPanel
         password.setToolTipText("Password cannot be empty");
         add(password,c);
 
-        c.gridy+=2;
-        c.anchor = GridBagConstraints.LINE_START;
-        JButton setupDBbtn = new JButton("Setup Database");
-        setupDBbtn.setFont(new Font("Century Gothic",Font.PLAIN,24));
-        setupDBbtn.setEnabled(false);
-        add(setupDBbtn,c);
-
-        setupDBbtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                UIManager.getInstalledLookAndFeels();
-                try {
-                    UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-                } catch (ClassNotFoundException ex) {
-                    ex.printStackTrace();
-                } catch (InstantiationException ex) {
-                    ex.printStackTrace();
-                } catch (IllegalAccessException ex) {
-                    ex.printStackTrace();
-                } catch (UnsupportedLookAndFeelException ex) {
-                    ex.printStackTrace();
-                }
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        new SetupDB();
-                    }
-                });
-            }
-        });
+//        c.gridy+=2;
+//        c.anchor = GridBagConstraints.LINE_START;
+//        JButton setupDBbtn = new JButton("Setup Database");
+//        setupDBbtn.setFont(new Font("Century Gothic",Font.PLAIN,24));
+//        setupDBbtn.setEnabled(false);
+//        add(setupDBbtn,c);
+//
+//        setupDBbtn.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                UIManager.getInstalledLookAndFeels();
+//                try {
+//                    UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+//                } catch (ClassNotFoundException ex) {
+//                    ex.printStackTrace();
+//                } catch (InstantiationException ex) {
+//                    ex.printStackTrace();
+//                } catch (IllegalAccessException ex) {
+//                    ex.printStackTrace();
+//                } catch (UnsupportedLookAndFeelException ex) {
+//                    ex.printStackTrace();
+//                }
+//                SwingUtilities.invokeLater(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        new SetupDB();
+//                    }
+//                });
+//            }
+//        });
 
         c.gridy+=2;
         c.anchor = GridBagConstraints.LINE_START;
@@ -122,6 +122,8 @@ public class SignUpPage extends JPanel
                             //VALIDATION CODE GOES HERE
                             try
                             {
+                                DatabaseUtil.getCredentials();
+                                DatabaseUtil.establishConnection();
                                 String insertString = "INSERT INTO `tbl_loginInfo`(`username`, `emailAddress`,`password`) VALUES ('"+username.getText()+"','"+emailAddress.getText()+"','"+password.getText()+"')";
                                 System.out.println(insertString);
                                 int i = DatabaseUtil.stmt.executeUpdate(insertString);
@@ -159,7 +161,7 @@ public class SignUpPage extends JPanel
             public void focusGained(FocusEvent e)
             {
                 signUpbtn.setEnabled(true);
-                setupDBbtn.setEnabled(true);
+//                setupDBbtn.setEnabled(true);
             }
 
             @Override

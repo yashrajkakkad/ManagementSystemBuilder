@@ -67,6 +67,8 @@ public class LoginPage extends JPanel {
                 if (!username.getText().equals("")) {
                     if (!password.getText().equals("")) {
                         try {
+                            DatabaseUtil.getCredentials();
+                            DatabaseUtil.establishConnection();
                             String query = "select username, password from tbl_loginInfo where username=? and password =?";
                             DatabaseUtil.ps = DatabaseUtil.con.prepareStatement(query);
                             DatabaseUtil.ps.setString(1, username.getText());

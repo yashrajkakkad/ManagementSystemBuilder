@@ -60,11 +60,19 @@ public final class EntityManager {
     public static void createDirectory() throws IOException{
         File tempFile = new File("generated");
         tempFile.mkdir();
-        directoryName = "generated\\" + projectName.replaceAll(" ","");
+        File emailFile;
+        File destEmailFile;
+        if (System.getProperty("os.name").startsWith("Windows")) {
+            directoryName = "generated\\" + projectName.replaceAll(" ","");
+            emailFile = new File("src\\Utility\\Email.java");
+            destEmailFile = new File(directoryName+"\\Email.java");
+        } else {
+            directoryName = "generated/" + projectName.replaceAll(" ","");
+            emailFile = new File("src/Utility/Email.java");
+            destEmailFile = new File(directoryName+"/Email.java");
+        }
         File dir = new File(directoryName);
         dir.mkdir();
-        File emailFile = new File("src\\Utility\\Email.java");
-        File destEmailFile = new File(directoryName+"\\Email.java");
         Files.copy(emailFile.toPath(),destEmailFile.toPath());
     }
 

@@ -1,20 +1,24 @@
 package GUI;
 
+import Utility.DatabaseUtil;
+
 import javax.swing.*;
+import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Properties;
 
 public class SetupDB extends JFrame implements ItemListener {
 
-    private static JPanel rootPanel = new JPanel();
-    public static JRadioButton local_db;
-    public static JRadioButton remote_db;
-    public static JTextField server_address;
-    public static JTextField username;
+    private JPanel rootPanel = new JPanel();
+    public JRadioButton local_db;
+    public JRadioButton remote_db;
+    public JTextField server_address;
+    public JTextField username;
 
     public SetupDB() {
         createView();
@@ -23,6 +27,11 @@ public class SetupDB extends JFrame implements ItemListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(960, 480);
         setBackground(new Color(103, 228, 255));
+//        setVisible(true);
+    }
+
+    public void spawn() {
+        dispose();
         setVisible(true);
     }
 
@@ -180,6 +189,12 @@ public class SetupDB extends JFrame implements ItemListener {
                     ex.printStackTrace();
                 }
                 dispose();
+                DatabaseUtil.getCredentials();
+                try {
+                    DatabaseUtil.establishConnection();
+                } catch (ClassNotFoundException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
     }
@@ -191,6 +206,10 @@ public class SetupDB extends JFrame implements ItemListener {
                 server_address.setText("localhost");
                 username.setText("root");
             }
+        } else {
+            if (e.getStateChange() == 1) {
+                server_address.setText("");
+            }
         }
     }
 
@@ -200,7 +219,8 @@ public class SetupDB extends JFrame implements ItemListener {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new SetupDB();
+                SetupDB setupDB = new SetupDB();
+                setupDB.spawn();
             }
         });
     }
