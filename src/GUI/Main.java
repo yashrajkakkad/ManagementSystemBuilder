@@ -14,7 +14,11 @@ public class Main extends JFrame {
     public Main() throws IOException {
         createView();
         setTitle("Management System Builder");
-        setIconImage(new ImageIcon("MSBtransparent.png").getImage());
+        if (System.getProperty("os.name").startsWith("Windows")) {
+            setIconImage(new ImageIcon("resources\\MSBtransparent.png").getImage());
+        } else {
+            setIconImage(new ImageIcon("resources/MSBtransparent.png").getImage());
+        }
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1920, 1080);
         setVisible(true);
@@ -55,19 +59,20 @@ public class Main extends JFrame {
 
     public static void changeRootPanel(int code) {
         switch (code) {
-            case 1:
-                rootCardLayout.show(rootPanel, "LoginModule");
-                break;
-            case 2:
-                rootCardLayout.show(rootPanel, "System Menu");
-                break;
-            case 3:
-                rootCardLayout.show(rootPanel, "Create System");
-                break;
+        case 1:
+            rootCardLayout.show(rootPanel, "LoginModule");
+            break;
+        case 2:
+            rootCardLayout.show(rootPanel, "System Menu");
+            break;
+        case 3:
+            rootCardLayout.show(rootPanel, "Create System");
+            break;
         }
     }
 
-    public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
+    public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException,
+            InstantiationException, IllegalAccessException {
         UIManager.getInstalledLookAndFeels();
         UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         SwingUtilities.invokeLater(new Runnable() {
@@ -83,5 +88,6 @@ public class Main extends JFrame {
     }
 }
 
-/* PROGRAM OUTPUT
+/*
+ * PROGRAM OUTPUT
  */
