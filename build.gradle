@@ -1,0 +1,42 @@
+plugins {
+    // Apply the java plugin to add support for Java
+    id 'java'
+}
+
+repositories {
+    // Use jcenter for resolving dependencies.
+    // You can declare any Maven/Ivy/file repository here.
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.11'
+    compile group: 'javax.mail', name: 'javax.mail-api', version: '1.6.2'
+    compile group: 'javax.activation', name: 'activation', version: '1.1.1'
+}
+
+jar {
+    manifest.attributes "Main-Class": "GUI.Main"
+    from configurations.compile.collect { zipTree it }
+}
+
+task setupDirectory(dependsOn: classes){
+    mkdir "release"
+}
+
+task copyResources(type: Copy, dependsOn: setupDirectory){
+    from "src/main/resources"
+    include "*"
+    into "release"
+}
+
+task copyJAR(type: Copy, dependsOn: copyResources){
+    from "build/libs"
+    include "*.jar"
+    into "release"
+}
+
+task runJAR(type: Exec, dependsOn: copyJAR){
+    executable 'java'
+    args '-jar', "release/ManagementSystemBuilder.jar"
+}
