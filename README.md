@@ -1,5 +1,5 @@
 <h1 align="center">
-  <a href="#"><img src="https://raw.githubusercontent.com/yashrajkakkad/ManagementSystemBuilder/master/MSBtransparent.png?token=AKS265XFHNVUEJQMYB7J7YC6BXLQA" alt="MSB" width="200"></a>
+  <a href="#"><img src="https://raw.githubusercontent.com/yashrajkakkad/ManagementSystemBuilder/master/MSBtransparent.png?token=AKS265VVA34TE5XJWZQ3QUC6BYU7Y" alt="MSB" width="200"></a>
   <br>
   Management System Builder
   <br>
