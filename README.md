@@ -52,7 +52,6 @@ Given the entities and their corresponding datafields, CRUD code for each entity
 ## Requirements
 
 - Java version 8 or higher. See [here](https://www.oracle.com/technetwork/java/javase/downloads/index.html) for install instructions.
-- Gradle. See [here](https://gradle.org/install/) for install instructions.
 
 ## Installation
 
@@ -69,7 +68,7 @@ Given the entities and their corresponding datafields, CRUD code for each entity
 git clone https://github.com/yashrajkakkad/ManagementSystemBuilder.git
 cd ManagementSystemBuilder
 ```
-- Build all the classes
+- Build all the classes. Gradle is our build system. See [here](https://gradle.org/install/) for install instructions.
 ```sh
 gradle build
 ```
