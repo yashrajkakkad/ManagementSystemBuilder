@@ -101,34 +101,45 @@ public class SystemCreationRootPanel extends JPanel {
 
     public void createJARWindows() throws IOException {
 
-        String javac = getExecPath("javac");
-        String jar = getExecPath("jar");
-        System.out.println(javac);
-        System.out.println(jar);
+//        String javac = getExecPath("javac");
+//        String jar = getExecPath("jar");
+        String javac = "javac";
+        String jar = "jar";
+//        System.out.println(javac);
+//        System.out.println(jar);
 
         StringBuilder command_string = new StringBuilder("");
         command_string.append("cd \"").append(currentDirectory).append("\" && ").append("xcopy deps \"")
                 .append(currentDirectory).append("\\").append(EntityManager.getDirectoryName()).append("\" /i /s && ")
                 .append("cd \"").append(currentDirectory).append("\\").append(EntityManager.getDirectoryName())
                 .append("\" && ").append("dir /s /B *.java > sources.txt").append(" && ")
-                .append("\"" + javac
-                        + "\" -cp \"mysql-connector-java-5.1.11-bin.jar;javax.mail.jar;activation.jar\" @sources.txt -d out && ")
-                .append("\"" + jar + "\" cfm ").append(EntityManager.getProjectName()).append(".jar")
+                .append("" + javac
+                        + " -cp \"mysql-connector-java-5.1.11-bin.jar;javax.mail.jar;activation.jar\" @sources.txt -d out && ")
+                .append("" + jar + " cfm ").append(EntityManager.getProjectName()).append(".jar")
                 .append(" Manifest.txt -C out/ . && ").append("java -jar ").append(EntityManager.getProjectName())
-                .append(".jar");
+                .append(".jar && pause");
         System.out.println(command_string.toString());
+//        try {
+//            Runtime rt = Runtime.getRuntime();
+//            // Process proc = rt.exec("cmd /c \""+command_string.toString()+"\"");
+//            Process proc = rt.exec("cmd /c start cmd.exe /K \"" + command_string.toString() + "\"");
+//            try {
+//                Thread.sleep(10000);
+//            } catch (InterruptedException ex) {
+//                ex.printStackTrace();
+//            }
+//            Runtime.getRuntime().exec("taskkill /f /im cmd.exe");
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
         try {
-            Runtime rt = Runtime.getRuntime();
-            // Process proc = rt.exec("cmd /c \""+command_string.toString()+"\"");
-            Process proc = rt.exec("cmd /c start cmd.exe /K \"" + command_string.toString() + "\"");
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
-            }
-            Runtime.getRuntime().exec("taskkill /f /im cmd.exe");
-        } catch (IOException ex) {
-            ex.printStackTrace();
+            FileWriter writer = new FileWriter("createJAR.cmd");
+            writer.write(command_string.toString());
+            writer.close();
+            Process process = Runtime.getRuntime().exec("cmd /c start cmd.exe /K createJAR.cmd");
+            process.waitFor();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
         }
         try {
             MainFrame mainFrame = new MainFrame();

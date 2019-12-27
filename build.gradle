@@ -15,6 +15,11 @@ dependencies {
     compile group: 'javax.activation', name: 'activation', version: '1.1.1'
 }
 
+java {
+    sourceCompatibility = 'VERSION_1_8'
+    targetCompatibility = 'VERSION_1_8'
+}
+
 jar {
     manifest.attributes "Main-Class": "GUI.Main"
     from configurations.compile.collect { zipTree it }
