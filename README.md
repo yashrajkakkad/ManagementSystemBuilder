@@ -32,7 +32,7 @@
 
 ## Introduction
 
-Several [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete)-based applications operate in a very similar manner, particularly management systems. Management System Builder intends to exploit this fact and allow users to create elementary management systems with CRUD functionality, database connectivity and abstraction and other features like email autoresponder and offline payment desk without writing a single line of code.
+Several [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete)-based applications operate in a very similar manner, particularly management systems. Management System Builder intends to exploit this fact and allow users to create elementary management systems with CRUD functionality, database connectivity and abstraction and other features like email autoresponder without writing a single line of code.
 
 ## How it Works
 
