@@ -23,6 +23,7 @@
 
 <p align="center">
   <a href="#introduction">Introduction</a> •
+  <a href="#how-it-works">How it Works</a> •
   <a href="#installation">Installation</a> •
   <a href="#usage">Usage</a>
 </p>
