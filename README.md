@@ -27,13 +27,22 @@
   <a href="#usage">Usage</a>
 </p>
 
+---
+
 ## Introduction
 
 blah blah blah
 
+## Requirements
+
+- Java version 8 or higher. Download it <a href="https://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">here</a>.
+- Gradle.
+
 ## Installation
 
-blah blah
+### Get it up & running
+
+- Download our latest release from the Releases section.
 
 ## Usage
 
